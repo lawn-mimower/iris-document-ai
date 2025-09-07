@@ -42,8 +42,7 @@ def calculate_iou(box_a, box_b):
 
 def detect_indicator_shapes(image, scale_x=1.0, scale_y=1.0):
     """
-    Detects shapes like underlines and boxes that indicate input fields.
-    This is a specialized replacement for the old generic shape detector.
+    Detects shapes like underlines, boxes, and checkboxes that indicate input fields.
     """
     indicator_shapes = []
     
@@ -51,18 +50,25 @@ def detect_indicator_shapes(image, scale_x=1.0, scale_y=1.0):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     
-    # Use adaptive thresholding for better results on varied lighting
     thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
                                    cv2.THRESH_BINARY_INV, 11, 2)
 
-    # Find contours
     contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # --- NEW: Tunable Parameters for Checkbox Detection ---
+    MIN_CHECKBOX_SIZE = 8
+    MAX_CHECKBOX_SIZE = 25
+    ASPECT_RATIO_TOLERANCE = 0.35 # Allows aspect ratio between 0.65 and 1.35
 
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         
-        # --- Heuristics to find Underlines and Boxes ---
-        aspect_ratio = w / h if h > 0 else 0
+        # --- MODIFIED: Heuristics to find Checkboxes, Underlines, and Boxes ---
+        aspect_ratio = w / float(h) if h > 0 else 0
+        
+        # Heuristic for checkboxes: small, squarish
+        is_checkbox_size = MIN_CHECKBOX_SIZE < w < MAX_CHECKBOX_SIZE and MIN_CHECKBOX_SIZE < h < MAX_CHECKBOX_SIZE
+        is_square_like = abs(1 - aspect_ratio) < ASPECT_RATIO_TOLERANCE
         
         # Heuristic for underlines: very wide and short
         is_underline = aspect_ratio > 10 and h < 10
@@ -70,13 +76,21 @@ def detect_indicator_shapes(image, scale_x=1.0, scale_y=1.0):
         # Heuristic for boxes: reasonable size, not a line
         is_box = (w > 15 and h > 15) and (0.5 < aspect_ratio < 10)
 
-        if is_underline or is_box:
+        shape_type = None
+        if is_checkbox_size and is_square_like:
+            shape_type = "CHECKBOX"
+        elif is_underline:
+            shape_type = "UNDERLINE"
+        elif is_box:
+            shape_type = "BOX"
+
+        if shape_type:
             # Scale coordinates back to the original document space
             x0, y0 = x * scale_x, y * scale_y
             x1, y1 = (x + w) * scale_x, (y + h) * scale_y
             
             shape = {
-                "type": "UNDERLINE" if is_underline else "BOX",
+                "type": shape_type,
                 "bbox": [round(x0, 2), round(y0, 2), round(x1, 2), round(y1, 2)]
             }
             indicator_shapes.append(shape)
@@ -98,7 +112,6 @@ def process_pdf(pdf_path):
             if "lines" in block:
                 for line in block["lines"]:
                     for span in line["spans"]:
-                        # Filter out purely whitespace spans
                         if not span["text"].strip():
                             continue
                         x0, y0, x1, y1 = span["bbox"]
@@ -113,7 +126,7 @@ def process_pdf(pdf_path):
                         }
                         candidate_elements.append(element)
 
-        # 2. --- Detect all indicator shapes (underlines and boxes) ---
+        # 2. --- Detect all indicator shapes ---
         pix = page.get_pixmap(dpi=DPI)
         img_data = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.h, pix.w, pix.n)
         img_cv = cv2.cvtColor(img_data, cv2.COLOR_RGB2BGR)
@@ -127,28 +140,35 @@ def process_pdf(pdf_path):
 
         for el in candidate_elements:
             is_input_field = False
+            best_shape_type = None # --- MODIFIED: Keep track of shape type
+            
             for i, shape in enumerate(indicator_shapes):
                 if i in used_indicator_indices:
                     continue
                 iou = calculate_iou(el["bbox"], shape["bbox"])
                 if iou > IOU_THRESHOLD:
-                    # High overlap with an indicator means this is an input field
                     is_input_field = True
                     used_indicator_indices.add(i)
-                    break # Associate with the first indicator found
+                    best_shape_type = shape["type"]
+                    break
 
             if is_input_field:
-                el["type"] = "INPUT_FIELD"
-                # Often, text like '____' is read; we can clear it
+                # --- MODIFIED: Use the specific shape type ---
+                if best_shape_type == "CHECKBOX":
+                    el["type"] = "CHECKBOX"
+                else: # BOX or UNDERLINE
+                    el["type"] = "INPUT_FIELD"
+                
                 if all(c in ' _' for c in el["text"]):
                     el["text"] = None
             final_elements.append(el)
 
-        # Add any indicator boxes that did NOT overlap with text as new input fields
+        # --- MODIFIED: Add any non-overlapping BOX or CHECKBOX shapes as new fields ---
         for i, shape in enumerate(indicator_shapes):
-            if i not in used_indicator_indices and shape["type"] == "BOX":
+            if i not in used_indicator_indices and shape["type"] in ["BOX", "CHECKBOX"]:
+                field_type = "INPUT_FIELD" if shape["type"] == "BOX" else "CHECKBOX"
                 new_field = {
-                    "type": "INPUT_FIELD",
+                    "type": field_type,
                     "text": None,
                     "bbox": shape["bbox"],
                     "center": [round((shape["bbox"][0] + shape["bbox"][2]) / 2, 2),
@@ -161,9 +181,6 @@ def process_pdf(pdf_path):
 
     doc.close()
     return all_elements
-
-# The process_image and main functions would be updated similarly but are omitted here for brevity.
-# The core logic change is demonstrated in process_pdf. We can assume a similar update for process_image.
 
 def main():
     parser = argparse.ArgumentParser(description="IRIS Perception Tool v2: Extract elements using shape correlation.")
@@ -182,9 +199,6 @@ def main():
 
     if file_ext == ".pdf":
         elements = process_pdf(args.input_path)
-    # The process_image function would need a similar overhaul to use this logic
-    # elif file_ext in [".png", ".jpg", ".jpeg", ".tiff"]:
-    #     elements = process_image(args.input_path) 
     else:
         print(f"Error: Unsupported or logic not yet implemented for '{file_ext}'. Please use PDF.")
         return
