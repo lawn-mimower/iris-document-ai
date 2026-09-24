@@ -105,7 +105,8 @@ def retrieve_from_milvus(query: str, db_path: str, collection: str,
     query_embedding = model.encode([query])[0].tolist()
 
     client = MilvusClient(db_path)
-    output_fields = ["text", "source_file", "doc_type", "page_number"]
+    # "source_file"/"doc_type" come from the phase-2 notebook schema, "filename" from oneshot_ingestion.py
+    output_fields = ["text", "source_file", "filename", "doc_type", "page_number"]
 
     # Try to include extra fields if they exist
     try:

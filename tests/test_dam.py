@@ -176,7 +176,10 @@ def test_retrieve_from_milvus_reads_filename_and_filters_excel(harness, monkeypa
             self.path = path
 
         def search(self, **kwargs):
-            return [hits]
+            # like Milvus, return only the requested output fields
+            fields = set(kwargs["output_fields"])
+            return [[{"distance": h["distance"], "entity": {k: v for k, v in h["entity"].items() if k in fields}}
+                     for h in hits]]
 
         def close(self):
             pass
