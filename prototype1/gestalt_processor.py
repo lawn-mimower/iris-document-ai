@@ -28,7 +28,7 @@ def load_elements(input_file: str) -> List[Dict[str, Any]]:
     except FileNotFoundError:
         raise FileNotFoundError(f"Input file not found: {input_file}")
     except json.JSONDecodeError as e:
-        raise json.JSONDecodeError(f"Invalid JSON in input file: {e}")
+        raise json.JSONDecodeError(f"Invalid JSON in input file: {e.msg}", e.doc, e.pos) from e
 
 
 def calculate_bbox_overlap(bbox1: List[float], bbox2: List[float]) -> float:
@@ -287,14 +287,15 @@ def find_nearest_neighbors(element: Dict[str, Any], all_elements: List[Dict[str,
     return neighbors[:max_neighbors]
 
 
-def calculate_relationships(elements: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def calculate_relationships(elements: List[Dict[str, Any]],
+                            max_neighbors: int = 5) -> List[Dict[str, Any]]:
     """
     Calculate spatial relationships (Gestalt descriptors) for all elements.
     """
     enriched_elements = []
     
     for element in elements:
-        neighbors = find_nearest_neighbors(element, elements)
+        neighbors = find_nearest_neighbors(element, elements, max_neighbors)
         
         enriched_element = element.copy()
         enriched_element['neighbors'] = neighbors
@@ -315,7 +316,7 @@ def save_processed_elements(elements: List[Dict[str, Any]], output_file: str) ->
         raise IOError(f"Could not write to output file {output_file}: {e}")
 
 
-def process_elements(input_file: str, output_file: str) -> None:
+def process_elements(input_file: str, output_file: str, max_neighbors: int = 5) -> None:
     """
     Main processing function that orchestrates the entire workflow.
     """
@@ -328,7 +329,7 @@ def process_elements(input_file: str, output_file: str) -> None:
     elements = merge_input_fields(elements)
     print(f"After input field merging: {len(elements)} elements")
     
-    elements = calculate_relationships(elements)
+    elements = calculate_relationships(elements, max_neighbors)
     print(f"Added spatial relationships to {len(elements)} elements")
     
     save_processed_elements(elements, output_file)
@@ -369,7 +370,7 @@ Examples:
     args = parser.parse_args()
     
     try:
-        process_elements(args.input_file, args.output_file)
+        process_elements(args.input_file, args.output_file, args.max_neighbors)
         print("✓ Gestalt pre-processing completed successfully!")
         
     except Exception as e:
