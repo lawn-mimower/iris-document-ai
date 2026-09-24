@@ -1,0 +1,7456 @@
+{
+ "benchmark": "dam_field_extraction",
+ "run": "gemini-3.5-flash-lite",
+ "status": "complete",
+ "updated": "2026-09-24T23:37:10",
+ "conditions": {
+  "llm": "gemini:gemini-3.5-flash-lite",
+  "temperature": 0.0,
+  "top_k": 5,
+  "ollama_num_ctx": null,
+  "embedding_model": "BAAI/bge-large-en-v1.5",
+  "bm25_chunking": "1000 characters, 200 overlap",
+  "n_companies": 6,
+  "n_fields": 16,
+  "python": "3.12.12",
+  "platform": "Linux-6.8.0-111-generic-x86_64-with-glibc2.39",
+  "cpu_count": 24,
+  "gpu": "none",
+  "stop_reason": null
+ },
+ "methods": {
+  "rules": "baseline C: regex / keyword rules, no LLM",
+  "single_call": "baseline B: all extracted text of a company in one prompt, all fields as JSON",
+  "bm25_batched": "baseline A retrieval (as bm25), all fields of a company in one LLM call",
+  "dam_batched": "repo retrieval (as dam), all fields of a company in one LLM call"
+ },
+ "summary": {
+  "rules": {
+   "n_records": 96,
+   "n_scored": 96,
+   "n_pending": 0,
+   "correct": 86,
+   "strict": 86,
+   "answerable_n": 94,
+   "answerable_correct": 86,
+   "unanswerable_n": 2,
+   "unanswerable_correct": 0,
+   "parse_errors": 0,
+   "source_n": 84,
+   "source_correct": 78,
+   "evidence_n": 0,
+   "evidence_in_context": 0,
+   "llm_calls": 0,
+   "live_llm_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "thinking_tokens": 0,
+   "llm_time_ms": 0,
+   "context_limit_hits": 0,
+   "ingestion_ms": 907,
+   "per_field": {
+    "cin": {
+     "n": 6,
+     "correct": 6
+    },
+    "company_name": {
+     "n": 6,
+     "correct": 6
+    },
+    "registered_office": {
+     "n": 6,
+     "correct": 6
+    },
+    "email": {
+     "n": 6,
+     "correct": 4
+    },
+    "fy_from": {
+     "n": 6,
+     "correct": 6
+    },
+    "fy_to": {
+     "n": 6,
+     "correct": 6
+    },
+    "board_meeting_date": {
+     "n": 6,
+     "correct": 6
+    },
+    "agm_date": {
+     "n": 6,
+     "correct": 0
+    },
+    "authorised_capital": {
+     "n": 6,
+     "correct": 5
+    },
+    "industry": {
+     "n": 6,
+     "correct": 6
+    },
+    "consolidated_fs": {
+     "n": 6,
+     "correct": 6
+    },
+    "cag_comments": {
+     "n": 6,
+     "correct": 6
+    },
+    "cag_supplementary_audit": {
+     "n": 6,
+     "correct": 6
+    },
+    "secretarial_audit": {
+     "n": 6,
+     "correct": 5
+    },
+    "revenue": {
+     "n": 6,
+     "correct": 6
+    },
+    "profit_after_tax": {
+     "n": 6,
+     "correct": 6
+    }
+   }
+  },
+  "single_call": {
+   "n_records": 96,
+   "n_scored": 96,
+   "n_pending": 0,
+   "correct": 93,
+   "strict": 93,
+   "answerable_n": 94,
+   "answerable_correct": 92,
+   "unanswerable_n": 2,
+   "unanswerable_correct": 1,
+   "parse_errors": 0,
+   "source_n": 0,
+   "source_correct": 0,
+   "evidence_n": 0,
+   "evidence_in_context": 0,
+   "llm_calls": 6,
+   "live_llm_calls": 5,
+   "prompt_tokens": 26307,
+   "completion_tokens": 1722,
+   "thinking_tokens": 0,
+   "llm_time_ms": 65175,
+   "context_limit_hits": 0,
+   "ingestion_ms": 907,
+   "per_field": {
+    "cin": {
+     "n": 6,
+     "correct": 6
+    },
+    "company_name": {
+     "n": 6,
+     "correct": 6
+    },
+    "registered_office": {
+     "n": 6,
+     "correct": 6
+    },
+    "email": {
+     "n": 6,
+     "correct": 5
+    },
+    "fy_from": {
+     "n": 6,
+     "correct": 6
+    },
+    "fy_to": {
+     "n": 6,
+     "correct": 6
+    },
+    "board_meeting_date": {
+     "n": 6,
+     "correct": 6
+    },
+    "agm_date": {
+     "n": 6,
+     "correct": 6
+    },
+    "authorised_capital": {
+     "n": 6,
+     "correct": 6
+    },
+    "industry": {
+     "n": 6,
+     "correct": 6
+    },
+    "consolidated_fs": {
+     "n": 6,
+     "correct": 6
+    },
+    "cag_comments": {
+     "n": 6,
+     "correct": 6
+    },
+    "cag_supplementary_audit": {
+     "n": 6,
+     "correct": 6
+    },
+    "secretarial_audit": {
+     "n": 6,
+     "correct": 6
+    },
+    "revenue": {
+     "n": 6,
+     "correct": 5
+    },
+    "profit_after_tax": {
+     "n": 6,
+     "correct": 5
+    }
+   }
+  },
+  "bm25_batched": {
+   "n_records": 96,
+   "n_scored": 96,
+   "n_pending": 0,
+   "correct": 91,
+   "strict": 91,
+   "answerable_n": 94,
+   "answerable_correct": 89,
+   "unanswerable_n": 2,
+   "unanswerable_correct": 2,
+   "parse_errors": 0,
+   "source_n": 94,
+   "source_correct": 88,
+   "evidence_n": 94,
+   "evidence_in_context": 86,
+   "llm_calls": 6,
+   "live_llm_calls": 5,
+   "prompt_tokens": 26731,
+   "completion_tokens": 2822,
+   "thinking_tokens": 0,
+   "llm_time_ms": 67675,
+   "context_limit_hits": 0,
+   "ingestion_ms": 907,
+   "per_field": {
+    "cin": {
+     "n": 6,
+     "correct": 6
+    },
+    "company_name": {
+     "n": 6,
+     "correct": 6
+    },
+    "registered_office": {
+     "n": 6,
+     "correct": 6
+    },
+    "email": {
+     "n": 6,
+     "correct": 6
+    },
+    "fy_from": {
+     "n": 6,
+     "correct": 6
+    },
+    "fy_to": {
+     "n": 6,
+     "correct": 6
+    },
+    "board_meeting_date": {
+     "n": 6,
+     "correct": 6
+    },
+    "agm_date": {
+     "n": 6,
+     "correct": 6
+    },
+    "authorised_capital": {
+     "n": 6,
+     "correct": 5
+    },
+    "industry": {
+     "n": 6,
+     "correct": 6
+    },
+    "consolidated_fs": {
+     "n": 6,
+     "correct": 6
+    },
+    "cag_comments": {
+     "n": 6,
+     "correct": 5
+    },
+    "cag_supplementary_audit": {
+     "n": 6,
+     "correct": 3
+    },
+    "secretarial_audit": {
+     "n": 6,
+     "correct": 6
+    },
+    "revenue": {
+     "n": 6,
+     "correct": 6
+    },
+    "profit_after_tax": {
+     "n": 6,
+     "correct": 6
+    }
+   }
+  },
+  "dam_batched": {
+   "n_records": 96,
+   "n_scored": 96,
+   "n_pending": 0,
+   "correct": 80,
+   "strict": 80,
+   "answerable_n": 94,
+   "answerable_correct": 78,
+   "unanswerable_n": 2,
+   "unanswerable_correct": 2,
+   "parse_errors": 0,
+   "source_n": 94,
+   "source_correct": 85,
+   "evidence_n": 94,
+   "evidence_in_context": 72,
+   "llm_calls": 6,
+   "live_llm_calls": 5,
+   "prompt_tokens": 29222,
+   "completion_tokens": 2838,
+   "thinking_tokens": 0,
+   "llm_time_ms": 61229,
+   "context_limit_hits": 0,
+   "ingestion_ms": 1043050,
+   "per_field": {
+    "cin": {
+     "n": 6,
+     "correct": 6
+    },
+    "company_name": {
+     "n": 6,
+     "correct": 6
+    },
+    "registered_office": {
+     "n": 6,
+     "correct": 6
+    },
+    "email": {
+     "n": 6,
+     "correct": 6
+    },
+    "fy_from": {
+     "n": 6,
+     "correct": 6
+    },
+    "fy_to": {
+     "n": 6,
+     "correct": 6
+    },
+    "board_meeting_date": {
+     "n": 6,
+     "correct": 4
+    },
+    "agm_date": {
+     "n": 6,
+     "correct": 6
+    },
+    "authorised_capital": {
+     "n": 6,
+     "correct": 4
+    },
+    "industry": {
+     "n": 6,
+     "correct": 4
+    },
+    "consolidated_fs": {
+     "n": 6,
+     "correct": 4
+    },
+    "cag_comments": {
+     "n": 6,
+     "correct": 3
+    },
+    "cag_supplementary_audit": {
+     "n": 6,
+     "correct": 3
+    },
+    "secretarial_audit": {
+     "n": 6,
+     "correct": 6
+    },
+    "revenue": {
+     "n": 6,
+     "correct": 6
+    },
+    "profit_after_tax": {
+     "n": 6,
+     "correct": 4
+    }
+   }
+  }
+ },
+ "ingestion": {
+  "dam": {
+   "c1_velmora": {
+    "n_chunks": 43,
+    "convert_chunk_ms": 14690,
+    "embed_ms": 163540,
+    "index_ms": 1230,
+    "total_ms": 179460
+   },
+   "c2_tarnwick": {
+    "n_chunks": 44,
+    "convert_chunk_ms": 18170,
+    "embed_ms": 137570,
+    "index_ms": 1160,
+    "total_ms": 156890
+   },
+   "c3_zedpower": {
+    "n_chunks": 43,
+    "convert_chunk_ms": 23170,
+    "embed_ms": 201850,
+    "index_ms": 1150,
+    "total_ms": 226180
+   },
+   "c4_quorrin": {
+    "n_chunks": 44,
+    "convert_chunk_ms": 26400,
+    "embed_ms": 169530,
+    "index_ms": 1510,
+    "total_ms": 197440
+   },
+   "c5_ambrel": {
+    "n_chunks": 43,
+    "convert_chunk_ms": 21390,
+    "embed_ms": 130440,
+    "index_ms": 1150,
+    "total_ms": 152990
+   },
+   "c6_lumeqa": {
+    "n_chunks": 46,
+    "convert_chunk_ms": 20320,
+    "embed_ms": 108600,
+    "index_ms": 1170,
+    "total_ms": 130090
+   }
+  },
+  "plain": {
+   "c1_velmora": {
+    "n_chunks": 19,
+    "total_ms": 388,
+    "extract_ms": 387
+   },
+   "c2_tarnwick": {
+    "n_chunks": 20,
+    "total_ms": 45,
+    "extract_ms": 43
+   },
+   "c3_zedpower": {
+    "n_chunks": 20,
+    "total_ms": 86,
+    "extract_ms": 81
+   },
+   "c4_quorrin": {
+    "n_chunks": 19,
+    "total_ms": 249,
+    "extract_ms": 245
+   },
+   "c5_ambrel": {
+    "n_chunks": 20,
+    "total_ms": 59,
+    "extract_ms": 55
+   },
+   "c6_lumeqa": {
+    "n_chunks": 20,
+    "total_ms": 80,
+    "extract_ms": 78
+   }
+  },
+  "dam_model_load_ms": 21630
+ },
+ "calls": [
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": null,
+   "prompt_tokens": 4494,
+   "completion_tokens": 291,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 12397
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": null,
+   "prompt_tokens": 5051,
+   "completion_tokens": 553,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 7324
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": null,
+   "prompt_tokens": 4502,
+   "completion_tokens": 436,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 8880
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": null,
+   "prompt_tokens": 4345,
+   "completion_tokens": 288,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 9259
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": null,
+   "prompt_tokens": 4669,
+   "completion_tokens": 433,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 9893
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": null,
+   "prompt_tokens": 4406,
+   "completion_tokens": 546,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 8254
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": null,
+   "prompt_tokens": 4298,
+   "completion_tokens": 290,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 16270
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": null,
+   "prompt_tokens": 4967,
+   "completion_tokens": 442,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 16890
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": null,
+   "prompt_tokens": 4324,
+   "completion_tokens": 553,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 20250
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": null,
+   "prompt_tokens": 4348,
+   "completion_tokens": 288,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 3118
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": null,
+   "prompt_tokens": 4823,
+   "completion_tokens": 442,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 5017
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": null,
+   "prompt_tokens": 4405,
+   "completion_tokens": 435,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 5673
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": null,
+   "prompt_tokens": 4246,
+   "completion_tokens": 281,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 2051
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": null,
+   "prompt_tokens": 4589,
+   "completion_tokens": 541,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 7410
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": null,
+   "prompt_tokens": 4414,
+   "completion_tokens": 428,
+   "thinking_tokens": 0,
+   "cached": false,
+   "context_limit_hit": false,
+   "latency_ms": 7716
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": null,
+   "prompt_tokens": 4576,
+   "completion_tokens": 284,
+   "thinking_tokens": 0,
+   "cached": true,
+   "context_limit_hit": false,
+   "latency_ms": 22080
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": null,
+   "prompt_tokens": 5123,
+   "completion_tokens": 427,
+   "thinking_tokens": 0,
+   "cached": true,
+   "context_limit_hit": false,
+   "latency_ms": 14695
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": null,
+   "prompt_tokens": 4680,
+   "completion_tokens": 424,
+   "thinking_tokens": 0,
+   "cached": true,
+   "context_limit_hit": false,
+   "latency_ms": 16902
+  }
+ ],
+ "records": [
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "cin",
+   "type": "id",
+   "gold": "L29120ZZ1994PLC011872",
+   "answer": "L29120ZZ1994PLC011872",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Velmora Pumps and Valves Limited",
+   "answer": "Velmora Pumps and Valves Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+   "answer": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "email",
+   "type": "email",
+   "gold": "secretarial@velmora-pumps.example",
+   "answer": "secretarial@velmora-pumps.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "1 April 2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31 March 2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "14/05/2024",
+   "answer": "14 May 2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "26/07/2024",
+   "answer": "14 May 2024",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 6
+   },
+   "source_correct": false,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "250000000",
+   "answer": "250000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "industry",
+   "type": "text",
+   "gold": "Manufacture of industrial pumps and valves",
+   "answer": "manufacture of industrial pumps and valves",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "1846235000",
+   "answer": "1846235000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c1_velmora",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "148216000",
+   "answer": "148216000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "cin",
+   "type": "id",
+   "gold": "L63090ZZ2006PLC048213",
+   "answer": "L63090ZZ2006PLC048213",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Tarnwick Logistics Limited",
+   "answer": "Tarnwick Logistics Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+   "answer": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "email",
+   "type": "email",
+   "gold": "cs@tarnwick-logistics.example",
+   "answer": "helpdesk@ledgerline-rta.example",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": false,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "1st April, 2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31 March 2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "22/05/2024",
+   "answer": "22nd May, 2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "20/08/2024",
+   "answer": "22nd May, 2024",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 6
+   },
+   "source_correct": false,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "500000000",
+   "answer": "500000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "industry",
+   "type": "text",
+   "gold": "Freight forwarding and warehousing services",
+   "answer": "freight forwarding and warehousing services",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "No",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "4231864000",
+   "answer": "4231864000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c2_tarnwick",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "210637000",
+   "answer": "210637000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "cin",
+   "type": "id",
+   "gold": "L40101ZZ1987SGC004512",
+   "answer": "L40101ZZ1987SGC004512",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Zedland State Power Generation Corporation Limited",
+   "answer": "Zedland State Power Generation Corporation Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+   "answer": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "email",
+   "type": "email",
+   "gold": "cosec@zspgcl.example",
+   "answer": "cosec@zspgcl.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "April 1, 2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31 March 2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "29/07/2024",
+   "answer": "July 29, 2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "27/09/2024",
+   "answer": "July 29, 2024",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 6
+   },
+   "source_correct": false,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "50000000000",
+   "answer": "50000000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "industry",
+   "type": "text",
+   "gold": "Generation of electricity from thermal and hydro power plants",
+   "answer": "generation of electricity from thermal and hydro power plants",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "84123500000",
+   "answer": "84123500000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c3_zedpower",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "3124800000",
+   "answer": "3124800000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "cin",
+   "type": "id",
+   "gold": "L17110ZZ2011PLC063347",
+   "answer": "L17110ZZ2011PLC063347",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Quorrin Textiles Limited",
+   "answer": "Quorrin Textiles Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+   "answer": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "email",
+   "type": "email",
+   "gold": null,
+   "answer": "grievances@ledgerline-rta.example",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2024",
+   "answer": "01.04.2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2025",
+   "answer": "31 March 2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "12/05/2025",
+   "answer": "12.05.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "17/09/2025",
+   "answer": "12.05.2025",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 6
+   },
+   "source_correct": false,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "400000000",
+   "answer": "200000000",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "industry",
+   "type": "text",
+   "gold": "Spinning and weaving of cotton yarn and fabrics",
+   "answer": "spinning and weaving of cotton yarn and fabrics",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "2964180000",
+   "answer": "2964180000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c4_quorrin",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "98640000",
+   "answer": "98640000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "cin",
+   "type": "id",
+   "gold": "L15490ZZ1999GOI021905",
+   "answer": "L15490ZZ1999GOI021905",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Ambrel Agro Foods Limited",
+   "answer": "Ambrel Agro Foods Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+   "answer": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "email",
+   "type": "email",
+   "gold": "company.secretary@ambrel-agro.example",
+   "answer": "company.secretary@ambrel-agro.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01-04-2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31 March 2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "06/08/2024",
+   "answer": "06-08-2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "25/09/2024",
+   "answer": "06-08-2024",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 6
+   },
+   "source_correct": false,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "150000000",
+   "answer": "150000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "industry",
+   "type": "text",
+   "gold": "Processing and packaging of edible oils and pulses",
+   "answer": "processing and packaging of edible oils and pulses",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "6124830000",
+   "answer": "6124830000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c5_ambrel",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "184070000",
+   "answer": "184070000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "cin",
+   "type": "id",
+   "gold": "L72200ZZ2015PLC079431",
+   "answer": "L72200ZZ2015PLC079431",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Lumeqa Software Limited",
+   "answer": "Lumeqa Software Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+   "answer": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "email",
+   "type": "email",
+   "gold": "investor.relations@lumeqa.example",
+   "answer": "investor.relations@lumeqa.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31 March 2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "25/04/2024",
+   "answer": "25/04/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "agm_date",
+   "type": "date",
+   "gold": null,
+   "answer": "25/04/2024",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 6
+   },
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "120000000",
+   "answer": "120000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "industry",
+   "type": "text",
+   "gold": "Development of software products for logistics companies",
+   "answer": "development of software products for logistics companies",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "973160000",
+   "answer": "973160000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "rules",
+   "company": "c6_lumeqa",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "216410000",
+   "answer": "216410000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3
+   },
+   "source_correct": true,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "cin",
+   "type": "id",
+   "gold": "L29120ZZ1994PLC011872",
+   "answer": "L29120ZZ1994PLC011872",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Velmora Pumps and Valves Limited",
+   "answer": "Velmora Pumps and Valves Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+   "answer": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "email",
+   "type": "email",
+   "gold": "secretarial@velmora-pumps.example",
+   "answer": "secretarial@velmora-pumps.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "14/05/2024",
+   "answer": "14/05/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "26/07/2024",
+   "answer": "26/07/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "250000000",
+   "answer": "250000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "industry",
+   "type": "text",
+   "gold": "Manufacture of industrial pumps and valves",
+   "answer": "manufacture of industrial pumps and valves",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "1846235000",
+   "answer": "1846235000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c1_velmora",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "148216000",
+   "answer": "148216000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "cin",
+   "type": "id",
+   "gold": "L63090ZZ2006PLC048213",
+   "answer": "L63090ZZ2006PLC048213",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Tarnwick Logistics Limited",
+   "answer": "Tarnwick Logistics Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+   "answer": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "email",
+   "type": "email",
+   "gold": "cs@tarnwick-logistics.example",
+   "answer": "cs@tarnwick-logistics.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "22/05/2024",
+   "answer": "22/05/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "20/08/2024",
+   "answer": "20/08/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "500000000",
+   "answer": "500000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "industry",
+   "type": "text",
+   "gold": "Freight forwarding and warehousing services",
+   "answer": "freight forwarding and warehousing services",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "4231864000",
+   "answer": "423186400000",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c2_tarnwick",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "210637000",
+   "answer": "21063700000",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "cin",
+   "type": "id",
+   "gold": "L40101ZZ1987SGC004512",
+   "answer": "L40101ZZ1987SGC004512",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Zedland State Power Generation Corporation Limited",
+   "answer": "Zedland State Power Generation Corporation Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+   "answer": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "email",
+   "type": "email",
+   "gold": "cosec@zspgcl.example",
+   "answer": "cosec@zspgcl.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "29/07/2024",
+   "answer": "29/07/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "27/09/2024",
+   "answer": "27/09/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "50000000000",
+   "answer": "50000000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "industry",
+   "type": "text",
+   "gold": "Generation of electricity from thermal and hydro power plants",
+   "answer": "generation of electricity from thermal and hydro power plants",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "84123500000",
+   "answer": "84123500000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c3_zedpower",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "3124800000",
+   "answer": "3124800000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "cin",
+   "type": "id",
+   "gold": "L17110ZZ2011PLC063347",
+   "answer": "L17110ZZ2011PLC063347",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Quorrin Textiles Limited",
+   "answer": "Quorrin Textiles Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+   "answer": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "email",
+   "type": "email",
+   "gold": null,
+   "answer": "grievances@ledgerline-rta.example",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2024",
+   "answer": "01.04.2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2025",
+   "answer": "31.03.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "12/05/2025",
+   "answer": "12.05.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "17/09/2025",
+   "answer": "17.09.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "400000000",
+   "answer": "400000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "industry",
+   "type": "text",
+   "gold": "Spinning and weaving of cotton yarn and fabrics",
+   "answer": "spinning and weaving of cotton yarn and fabrics",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "2964180000",
+   "answer": "2964180000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c4_quorrin",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "98640000",
+   "answer": "98640000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "cin",
+   "type": "id",
+   "gold": "L15490ZZ1999GOI021905",
+   "answer": "L15490ZZ1999GOI021905",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Ambrel Agro Foods Limited",
+   "answer": "Ambrel Agro Foods Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+   "answer": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "email",
+   "type": "email",
+   "gold": "company.secretary@ambrel-agro.example",
+   "answer": "company.secretary@ambrel-agro.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "06/08/2024",
+   "answer": "06/08/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "25/09/2024",
+   "answer": "25/09/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "150000000",
+   "answer": "150000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "industry",
+   "type": "text",
+   "gold": "Processing and packaging of edible oils and pulses",
+   "answer": "processing and packaging of edible oils and pulses",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "6124830000",
+   "answer": "6124830000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c5_ambrel",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "184070000",
+   "answer": "184070000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "cin",
+   "type": "id",
+   "gold": "L72200ZZ2015PLC079431",
+   "answer": "L72200ZZ2015PLC079431",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Lumeqa Software Limited",
+   "answer": "Lumeqa Software Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+   "answer": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "email",
+   "type": "email",
+   "gold": "investor.relations@lumeqa.example",
+   "answer": "investor.relations@lumeqa.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "25/04/2024",
+   "answer": "25/04/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "agm_date",
+   "type": "date",
+   "gold": null,
+   "answer": "UNANSWERABLE",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "120000000",
+   "answer": "120000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "industry",
+   "type": "text",
+   "gold": "Development of software products for logistics companies",
+   "answer": "development of software products for logistics companies",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "973160000",
+   "answer": "973160000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "single_call",
+   "company": "c6_lumeqa",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "216410000",
+   "answer": "216410000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": null,
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "cin",
+   "type": "id",
+   "gold": "L29120ZZ1994PLC011872",
+   "answer": "L29120ZZ1994PLC011872",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Velmora Pumps and Valves Limited",
+   "answer": "Velmora Pumps and Valves Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": false,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+   "answer": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "email",
+   "type": "email",
+   "gold": "secretarial@velmora-pumps.example",
+   "answer": "secretarial@velmora-pumps.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "14/05/2024",
+   "answer": "14/05/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "26/07/2024",
+   "answer": "26/07/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "250000000",
+   "answer": "250000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "industry",
+   "type": "text",
+   "gold": "Manufacture of industrial pumps and valves",
+   "answer": "manufacture of industrial pumps and valves",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "top1"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "1846235000",
+   "answer": "1846235000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c1_velmora",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "148216000",
+   "answer": "148216000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "cin",
+   "type": "id",
+   "gold": "L63090ZZ2006PLC048213",
+   "answer": "L63090ZZ2006PLC048213",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Tarnwick Logistics Limited",
+   "answer": "Tarnwick Logistics Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": false,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+   "answer": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "email",
+   "type": "email",
+   "gold": "cs@tarnwick-logistics.example",
+   "answer": "cs@tarnwick-logistics.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "22/05/2024",
+   "answer": "22/05/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "20/08/2024",
+   "answer": "20/08/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "500000000",
+   "answer": "500000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "industry",
+   "type": "text",
+   "gold": "Freight forwarding and warehousing services",
+   "answer": "freight forwarding and warehousing services",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "4231864000",
+   "answer": "4231864000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c2_tarnwick",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "210637000",
+   "answer": "210637000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "cin",
+   "type": "id",
+   "gold": "L40101ZZ1987SGC004512",
+   "answer": "L40101ZZ1987SGC004512",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Zedland State Power Generation Corporation Limited",
+   "answer": "Zedland State Power Generation Corporation Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+   "answer": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "email",
+   "type": "email",
+   "gold": "cosec@zspgcl.example",
+   "answer": "cosec@zspgcl.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "29/07/2024",
+   "answer": "29/07/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "27/09/2024",
+   "answer": "27/09/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "50000000000",
+   "answer": "50000000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "industry",
+   "type": "text",
+   "gold": "Generation of electricity from thermal and hydro power plants",
+   "answer": "generation of electricity from thermal and hydro power plants",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "84123500000",
+   "answer": "84123500000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c3_zedpower",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "3124800000",
+   "answer": "3124800000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "cin",
+   "type": "id",
+   "gold": "L17110ZZ2011PLC063347",
+   "answer": "L17110ZZ2011PLC063347",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Quorrin Textiles Limited",
+   "answer": "Quorrin Textiles Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+   "answer": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "email",
+   "type": "email",
+   "gold": null,
+   "answer": "UNANSWERABLE",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 6,
+    "via": "top1"
+   },
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2024",
+   "answer": "01.04.2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2025",
+   "answer": "31.03.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "12/05/2025",
+   "answer": "12.05.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "17/09/2025",
+   "answer": "17.09.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "400000000",
+   "answer": "400000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "industry",
+   "type": "text",
+   "gold": "Spinning and weaving of cotton yarn and fabrics",
+   "answer": "spinning and weaving of cotton yarn and fabrics",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "2964180000",
+   "answer": "2964180000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c4_quorrin",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "98640000",
+   "answer": "98640000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "cin",
+   "type": "id",
+   "gold": "L15490ZZ1999GOI021905",
+   "answer": "L15490ZZ1999GOI021905",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Ambrel Agro Foods Limited",
+   "answer": "Ambrel Agro Foods Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": false,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+   "answer": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "email",
+   "type": "email",
+   "gold": "company.secretary@ambrel-agro.example",
+   "answer": "company.secretary@ambrel-agro.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01-04-2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31-03-2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "06/08/2024",
+   "answer": "06-08-2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "25/09/2024",
+   "answer": "25-09-2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "150000000",
+   "answer": "1500000000",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "industry",
+   "type": "text",
+   "gold": "Processing and packaging of edible oils and pulses",
+   "answer": "processing and packaging of edible oils and pulses",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "6124830000",
+   "answer": "6124830000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c5_ambrel",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "184070000",
+   "answer": "184070000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "cin",
+   "type": "id",
+   "gold": "L72200ZZ2015PLC079431",
+   "answer": "L72200ZZ2015PLC079431",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Lumeqa Software Limited",
+   "answer": "Lumeqa Software Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": false,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+   "answer": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "email",
+   "type": "email",
+   "gold": "investor.relations@lumeqa.example",
+   "answer": "investor.relations@lumeqa.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "25/04/2024",
+   "answer": "25/04/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "agm_date",
+   "type": "date",
+   "gold": null,
+   "answer": "UNANSWERABLE",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "top1"
+   },
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "120000000",
+   "answer": "120000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "industry",
+   "type": "text",
+   "gold": "Development of software products for logistics companies",
+   "answer": "development of software products for logistics companies",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "top1"
+   },
+   "source_correct": false,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "973160000",
+   "answer": "973160000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "bm25_batched",
+   "company": "c6_lumeqa",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "216410000",
+   "answer": "216410000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": null,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "cin",
+   "type": "id",
+   "gold": "L29120ZZ1994PLC011872",
+   "answer": "L29120ZZ1994PLC011872",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Velmora Pumps and Valves Limited",
+   "answer": "Velmora Pumps and Valves Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+   "answer": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "email",
+   "type": "email",
+   "gold": "secretarial@velmora-pumps.example",
+   "answer": "secretarial@velmora-pumps.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "14/05/2024",
+   "answer": "14/05/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "26/07/2024",
+   "answer": "26/07/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "250000000",
+   "answer": "250000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "industry",
+   "type": "text",
+   "gold": "Manufacture of industrial pumps and valves",
+   "answer": "manufacture of industrial pumps and valves",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "top1"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "top1"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "1846235000",
+   "answer": "1846235000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c1_velmora",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "148216000",
+   "answer": "148216000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "cin",
+   "type": "id",
+   "gold": "L63090ZZ2006PLC048213",
+   "answer": "L63090ZZ2006PLC048213",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Tarnwick Logistics Limited",
+   "answer": "Tarnwick Logistics Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+   "answer": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "email",
+   "type": "email",
+   "gold": "cs@tarnwick-logistics.example",
+   "answer": "cs@tarnwick-logistics.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "22/05/2024",
+   "answer": "19/05/2023",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "20/08/2024",
+   "answer": "20/08/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "500000000",
+   "answer": "5000000000",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "industry",
+   "type": "text",
+   "gold": "Freight forwarding and warehousing services",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "top1"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "top1"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "top1"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "4231864000",
+   "answer": "4231864000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 2,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c2_tarnwick",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "210637000",
+   "answer": "2106370000",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "cin",
+   "type": "id",
+   "gold": "L40101ZZ1987SGC004512",
+   "answer": "L40101ZZ1987SGC004512",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Zedland State Power Generation Corporation Limited",
+   "answer": "Zedland State Power Generation Corporation Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+   "answer": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "email",
+   "type": "email",
+   "gold": "cosec@zspgcl.example",
+   "answer": "cosec@zspgcl.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "29/07/2024",
+   "answer": "29/07/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "27/09/2024",
+   "answer": "27/09/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "50000000000",
+   "answer": "50000000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "industry",
+   "type": "text",
+   "gold": "Generation of electricity from thermal and hydro power plants",
+   "answer": "generation of electricity from thermal and hydro power plants",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 5,
+    "via": "top1"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "84123500000",
+   "answer": "84123500000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 2,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c3_zedpower",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "3124800000",
+   "answer": "3124800000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "cin",
+   "type": "id",
+   "gold": "L17110ZZ2011PLC063347",
+   "answer": "L17110ZZ2011PLC063347",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Quorrin Textiles Limited",
+   "answer": "Quorrin Textiles Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+   "answer": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "email",
+   "type": "email",
+   "gold": null,
+   "answer": "UNANSWERABLE",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "top1"
+   },
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2024",
+   "answer": "01.04.2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2025",
+   "answer": "31.03.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "12/05/2025",
+   "answer": "12.05.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "17/09/2025",
+   "answer": "17.09.2025",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "400000000",
+   "answer": "400000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "industry",
+   "type": "text",
+   "gold": "Spinning and weaving of cotton yarn and fabrics",
+   "answer": "spinning and weaving of cotton yarn and fabrics",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 5,
+    "via": "top1"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "2964180000",
+   "answer": "2964180000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c4_quorrin",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "98640000",
+   "answer": "98640000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "cin",
+   "type": "id",
+   "gold": "L15490ZZ1999GOI021905",
+   "answer": "L15490ZZ1999GOI021905",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Ambrel Agro Foods Limited",
+   "answer": "Ambrel Agro Foods Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+   "answer": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "email",
+   "type": "email",
+   "gold": "company.secretary@ambrel-agro.example",
+   "answer": "company.secretary@ambrel-agro.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01-04-2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31-03-2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "06/08/2024",
+   "answer": "06-08-2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "agm_date",
+   "type": "date",
+   "gold": "25/09/2024",
+   "answer": "25-09-2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "150000000",
+   "answer": "150000000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "industry",
+   "type": "text",
+   "gold": "Processing and packaging of edible oils and pulses",
+   "answer": "processing and packaging of edible oils and pulses",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 4,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "6124830000",
+   "answer": "6124830000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 2,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c5_ambrel",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "184070000",
+   "answer": "1840700000",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "cin",
+   "type": "id",
+   "gold": "L72200ZZ2015PLC079431",
+   "answer": "L72200ZZ2015PLC079431",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "company_name",
+   "type": "text",
+   "gold": "Lumeqa Software Limited",
+   "answer": "Lumeqa Software Limited",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "registered_office",
+   "type": "text",
+   "gold": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+   "answer": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "email",
+   "type": "email",
+   "gold": "investor.relations@lumeqa.example",
+   "answer": "investor.relations@lumeqa.example",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "fy_from",
+   "type": "date",
+   "gold": "01/04/2023",
+   "answer": "01/04/2023",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "fy_to",
+   "type": "date",
+   "gold": "31/03/2024",
+   "answer": "31/03/2024",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 1,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "board_meeting_date",
+   "type": "date",
+   "gold": "25/04/2024",
+   "answer": "27/04/2023",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "agm_date",
+   "type": "date",
+   "gold": null,
+   "answer": "UNANSWERABLE",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": null,
+   "evidence_in_context": null,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "authorised_capital",
+   "type": "amount",
+   "gold": "120000000",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 2,
+    "via": "citation"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "industry",
+   "type": "text",
+   "gold": "Development of software products for logistics companies",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "consolidated_fs",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "No",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "cag_comments",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "cag_supplementary_audit",
+   "type": "yesno",
+   "gold": "No",
+   "answer": "UNANSWERABLE",
+   "correct": false,
+   "strict": false,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": false,
+   "evidence_in_context": false,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "secretarial_audit",
+   "type": "yesno",
+   "gold": "Yes",
+   "answer": "Yes",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "directors_report.docx",
+    "page": 0,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "revenue",
+   "type": "amount",
+   "gold": "973160000",
+   "answer": "973160000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "trial_balance.xlsx",
+    "page": 2,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  },
+  {
+   "method": "dam_batched",
+   "company": "c6_lumeqa",
+   "field": "profit_after_tax",
+   "type": "amount",
+   "gold": "216410000",
+   "answer": "216410000",
+   "correct": true,
+   "strict": true,
+   "status": "ok",
+   "source": {
+    "file": "financial_statements.pdf",
+    "page": 3,
+    "via": "citation"
+   },
+   "source_correct": true,
+   "evidence_in_context": true,
+   "raw": null
+  }
+ ]
+}

@@ -1,0 +1,1861 @@
+{
+  "description": "Synthetic AOC-4 style field-extraction benchmark. All companies and figures are fictional. Each field lists its gold value (null = not stated in the documents) and the (file, page) locations that state it, with the text that states it there (evidence); page is null for .docx and .xlsx files.",
+  "fields": [
+    {
+      "id": "cin",
+      "type": "id",
+      "label": "1.(a) Corporate Identity Number (CIN) of company"
+    },
+    {
+      "id": "company_name",
+      "type": "text",
+      "label": "2.(a) Name of the company"
+    },
+    {
+      "id": "registered_office",
+      "type": "text",
+      "label": "2.(b) Address of the registered office of the company"
+    },
+    {
+      "id": "email",
+      "type": "email",
+      "label": "2.(c) e-mail ID of the company"
+    },
+    {
+      "id": "fy_from",
+      "type": "date",
+      "label": "3. Financial year to which the financial statements relate - From (DD/MM/YYYY)"
+    },
+    {
+      "id": "fy_to",
+      "type": "date",
+      "label": "3. Financial year to which the financial statements relate - To (DD/MM/YYYY)"
+    },
+    {
+      "id": "board_meeting_date",
+      "type": "date",
+      "label": "4.(a) Date of Board of Directors' meeting in which financial statements are approved (DD/MM/YYYY)"
+    },
+    {
+      "id": "agm_date",
+      "type": "date",
+      "label": "5.(b) Date of the Annual General Meeting (AGM) for this financial year (DD/MM/YYYY)"
+    },
+    {
+      "id": "authorised_capital",
+      "type": "amount",
+      "label": "Authorised capital of the company at the end of the financial year (in Rs.)"
+    },
+    {
+      "id": "industry",
+      "type": "text",
+      "label": "7. Type of industry / principal business activity of the company"
+    },
+    {
+      "id": "consolidated_fs",
+      "type": "yesno",
+      "label": "8. Whether consolidated financial statements are also being filed (Yes/No)"
+    },
+    {
+      "id": "cag_comments",
+      "type": "yesno",
+      "label": "9.(a) In case of a government company, whether the CAG of India has commented upon or supplemented the audit report under section 143 of the Companies Act, 2013 (Yes/No)"
+    },
+    {
+      "id": "cag_supplementary_audit",
+      "type": "yesno",
+      "label": "9.(d) Whether the CAG of India has conducted a supplementary or test audit under section 143 (Yes/No)"
+    },
+    {
+      "id": "secretarial_audit",
+      "type": "yesno",
+      "label": "10. Whether Secretarial Audit is applicable to the company (Yes/No)"
+    },
+    {
+      "id": "revenue",
+      "type": "amount",
+      "label": "Revenue from operations of the company for the current financial year (in Rs.)"
+    },
+    {
+      "id": "profit_after_tax",
+      "type": "amount",
+      "label": "Profit after tax of the company for the current financial year (in Rs.)"
+    }
+  ],
+  "companies": [
+    {
+      "id": "c1_velmora",
+      "folder": "c1_velmora",
+      "name": "Velmora Pumps and Valves Limited",
+      "amount_unit_in_statements": "rupees",
+      "fields": {
+        "cin": {
+          "gold": "L29120ZZ1994PLC011872",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "L29120ZZ1994PLC011872"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "L29120ZZ1994PLC011872"
+              ]
+            }
+          ]
+        },
+        "company_name": {
+          "gold": "Velmora Pumps and Valves Limited",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Velmora Pumps and Valves Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 2,
+              "evidence": [
+                "Velmora Pumps and Valves Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "Velmora Pumps and Valves Limited"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Velmora Pumps and Valves Limited"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "Velmora Pumps and Valves Limited"
+              ]
+            }
+          ]
+        },
+        "registered_office": {
+          "gold": "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Plot 14, Sector 9, Examplepur Industrial Area, Examplepur, Zedland 999014"
+              ]
+            }
+          ]
+        },
+        "email": {
+          "gold": "secretarial@velmora-pumps.example",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "secretarial@velmora-pumps.example"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "secretarial@velmora-pumps.example"
+              ]
+            }
+          ]
+        },
+        "fy_from": {
+          "gold": "01/04/2023",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "1 April 2023"
+              ]
+            }
+          ]
+        },
+        "fy_to": {
+          "gold": "31/03/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "31 March 2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "31/03/2024"
+              ]
+            }
+          ]
+        },
+        "board_meeting_date": {
+          "gold": "14/05/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "14 May 2024"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 6,
+              "evidence": [
+                "14 May 2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "14/05/2024"
+              ]
+            }
+          ]
+        },
+        "agm_date": {
+          "gold": "26/07/2024",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "26/07/2024"
+              ]
+            }
+          ]
+        },
+        "authorised_capital": {
+          "gold": "250000000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "Rs. 25,00,00,000"
+              ]
+            }
+          ]
+        },
+        "industry": {
+          "gold": "Manufacture of industrial pumps and valves",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "manufacture of industrial pumps and valves"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "manufacture of industrial pumps and valves"
+              ]
+            }
+          ]
+        },
+        "consolidated_fs": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Company does not have any subsidiary, joint venture or a"
+              ]
+            }
+          ]
+        },
+        "cag_comments": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "not a Government company"
+              ]
+            }
+          ]
+        },
+        "cag_supplementary_audit": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "not a Government company"
+              ]
+            }
+          ]
+        },
+        "secretarial_audit": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Secretarial Audit Report in Form MR-3"
+              ]
+            }
+          ]
+        },
+        "revenue": {
+          "gold": "1846235000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "1,84,62,35,000"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "1,84,62,35,000"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "1846235000"
+              ]
+            }
+          ]
+        },
+        "profit_after_tax": {
+          "gold": "148216000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "14,82,16,000"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "14,82,16,000"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c2_tarnwick",
+      "folder": "c2_tarnwick",
+      "name": "Tarnwick Logistics Limited",
+      "amount_unit_in_statements": "lakhs",
+      "fields": {
+        "cin": {
+          "gold": "L63090ZZ2006PLC048213",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "L63090ZZ2006PLC048213"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "L63090ZZ2006PLC048213"
+              ]
+            }
+          ]
+        },
+        "company_name": {
+          "gold": "Tarnwick Logistics Limited",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Tarnwick Logistics Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 2,
+              "evidence": [
+                "Tarnwick Logistics Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "Tarnwick Logistics Limited"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Tarnwick Logistics Limited"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "Tarnwick Logistics Limited"
+              ]
+            }
+          ]
+        },
+        "registered_office": {
+          "gold": "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "7th Floor, Harbour View Towers, Dock Road, Sampleton, Zedland 999221"
+              ]
+            }
+          ]
+        },
+        "email": {
+          "gold": "cs@tarnwick-logistics.example",
+          "sources": [
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "cs@tarnwick-logistics.example"
+              ]
+            }
+          ]
+        },
+        "fy_from": {
+          "gold": "01/04/2023",
+          "sources": [
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "1st April, 2023"
+              ]
+            }
+          ]
+        },
+        "fy_to": {
+          "gold": "31/03/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "31 March 2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "31st March, 2024"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "31st March, 2024"
+              ]
+            }
+          ]
+        },
+        "board_meeting_date": {
+          "gold": "22/05/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "22nd May, 2024"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 6,
+              "evidence": [
+                "22nd May, 2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "22nd May, 2024"
+              ]
+            }
+          ]
+        },
+        "agm_date": {
+          "gold": "20/08/2024",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "20th August, 2024"
+              ]
+            }
+          ]
+        },
+        "authorised_capital": {
+          "gold": "500000000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "5,000.00"
+              ]
+            }
+          ]
+        },
+        "industry": {
+          "gold": "Freight forwarding and warehousing services",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "freight forwarding and warehousing services"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "freight forwarding and warehousing services"
+              ]
+            }
+          ]
+        },
+        "consolidated_fs": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Company has two wholly owned subsidiaries, Tarnwick Cold"
+              ]
+            }
+          ]
+        },
+        "cag_comments": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "not a Government company"
+              ]
+            }
+          ]
+        },
+        "cag_supplementary_audit": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "not a Government company"
+              ]
+            }
+          ]
+        },
+        "secretarial_audit": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Secretarial Audit Report in Form MR-3"
+              ]
+            }
+          ]
+        },
+        "revenue": {
+          "gold": "4231864000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "42,318.64"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "42,318.64"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "4231864000"
+              ]
+            }
+          ]
+        },
+        "profit_after_tax": {
+          "gold": "210637000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "2,106.37"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "2,106.37"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c3_zedpower",
+      "folder": "c3_zedpower",
+      "name": "Zedland State Power Generation Corporation Limited",
+      "amount_unit_in_statements": "crore",
+      "fields": {
+        "cin": {
+          "gold": "L40101ZZ1987SGC004512",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "L40101ZZ1987SGC004512"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "L40101ZZ1987SGC004512"
+              ]
+            }
+          ]
+        },
+        "company_name": {
+          "gold": "Zedland State Power Generation Corporation Limited",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Zedland State Power Generation Corporation Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 2,
+              "evidence": [
+                "Zedland State Power Generation Corporation Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "Zedland State Power Generation Corporation Limited"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Zedland State Power Generation Corporation Limited"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "Zedland State Power Generation Corporation Limited"
+              ]
+            }
+          ]
+        },
+        "registered_office": {
+          "gold": "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Urja Bhavan, 3 Grid Lane, Testnagar, Zedland 999402"
+              ]
+            }
+          ]
+        },
+        "email": {
+          "gold": "cosec@zspgcl.example",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "cosec@zspgcl.example"
+              ]
+            }
+          ]
+        },
+        "fy_from": {
+          "gold": "01/04/2023",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "April 1, 2023"
+              ]
+            }
+          ]
+        },
+        "fy_to": {
+          "gold": "31/03/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "31 March 2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "March 31, 2024"
+              ]
+            }
+          ]
+        },
+        "board_meeting_date": {
+          "gold": "29/07/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "July 29, 2024"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 6,
+              "evidence": [
+                "July 29, 2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "July 29, 2024"
+              ]
+            }
+          ]
+        },
+        "agm_date": {
+          "gold": "27/09/2024",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "September 27, 2024"
+              ]
+            }
+          ]
+        },
+        "authorised_capital": {
+          "gold": "50000000000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "Rs. 5,000 crore"
+              ]
+            }
+          ]
+        },
+        "industry": {
+          "gold": "Generation of electricity from thermal and hydro power plants",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "generation of electricity from thermal and hydro power plants"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "generation of electricity from thermal and hydro power plants"
+              ]
+            }
+          ]
+        },
+        "consolidated_fs": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Corporation has no subsidiaries; consolidated financial"
+              ]
+            }
+          ]
+        },
+        "cag_comments": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Comptroller and Auditor General of India (C&AG) conducte"
+              ]
+            }
+          ]
+        },
+        "cag_supplementary_audit": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Comptroller and Auditor General of India (C&AG) conducte"
+              ]
+            }
+          ]
+        },
+        "secretarial_audit": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Secretarial Audit Report in Form MR-3"
+              ]
+            }
+          ]
+        },
+        "revenue": {
+          "gold": "84123500000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "8,412.35"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "8,412.35"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "84123500000"
+              ]
+            }
+          ]
+        },
+        "profit_after_tax": {
+          "gold": "3124800000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "312.48"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "312.48"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c4_quorrin",
+      "folder": "c4_quorrin",
+      "name": "Quorrin Textiles Limited",
+      "amount_unit_in_statements": "rupees",
+      "fields": {
+        "cin": {
+          "gold": "L17110ZZ2011PLC063347",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "L17110ZZ2011PLC063347"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "L17110ZZ2011PLC063347"
+              ]
+            }
+          ]
+        },
+        "company_name": {
+          "gold": "Quorrin Textiles Limited",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Quorrin Textiles Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 2,
+              "evidence": [
+                "Quorrin Textiles Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "Quorrin Textiles Limited"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Quorrin Textiles Limited"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "Quorrin Textiles Limited"
+              ]
+            }
+          ]
+        },
+        "registered_office": {
+          "gold": "Survey No. 41, Loom Street, Mockpur, Zedland 999318",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Survey No. 41, Loom Street, Mockpur, Zedland 999318"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Survey No. 41, Loom Street, Mockpur, Zedland 999318"
+              ]
+            }
+          ]
+        },
+        "email": {
+          "gold": null,
+          "sources": []
+        },
+        "fy_from": {
+          "gold": "01/04/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "01.04.2024"
+              ]
+            }
+          ]
+        },
+        "fy_to": {
+          "gold": "31/03/2025",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "31 March 2025",
+                "31.03.2025"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "31.03.2025"
+              ]
+            }
+          ]
+        },
+        "board_meeting_date": {
+          "gold": "12/05/2025",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "12.05.2025"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 6,
+              "evidence": [
+                "12.05.2025"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "12.05.2025"
+              ]
+            }
+          ]
+        },
+        "agm_date": {
+          "gold": "17/09/2025",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "17.09.2025"
+              ]
+            }
+          ]
+        },
+        "authorised_capital": {
+          "gold": "400000000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "Rs. 40,00,00,000"
+              ]
+            }
+          ]
+        },
+        "industry": {
+          "gold": "Spinning and weaving of cotton yarn and fabrics",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "spinning and weaving of cotton yarn and fabrics"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "spinning and weaving of cotton yarn and fabrics"
+              ]
+            }
+          ]
+        },
+        "consolidated_fs": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "As the Company has no subsidiary or associate company, the r"
+              ]
+            }
+          ]
+        },
+        "cag_comments": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Company is not a Government company; the provisions of s"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "not a Government company"
+              ]
+            }
+          ]
+        },
+        "cag_supplementary_audit": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Company is not a Government company; the provisions of s"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "not a Government company"
+              ]
+            }
+          ]
+        },
+        "secretarial_audit": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Secretarial Audit Report in Form MR-3"
+              ]
+            }
+          ]
+        },
+        "revenue": {
+          "gold": "2964180000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "2,96,41,80,000"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "2,96,41,80,000"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "2964180000"
+              ]
+            }
+          ]
+        },
+        "profit_after_tax": {
+          "gold": "98640000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "9,86,40,000"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "9,86,40,000"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c5_ambrel",
+      "folder": "c5_ambrel",
+      "name": "Ambrel Agro Foods Limited",
+      "amount_unit_in_statements": "lakhs",
+      "fields": {
+        "cin": {
+          "gold": "L15490ZZ1999GOI021905",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "L15490ZZ1999GOI021905"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "L15490ZZ1999GOI021905"
+              ]
+            }
+          ]
+        },
+        "company_name": {
+          "gold": "Ambrel Agro Foods Limited",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Ambrel Agro Foods Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 2,
+              "evidence": [
+                "Ambrel Agro Foods Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "Ambrel Agro Foods Limited"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Ambrel Agro Foods Limited"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "Ambrel Agro Foods Limited"
+              ]
+            }
+          ]
+        },
+        "registered_office": {
+          "gold": "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Krishi Complex, 22 Mandi Road, Demoabad, Zedland 999507"
+              ]
+            }
+          ]
+        },
+        "email": {
+          "gold": "company.secretary@ambrel-agro.example",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "company.secretary@ambrel-agro.example"
+              ]
+            }
+          ]
+        },
+        "fy_from": {
+          "gold": "01/04/2023",
+          "sources": [
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "01-04-2023"
+              ]
+            }
+          ]
+        },
+        "fy_to": {
+          "gold": "31/03/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "31 March 2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "31-03-2024"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "31-03-2024"
+              ]
+            }
+          ]
+        },
+        "board_meeting_date": {
+          "gold": "06/08/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "06-08-2024"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 6,
+              "evidence": [
+                "06-08-2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "06-08-2024"
+              ]
+            }
+          ]
+        },
+        "agm_date": {
+          "gold": "25/09/2024",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "25-09-2024"
+              ]
+            }
+          ]
+        },
+        "authorised_capital": {
+          "gold": "150000000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "Rs. 15,00,00,000"
+              ]
+            }
+          ]
+        },
+        "industry": {
+          "gold": "Processing and packaging of edible oils and pulses",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "processing and packaging of edible oils and pulses"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "processing and packaging of edible oils and pulses"
+              ]
+            }
+          ]
+        },
+        "consolidated_fs": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "In accordance with section 129(3) of the Act, the Company ha"
+              ]
+            }
+          ]
+        },
+        "cag_comments": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Comptroller and Auditor General of India, vide letter da"
+              ]
+            }
+          ]
+        },
+        "cag_supplementary_audit": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Comptroller and Auditor General of India, vide letter da"
+              ]
+            }
+          ]
+        },
+        "secretarial_audit": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Secretarial Audit Report in Form MR-3"
+              ]
+            }
+          ]
+        },
+        "revenue": {
+          "gold": "6124830000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "61,248.30"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "61,248.30"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "6124830000"
+              ]
+            }
+          ]
+        },
+        "profit_after_tax": {
+          "gold": "184070000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "1,840.70"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "1,840.70"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c6_lumeqa",
+      "folder": "c6_lumeqa",
+      "name": "Lumeqa Software Limited",
+      "amount_unit_in_statements": "millions",
+      "fields": {
+        "cin": {
+          "gold": "L72200ZZ2015PLC079431",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "L72200ZZ2015PLC079431"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "L72200ZZ2015PLC079431"
+              ]
+            }
+          ]
+        },
+        "company_name": {
+          "gold": "Lumeqa Software Limited",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Lumeqa Software Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 2,
+              "evidence": [
+                "Lumeqa Software Limited"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "Lumeqa Software Limited"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Lumeqa Software Limited"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "Lumeqa Software Limited"
+              ]
+            }
+          ]
+        },
+        "registered_office": {
+          "gold": "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "Unit 502, Fifth Floor, Techpark Phase II, Fictionganj, Zedland 999633"
+              ]
+            }
+          ]
+        },
+        "email": {
+          "gold": "investor.relations@lumeqa.example",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "investor.relations@lumeqa.example"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "investor.relations@lumeqa.example"
+              ]
+            }
+          ]
+        },
+        "fy_from": {
+          "gold": "01/04/2023",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "01/04/2023"
+              ]
+            }
+          ]
+        },
+        "fy_to": {
+          "gold": "31/03/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 1,
+              "evidence": [
+                "31 March 2024",
+                "31/03/2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "31/03/2024"
+              ]
+            }
+          ]
+        },
+        "board_meeting_date": {
+          "gold": "25/04/2024",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "25/04/2024"
+              ]
+            },
+            {
+              "file": "financial_statements.pdf",
+              "page": 6,
+              "evidence": [
+                "25/04/2024"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "25/04/2024"
+              ]
+            }
+          ]
+        },
+        "agm_date": {
+          "gold": null,
+          "sources": []
+        },
+        "authorised_capital": {
+          "gold": "120000000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "INR 120 million"
+              ]
+            }
+          ]
+        },
+        "industry": {
+          "gold": "Development of software products for logistics companies",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "development of software products for logistics companies"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "development of software products for logistics companies"
+              ]
+            }
+          ]
+        },
+        "consolidated_fs": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Company is a subsidiary of Kestrow Holdings Limited and"
+              ]
+            }
+          ]
+        },
+        "cag_comments": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "not a Government company"
+              ]
+            }
+          ]
+        },
+        "cag_supplementary_audit": {
+          "gold": "No",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 4,
+              "evidence": [
+                "not a Government company"
+              ]
+            }
+          ]
+        },
+        "secretarial_audit": {
+          "gold": "Yes",
+          "sources": [
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "The Secretarial Audit Report in Form MR-3"
+              ]
+            }
+          ]
+        },
+        "revenue": {
+          "gold": "973160000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "973.16"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "973.16"
+              ]
+            },
+            {
+              "file": "trial_balance.xlsx",
+              "page": null,
+              "evidence": [
+                "973160000"
+              ]
+            }
+          ]
+        },
+        "profit_after_tax": {
+          "gold": "216410000",
+          "sources": [
+            {
+              "file": "financial_statements.pdf",
+              "page": 3,
+              "evidence": [
+                "216.41"
+              ]
+            },
+            {
+              "file": "directors_report.docx",
+              "page": null,
+              "evidence": [
+                "216.41"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

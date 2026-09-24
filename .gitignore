@@ -31,3 +31,7 @@ oneshot_ingestion_report.json
 chunk_statistics_report.json
 chunk_statistics_plots.png
 small_chunks_detail.png
+
+# Benchmark caches and working files (LLM responses, Milvus databases, processed forms)
+benchmarks/.cache/
+benchmarks/work/

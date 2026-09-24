@@ -1,0 +1,980 @@
+{
+  "description": "Synthetic form-filling benchmark. Boxes are PDF points with a top-left origin. All forms and values are fictional.",
+  "page_size": [
+    595.0,
+    842.0
+  ],
+  "forms": [
+    {
+      "id": "f1_labels_left",
+      "title": "LIBRARY MEMBERSHIP APPLICATION",
+      "description": "label left of each box; checkbox before its option text",
+      "fields": [
+        {
+          "key": "Applicant name",
+          "kind": "text",
+          "value": "Jordan Sample",
+          "bbox": [
+            215,
+            92.0,
+            515,
+            112.0
+          ]
+        },
+        {
+          "key": "Date of birth",
+          "kind": "text",
+          "value": "17/10/1986",
+          "bbox": [
+            215,
+            130.0,
+            335,
+            150.0
+          ]
+        },
+        {
+          "key": "Address",
+          "kind": "text",
+          "value": "4 Demo Lane, Sampleton",
+          "bbox": [
+            215,
+            168.0,
+            545,
+            188.0
+          ]
+        },
+        {
+          "key": "Phone number",
+          "kind": "text",
+          "value": "+91 90000 22222",
+          "bbox": [
+            215,
+            206.0,
+            375,
+            226.0
+          ]
+        },
+        {
+          "key": "E-mail",
+          "kind": "text",
+          "value": "jordan@example.invalid",
+          "bbox": [
+            215,
+            244.0,
+            465,
+            264.0
+          ]
+        },
+        {
+          "key": "Membership type",
+          "kind": "checkbox",
+          "value": "Student",
+          "options": [
+            {
+              "value": "Annual",
+              "bbox": [
+                215,
+                291.0,
+                220.0,
+                296.0
+              ]
+            },
+            {
+              "value": "Life",
+              "bbox": [
+                290,
+                291.0,
+                295.0,
+                296.0
+              ]
+            },
+            {
+              "value": "Student",
+              "bbox": [
+                350,
+                291.0,
+                355.0,
+                296.0
+              ]
+            }
+          ]
+        },
+        {
+          "key": "Preferred language",
+          "kind": "checkbox",
+          "value": "Hindi",
+          "options": [
+            {
+              "value": "English",
+              "bbox": [
+                215,
+                323.0,
+                220.0,
+                328.0
+              ]
+            },
+            {
+              "value": "Hindi",
+              "bbox": [
+                290,
+                323.0,
+                295.0,
+                328.0
+              ]
+            },
+            {
+              "value": "Marathi",
+              "bbox": [
+                350,
+                323.0,
+                355.0,
+                328.0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f2_labels_above",
+      "title": "VISITOR REGISTRATION FORM",
+      "description": "label above each box; checkbox options on the line below the label",
+      "fields": [
+        {
+          "key": "Full name",
+          "kind": "text",
+          "value": "Sam Specimen",
+          "bbox": [
+            50,
+            122.0,
+            450,
+            142.0
+          ]
+        },
+        {
+          "key": "Organisation",
+          "kind": "text",
+          "value": "Sample Textiles Co.",
+          "bbox": [
+            50,
+            174.0,
+            450,
+            194.0
+          ]
+        },
+        {
+          "key": "Purpose of visit",
+          "kind": "text",
+          "value": "Vendor meeting",
+          "bbox": [
+            50,
+            226.0,
+            450,
+            246.0
+          ]
+        },
+        {
+          "key": "Host employee",
+          "kind": "text",
+          "value": "K. Testcase",
+          "bbox": [
+            50,
+            278.0,
+            450,
+            298.0
+          ]
+        },
+        {
+          "key": "Vehicle number",
+          "kind": "text",
+          "value": "ZZ 09 CD 5678",
+          "bbox": [
+            50,
+            330.0,
+            450,
+            350.0
+          ]
+        },
+        {
+          "key": "ID proof shown",
+          "kind": "checkbox",
+          "value": "Voter ID",
+          "options": [
+            {
+              "value": "Passport",
+              "bbox": [
+                50,
+                393.0,
+                55.0,
+                398.0
+              ]
+            },
+            {
+              "value": "Driving licence",
+              "bbox": [
+                140,
+                393.0,
+                145.0,
+                398.0
+              ]
+            },
+            {
+              "value": "Voter ID",
+              "bbox": [
+                260,
+                393.0,
+                265.0,
+                398.0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f3_two_column",
+      "title": "EMPLOYEE ONBOARDING DETAILS",
+      "description": "two columns of label/box pairs, checkbox groups in both columns",
+      "fields": [
+        {
+          "key": "First name",
+          "kind": "text",
+          "value": "Leo",
+          "bbox": [
+            125,
+            102.0,
+            265,
+            122.0
+          ]
+        },
+        {
+          "key": "Last name",
+          "kind": "text",
+          "value": "Specimen",
+          "bbox": [
+            385,
+            102.0,
+            545,
+            122.0
+          ]
+        },
+        {
+          "key": "Employee ID",
+          "kind": "text",
+          "value": "EX-2210",
+          "bbox": [
+            125,
+            138.0,
+            265,
+            158.0
+          ]
+        },
+        {
+          "key": "Department",
+          "kind": "text",
+          "value": "Logistics",
+          "bbox": [
+            385,
+            138.0,
+            545,
+            158.0
+          ]
+        },
+        {
+          "key": "Joining date",
+          "kind": "text",
+          "value": "15/01/2025",
+          "bbox": [
+            125,
+            174.0,
+            265,
+            194.0
+          ]
+        },
+        {
+          "key": "Manager",
+          "kind": "text",
+          "value": "R. Mockley",
+          "bbox": [
+            385,
+            174.0,
+            545,
+            194.0
+          ]
+        },
+        {
+          "key": "City",
+          "kind": "text",
+          "value": "Sampleton",
+          "bbox": [
+            125,
+            210.0,
+            265,
+            230.0
+          ]
+        },
+        {
+          "key": "PIN code",
+          "kind": "text",
+          "value": "999202",
+          "bbox": [
+            385,
+            210.0,
+            545,
+            230.0
+          ]
+        },
+        {
+          "key": "Shift",
+          "kind": "checkbox",
+          "value": "Night",
+          "options": [
+            {
+              "value": "Day",
+              "bbox": [
+                125,
+                255.0,
+                130.0,
+                260.0
+              ]
+            },
+            {
+              "value": "Night",
+              "bbox": [
+                185,
+                255.0,
+                190.0,
+                260.0
+              ]
+            }
+          ]
+        },
+        {
+          "key": "Laptop required",
+          "kind": "checkbox",
+          "value": "No",
+          "options": [
+            {
+              "value": "Yes",
+              "bbox": [
+                385,
+                255.0,
+                390.0,
+                260.0
+              ]
+            },
+            {
+              "value": "No",
+              "bbox": [
+                440,
+                255.0,
+                445.0,
+                260.0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f4_yes_no_rows",
+      "title": "HEALTH DECLARATION",
+      "description": "text fields plus yes/no questionnaire rows with the option text before its box",
+      "fields": [
+        {
+          "key": "Name",
+          "kind": "text",
+          "value": "Omar Sample",
+          "bbox": [
+            160,
+            92.0,
+            410,
+            112.0
+          ]
+        },
+        {
+          "key": "Policy number",
+          "kind": "text",
+          "value": "POL-000987",
+          "bbox": [
+            160,
+            126.0,
+            310,
+            146.0
+          ]
+        },
+        {
+          "key": "Height (cm)",
+          "kind": "text",
+          "value": "181",
+          "bbox": [
+            160,
+            160.0,
+            220,
+            180.0
+          ]
+        },
+        {
+          "key": "Weight (kg)",
+          "kind": "text",
+          "value": "77",
+          "bbox": [
+            160,
+            194.0,
+            220,
+            214.0
+          ]
+        },
+        {
+          "key": "Do you smoke",
+          "kind": "checkbox",
+          "value": "Yes",
+          "options": [
+            {
+              "value": "Yes",
+              "bbox": [
+                421.23,
+                253.0,
+                426.23,
+                258.0
+              ]
+            },
+            {
+              "value": "No",
+              "bbox": [
+                476.78,
+                253.0,
+                481.78,
+                258.0
+              ]
+            }
+          ]
+        },
+        {
+          "key": "Do you have diabetes",
+          "kind": "checkbox",
+          "value": "No",
+          "options": [
+            {
+              "value": "Yes",
+              "bbox": [
+                421.23,
+                279.0,
+                426.23,
+                284.0
+              ]
+            },
+            {
+              "value": "No",
+              "bbox": [
+                476.78,
+                279.0,
+                481.78,
+                284.0
+              ]
+            }
+          ]
+        },
+        {
+          "key": "Hospitalised in the last 5 years",
+          "kind": "checkbox",
+          "value": "No",
+          "options": [
+            {
+              "value": "Yes",
+              "bbox": [
+                421.23,
+                305.0,
+                426.23,
+                310.0
+              ]
+            },
+            {
+              "value": "No",
+              "bbox": [
+                476.78,
+                305.0,
+                481.78,
+                310.0
+              ]
+            }
+          ]
+        },
+        {
+          "key": "Do you consume alcohol",
+          "kind": "checkbox",
+          "value": "Yes",
+          "options": [
+            {
+              "value": "Yes",
+              "bbox": [
+                421.23,
+                331.0,
+                426.23,
+                336.0
+              ]
+            },
+            {
+              "value": "No",
+              "bbox": [
+                476.78,
+                331.0,
+                481.78,
+                336.0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f5_ruled_grid",
+      "title": "VENDOR REGISTRATION",
+      "description": "ruled table: label cells and value cells share grid lines",
+      "fields": [
+        {
+          "key": "Vendor name",
+          "kind": "text",
+          "value": "Sample Paints Co.",
+          "bbox": [
+            168.75,
+            122.0,
+            297.5,
+            148.0
+          ]
+        },
+        {
+          "key": "Tax registration no.",
+          "kind": "text",
+          "value": "ZZ-TAX-2222",
+          "bbox": [
+            426.25,
+            122.0,
+            555.0,
+            148.0
+          ]
+        },
+        {
+          "key": "Contact person",
+          "kind": "text",
+          "value": "M. Sample",
+          "bbox": [
+            168.75,
+            148.0,
+            297.5,
+            174.0
+          ]
+        },
+        {
+          "key": "Phone",
+          "kind": "text",
+          "value": "+91 90000 44444",
+          "bbox": [
+            426.25,
+            148.0,
+            555.0,
+            174.0
+          ]
+        },
+        {
+          "key": "Bank name",
+          "kind": "text",
+          "value": "Sample Rural Bank",
+          "bbox": [
+            168.75,
+            174.0,
+            297.5,
+            200.0
+          ]
+        },
+        {
+          "key": "Account number",
+          "kind": "text",
+          "value": "000444555666",
+          "bbox": [
+            426.25,
+            174.0,
+            555.0,
+            200.0
+          ]
+        },
+        {
+          "key": "Branch code",
+          "kind": "text",
+          "value": "SMPL0005678",
+          "bbox": [
+            168.75,
+            200.0,
+            297.5,
+            226.0
+          ]
+        },
+        {
+          "key": "City",
+          "kind": "text",
+          "value": "Mockpur",
+          "bbox": [
+            426.25,
+            200.0,
+            555.0,
+            226.0
+          ]
+        },
+        {
+          "key": "Vendor type",
+          "kind": "checkbox",
+          "value": "Service provider",
+          "options": [
+            {
+              "value": "Manufacturer",
+              "bbox": [
+                176.75,
+                238.0,
+                181.75,
+                243.0
+              ]
+            },
+            {
+              "value": "Trader",
+              "bbox": [
+                278.75,
+                238.0,
+                283.75,
+                243.0
+              ]
+            },
+            {
+              "value": "Service provider",
+              "bbox": [
+                358.75,
+                238.0,
+                363.75,
+                243.0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f6_comb_kyc",
+      "title": "SAVINGS ACCOUNT OPENING - KYC DETAILS",
+      "description": "labels above boxes, character-cell (comb) fields, 9 pt checkboxes",
+      "fields": [
+        {
+          "key": "Customer name",
+          "kind": "text",
+          "value": "Arjun Sample",
+          "bbox": [
+            40,
+            122.0,
+            370,
+            142.0
+          ]
+        },
+        {
+          "key": "Date of birth",
+          "kind": "comb",
+          "value": "21/11/1985",
+          "bbox": [
+            390,
+            122.0,
+            530,
+            142.0
+          ],
+          "cells": [
+            [
+              390,
+              122.0,
+              406,
+              142.0
+            ],
+            [
+              406,
+              122.0,
+              422,
+              142.0
+            ],
+            [
+              428,
+              122.0,
+              444,
+              142.0
+            ],
+            [
+              444,
+              122.0,
+              460,
+              142.0
+            ],
+            [
+              466,
+              122.0,
+              482,
+              142.0
+            ],
+            [
+              482,
+              122.0,
+              498,
+              142.0
+            ],
+            [
+              498,
+              122.0,
+              514,
+              142.0
+            ],
+            [
+              514,
+              122.0,
+              530,
+              142.0
+            ]
+          ],
+          "n_cells": 8
+        },
+        {
+          "key": "Father's or spouse's name",
+          "kind": "text",
+          "value": "S. Sample",
+          "bbox": [
+            40,
+            172.0,
+            370,
+            192.0
+          ]
+        },
+        {
+          "key": "Mobile",
+          "kind": "text",
+          "value": "9000066666",
+          "bbox": [
+            390,
+            172.0,
+            555,
+            192.0
+          ]
+        },
+        {
+          "key": "E-mail",
+          "kind": "text",
+          "value": "arjun@example.invalid",
+          "bbox": [
+            40,
+            222.0,
+            290,
+            242.0
+          ]
+        },
+        {
+          "key": "Occupation",
+          "kind": "text",
+          "value": "Teacher",
+          "bbox": [
+            310,
+            222.0,
+            430,
+            242.0
+          ]
+        },
+        {
+          "key": "Annual income",
+          "kind": "text",
+          "value": "650000",
+          "bbox": [
+            445,
+            222.0,
+            555,
+            242.0
+          ]
+        },
+        {
+          "key": "Address",
+          "kind": "text",
+          "value": "3 Sample Nagar, Mockpur",
+          "bbox": [
+            40,
+            272.0,
+            430,
+            292.0
+          ]
+        },
+        {
+          "key": "PIN code",
+          "kind": "comb",
+          "value": "999404",
+          "bbox": [
+            445,
+            272.0,
+            553,
+            292.0
+          ],
+          "cells": [
+            [
+              445,
+              272.0,
+              463,
+              292.0
+            ],
+            [
+              463,
+              272.0,
+              481,
+              292.0
+            ],
+            [
+              481,
+              272.0,
+              499,
+              292.0
+            ],
+            [
+              499,
+              272.0,
+              517,
+              292.0
+            ],
+            [
+              517,
+              272.0,
+              535,
+              292.0
+            ],
+            [
+              535,
+              272.0,
+              553,
+              292.0
+            ]
+          ],
+          "n_cells": 6
+        },
+        {
+          "key": "Tax ID",
+          "kind": "comb",
+          "value": "PQRSX6789K",
+          "bbox": [
+            40,
+            322.0,
+            220,
+            342.0
+          ],
+          "cells": [
+            [
+              40,
+              322.0,
+              58,
+              342.0
+            ],
+            [
+              58,
+              322.0,
+              76,
+              342.0
+            ],
+            [
+              76,
+              322.0,
+              94,
+              342.0
+            ],
+            [
+              94,
+              322.0,
+              112,
+              342.0
+            ],
+            [
+              112,
+              322.0,
+              130,
+              342.0
+            ],
+            [
+              130,
+              322.0,
+              148,
+              342.0
+            ],
+            [
+              148,
+              322.0,
+              166,
+              342.0
+            ],
+            [
+              166,
+              322.0,
+              184,
+              342.0
+            ],
+            [
+              184,
+              322.0,
+              202,
+              342.0
+            ],
+            [
+              202,
+              322.0,
+              220,
+              342.0
+            ]
+          ],
+          "n_cells": 10
+        },
+        {
+          "key": "Account type",
+          "kind": "checkbox",
+          "value": "Current",
+          "options": [
+            {
+              "value": "Savings",
+              "bbox": [
+                360,
+                317.0,
+                369.0,
+                326.0
+              ]
+            },
+            {
+              "value": "Current",
+              "bbox": [
+                440,
+                317.0,
+                449.0,
+                326.0
+              ]
+            }
+          ]
+        },
+        {
+          "key": "Nationality",
+          "kind": "checkbox",
+          "value": "Other",
+          "options": [
+            {
+              "value": "Indian",
+              "bbox": [
+                120,
+                367.0,
+                129.0,
+                376.0
+              ]
+            },
+            {
+              "value": "Other",
+              "bbox": [
+                200,
+                367.0,
+                209.0,
+                376.0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
