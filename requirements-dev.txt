@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest>=8.0
+# used by tests/fixtures/make_fixtures.py
+reportlab>=4.0
+openpyxl>=3.1
+python-docx>=1.1

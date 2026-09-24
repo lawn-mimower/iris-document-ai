@@ -1,0 +1,23 @@
+# Form element detection and form filling (phase1/, prototype1/, checkbox_trials/)
+PyMuPDF>=1.23
+opencv-python-headless>=4.8
+numpy>=1.24
+pytesseract>=0.3.10
+google-generativeai>=0.8
+python-dotenv>=1.0
+
+# Docling conversion, chunking, embeddings and Milvus Lite RAG (DAM/, KG/)
+docling>=2.50
+docling-core>=2.40
+sentence-transformers>=3.0
+torch>=2.1
+pymilvus[milvus_lite]>=2.5
+pandas>=2.0
+tabulate>=0.9
+tqdm>=4.66
+tiktoken>=0.7
+matplotlib>=3.8
+Pillow>=10.0
+
+# Knowledge graph MVP (KG/inventory_management.py)
+neo4j>=5.14
