@@ -107,7 +107,7 @@ Extra requirements for some notebooks:
 
 ```bash
 pip install -r requirements-dev.txt
-pytest          # 84 offline tests; Gemini, Milvus, Pinecone, OCR and the embedding model are stubbed
+pytest          # 137 offline tests; Gemini, Milvus, Pinecone, OCR and the embedding model are stubbed
 pytest -m e2e   # 6 live tests; each is skipped when what it needs is missing
 ```
 
@@ -118,6 +118,7 @@ The offline suite covers:
 - the agent, with Gemini mocked
 - the DAM scripts and the notebook `VARIANT` / `CHUNKING` / `SOURCE` settings, with their heavy parts stubbed
 - the inventory parser
+- the benchmark: answer normalisation and scoring, the generators, the rule and geometric baselines, and both runners with the LLM faked
 
 The e2e tests run the real Docling + BGE ingestion and retrieval on the fixture documents, the Markdown and table command-line tools, and a double load into Neo4j (needs `NEO4J_URI` and `NEO4J_PASSWORD`). Two of them call Gemini: a fill plan for the demo form and a harness run against `tests/fixtures/dam_ground_truth.json`.
 
@@ -130,17 +131,40 @@ These are experiments, not a product. The following has been checked on the fict
 - Form detection finds all four input boxes and all six checkboxes on the demo form and keeps filled-in values as text.
 - Ingesting the three fixture documents gives 14 chunks. The CIN query retrieves the right PDF passage on page 1 with its box, and the grounding script highlights it on the page.
 
-Two things are not measured here. For the fill plan, the live test only checks where one value (the name) goes. For RAG answers, the harness exists to score them against your own ground truth, but no results ship with the repo.
+Measured results live in `benchmarks/`; see [Benchmark](#benchmark) below. They cover synthetic data only. The harness itself still scores answers with an LLM judge, while the benchmark uses normalised exact matching.
 
 Known limitations:
 
 - **Form detection over-reports.** Individual letters become boxes and checkboxes: on the one-page demo form the raw output has 189 elements, including 93 input fields and 80 checkboxes, for 4 real boxes and 6 checkboxes. Underline-style fields, such as the Signature and Date lines, are not reported.
+- **Form detection misses common box shapes.** Boxes more than 10 times as wide as they are tall are not reported (the shape filter needs an aspect ratio below 10). Only a table's outer border is reported, because only outermost contours are kept. Checkboxes larger than about 6 pt become input fields, and the gestalt step then merges them with letter fragments of the option text. On the six benchmark forms this leaves 39 of 68 target boxes.
 - **Very large agent prompts.** Because the agent sends both forms' full element lists in one prompt, the request for the demo form is about 105k tokens, which can run into free-tier rate limits. The reply is only checked to be valid JSON, not checked against the form.
 - **Source boxes only mean something for PDFs.** Word chunks come back with page 0 and an all-zero box, and Excel chunks get a cell range instead of page coordinates.
 - **The harness expects databases from other steps.** Only `baseline` and `no_excel` run on the `oneshot.db` from `oneshot_ingestion.py`. The other experiments expect the phase-2 notebook's `milvus_all_docs_mixed.db` / `milvus_all_docs_hybrid.db` in `DAM_WORK_DIR`, and `monolithic` expects `docling_outputs/md/`. The chunk counts in the `--list` descriptions come from an earlier document set, and verdicts come from an LLM judge, not exact match.
 - **`reindex.py`'s built-in check strings are specific to an earlier document set.** On the fixtures most of them report MISSING.
 - **The notebooks are a lab record.** They point at local folders (`all_data/`, `docs/`) that are not in the repo. Two of them still name Gemini models that are no longer served: `REBEL_kggen.ipynb` uses `gemini-1.5-flash-latest` and `pdf_table_extraction_test.ipynb` uses `gemini-2.0-flash-lite`.
-- **Deprecated SDK.** Everything uses Google's deprecated `google-generativeai` package.
+- **Deprecated SDK and retired defaults.** Everything uses Google's deprecated `google-generativeai` package. In September 2026, the harness default `gemini-2.5-flash-lite` answered new API users with 404 ("no longer available to new users"), so set `GEMINI_MODEL`.
+
+## Benchmark
+
+`benchmarks/` compares both strands with conventional baselines on synthetic documents. Everything is fictional, the sets are small, and each configuration ran once. [`benchmarks/RESULTS.md`](benchmarks/RESULTS.md) has the full tables, the run conditions and the caveats.
+
+**Field extraction.** Six fictional companies each have a 6-page financial-statement PDF, a directors' report (DOCX) and a trial balance (XLSX). Facts are spread across the files, and the documents contain distractors such as prior-year figures, a holding company's CIN and a registrar's e-mail. The task is 16 AOC-4 style fields per company: 96 field instances, 2 of which are stated nowhere. Four methods are compared, with the same LLM for all of them within a run:
+
+- the repo's pipeline (Docling → BGE-large → Milvus Lite, top 5)
+- a basic BM25 RAG over plain pypdf / python-docx / openpyxl text
+- one prompt holding the whole folder
+- regex rules
+
+| `gemini-3.5-flash-lite`, one call per company | correct | gold evidence in retrieved passages |
+|---|---|---|
+| whole folder in one prompt | 93/96 | – |
+| BM25 RAG, all fields in one call | 91/96 | 86/94 |
+| repo pipeline, all fields in one call | 80/96 | 72/94 |
+| regex rules (no LLM) | 86/96 | – |
+
+On these short documents (about 4k tokens per company), the repo's pipeline loses to both simpler methods, and the reason is its retrieval. Docling leaves the cover title and the headings out of chunk text and merges numbered notes into one long chunk. The top-5 passages for a field then often miss the sentence that answers it. The single call costs no more tokens here than either RAG variant. That would change with real annual reports of 100+ pages, which this benchmark does not test.
+
+**Form filling.** There are six fictional form layouts (labels left or above, two columns, yes/no rows, a ruled table, character-cell fields) with 52 fields in total. The repo's `phase1.py` + `gestalt_processor.py` report only 39 of the 68 target boxes: wide boxes, ruled tables and 9 pt checkboxes are missed. A no-LLM nearest-label rule on that output places 28 of 52 values. If the boxes come from the PDF's vector drawings instead, both the unchanged `agent.py` (on `gemini-3.5-flash`) and the nearest-label rule place 52 of 52. The agent on the repo's own phase1 output has not run yet, because the free Gemini quota ran out; `RESULTS.md` has the command that finishes it.
 
 ## Repository layout
 
@@ -152,6 +176,7 @@ DAM/                        Docling → BGE → Milvus Lite RAG: ingestion, rein
                             experiment harness, chunk statistics, phase-1/phase-2 notebooks
 ComparisonScriptsOctober/   trueRAG.ipynb (Pinecone), Excel extraction and PDF table extraction notebooks
 KG/                         Docling conversion, table extraction, Neo4j loader, REBEL notebook, vlm.py
+benchmarks/                 synthetic benchmarks with conventional baselines: generators, runners, results
 tests/                      offline and e2e tests; fixtures/ holds the fictional form and financial documents
 ```
 
