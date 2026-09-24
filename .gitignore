@@ -1,0 +1,33 @@
+# Environment and secrets
+.env
+.venv/
+venv/
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Input data (keep real documents out of the repository)
+all_data/
+DAM/all_data/
+DAM/docs/
+
+# Script outputs
+*.db
+*.db.lock
+.*.db.lock
+output.md
+extracted_tables/
+visualizations/
+visual_grounding_outputs/
+processed_output.json
+DAM/reindex_output/
+DAM/experiment_results/
+DAM/docling_outputs/
+DAM/ground_truth.json
+oneshot_ingestion_report.json
+chunk_statistics_report.json
+chunk_statistics_plots.png
+small_chunks_detail.png
