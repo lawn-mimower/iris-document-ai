@@ -143,25 +143,23 @@ def load_data_to_neo4j(data: Dict[str, Any], uri: str, user: str, password: str)
                 SET buyer.type = 'Buyer'
             """, buyer_name=data['buyer'])
             
-            # Create invoice node
+            # Create invoice node (MERGE keeps re-runs from duplicating the invoice)
             session.run("""
-                CREATE (invoice:Invoice {
-                    id: $invoice_id,
-                    date: $date
-                })
+                MERGE (invoice:Invoice {id: $invoice_id})
+                SET invoice.date = $date
             """, invoice_id=data['invoice_id'], date=data['date'])
             
             # Create relationships between companies and invoice
             session.run("""
                 MATCH (seller:Company {name: $seller_name})
                 MATCH (invoice:Invoice {id: $invoice_id})
-                CREATE (seller)-[:SOLD]->(invoice)
+                MERGE (seller)-[:SOLD]->(invoice)
             """, seller_name=data['seller'], invoice_id=data['invoice_id'])
             
             session.run("""
                 MATCH (buyer:Company {name: $buyer_name})
                 MATCH (invoice:Invoice {id: $invoice_id})
-                CREATE (buyer)-[:BOUGHT]->(invoice)
+                MERGE (buyer)-[:BOUGHT]->(invoice)
             """, buyer_name=data['buyer'], invoice_id=data['invoice_id'])
             
             # Process each item
@@ -175,10 +173,9 @@ def load_data_to_neo4j(data: Dict[str, Any], uri: str, user: str, password: str)
                 session.run("""
                     MATCH (invoice:Invoice {id: $invoice_id})
                     MATCH (product:Product {name: $product_name})
-                    CREATE (invoice)-[:CONTAINS_ITEM {
-                        quantity: $quantity,
-                        unit_price: $unit_price
-                    }]->(product)
+                    MERGE (invoice)-[item:CONTAINS_ITEM]->(product)
+                    SET item.quantity = $quantity,
+                        item.unit_price = $unit_price
                 """, 
                 invoice_id=data['invoice_id'],
                 product_name=item['name'],
