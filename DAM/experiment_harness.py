@@ -30,8 +30,11 @@ from typing import Optional, List
 
 # ── Config ──────────────────────────────────────────────────────
 
-GROUND_TRUTH_PATH = Path(__file__).parent / "ground_truth.json"
-RESULTS_DIR = Path(__file__).parent / "experiment_results"
+# Folder holding the Milvus databases, docling markdown exports and results
+# (defaults to this directory; override with DAM_WORK_DIR)
+WORK_DIR = Path(os.getenv("DAM_WORK_DIR", Path(__file__).parent))
+GROUND_TRUTH_PATH = Path(os.getenv("DAM_GROUND_TRUTH", WORK_DIR / "ground_truth.json"))
+RESULTS_DIR = WORK_DIR / "experiment_results"
 RESULTS_DIR.mkdir(exist_ok=True)
 
 # Milvus databases (already built)
@@ -46,7 +49,7 @@ EMBEDDING_MODEL = "BAAI/bge-large-en-v1.5"
 EMBEDDING_DIM = 1024
 
 # Gemini config
-GEMINI_MODEL = "gemini-2.0-flash-lite"
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
 
 # ── Lazy globals ────────────────────────────────────────────────
 
@@ -125,7 +128,7 @@ def retrieve_from_milvus(query: str, db_path: str, collection: str,
     chunks = []
     for hit in results[0]:
         entity = hit.get("entity", hit)
-        source = entity.get("source_file", "")
+        source = entity.get("source_file") or entity.get("filename", "")
         doc_type = entity.get("doc_type", "")
 
         # Filter Excel if requested
@@ -341,7 +344,7 @@ def run_monolithic_experiment() -> dict:
     questions = gt["questions"]
 
     # Load all markdown documents
-    md_dir = Path(__file__).parent / "docling_outputs" / "md"
+    md_dir = WORK_DIR / "docling_outputs" / "md"
     all_text = ""
     doc_count = 0
     for md_file in sorted(md_dir.glob("*.md")):
@@ -818,7 +821,7 @@ EXPERIMENTS = {
         "desc": "All docs, hierarchical chunking, top-5 (5,086 chunks)",
         "fn": lambda: run_rag_experiment(
             "baseline",
-            str(Path(__file__).parent / "oneshot.db"),
+            str(WORK_DIR / "oneshot.db"),
             "oneshot",
             top_k=5,
         ),
@@ -827,7 +830,7 @@ EXPERIMENTS = {
         "desc": "Exclude Excel files, top-5",
         "fn": lambda: run_rag_experiment(
             "no_excel",
-            str(Path(__file__).parent / "oneshot.db"),
+            str(WORK_DIR / "oneshot.db"),
             "oneshot",
             top_k=5,
             exclude_excel=True,
@@ -837,7 +840,7 @@ EXPERIMENTS = {
         "desc": "Mixed strategy (hierarchical for xlsx, hybrid for rest), top-5 (3,813 chunks)",
         "fn": lambda: run_rag_experiment(
             "mixed_chunking",
-            str(Path(__file__).parent / "milvus_all_docs_mixed.db"),
+            str(WORK_DIR / "milvus_all_docs_mixed.db"),
             "rag_all_docs_mixed",
             top_k=5,
         ),
@@ -846,7 +849,7 @@ EXPERIMENTS = {
         "desc": "Hybrid token-aware chunking, top-5 (28,554 chunks)",
         "fn": lambda: run_rag_experiment(
             "hybrid_chunking",
-            str(Path(__file__).parent / "milvus_all_docs_hybrid.db"),
+            str(WORK_DIR / "milvus_all_docs_hybrid.db"),
             "rag_all_docs_hybrid",
             top_k=5,
         ),
@@ -855,7 +858,7 @@ EXPERIMENTS = {
         "desc": "Mixed strategy, top-20 (more context)",
         "fn": lambda: run_rag_experiment(
             "mixed_top20",
-            str(Path(__file__).parent / "milvus_all_docs_mixed.db"),
+            str(WORK_DIR / "milvus_all_docs_mixed.db"),
             "rag_all_docs_mixed",
             top_k=20,
         ),
@@ -864,7 +867,7 @@ EXPERIMENTS = {
         "desc": "Mixed strategy, top-350 (brute force, ~70K tokens)",
         "fn": lambda: run_rag_experiment(
             "brute_force",
-            str(Path(__file__).parent / "milvus_all_docs_mixed.db"),
+            str(WORK_DIR / "milvus_all_docs_mixed.db"),
             "rag_all_docs_mixed",
             top_k=350,
         ),
@@ -878,7 +881,7 @@ EXPERIMENTS = {
         "desc": "Gemini reformulates form labels → natural language queries, then top-5",
         "fn": lambda: run_reformulated_experiment(
             "query_reformulation",
-            str(Path(__file__).parent / "milvus_all_docs_mixed.db"),
+            str(WORK_DIR / "milvus_all_docs_mixed.db"),
             "rag_all_docs_mixed",
             top_k=5,
         ),
@@ -887,7 +890,7 @@ EXPERIMENTS = {
         "desc": "Retrieve top-50, rerank with BGE-reranker-v2-m3, take top-5",
         "fn": lambda: run_reranking_experiment(
             "reranking",
-            str(Path(__file__).parent / "milvus_all_docs_mixed.db"),
+            str(WORK_DIR / "milvus_all_docs_mixed.db"),
             "rag_all_docs_mixed",
             initial_top_k=50,
             final_top_k=5,
@@ -897,7 +900,7 @@ EXPERIMENTS = {
         "desc": "Generate 3 query variants, retrieve each, merge via reciprocal rank fusion",
         "fn": lambda: run_multi_query_experiment(
             "multi_query",
-            str(Path(__file__).parent / "milvus_all_docs_mixed.db"),
+            str(WORK_DIR / "milvus_all_docs_mixed.db"),
             "rag_all_docs_mixed",
             num_variants=3,
             top_k=5,
@@ -910,7 +913,7 @@ EXPERIMENTS = {
     "topk_sweep": {
         "desc": "Systematic top-K sweep: 5, 10, 20, 50 on mixed chunking",
         "fn": lambda: run_topk_sweep(
-            str(Path(__file__).parent / "milvus_all_docs_mixed.db"),
+            str(WORK_DIR / "milvus_all_docs_mixed.db"),
             "rag_all_docs_mixed",
             top_ks=[5, 10, 20, 50],
         ),
@@ -922,7 +925,7 @@ def _run_combined_experiment():
     """Combined: reformulate query + rerank."""
     gt = load_ground_truth()
     questions = gt["questions"]
-    db_path = str(Path(__file__).parent / "milvus_all_docs_mixed.db")
+    db_path = str(WORK_DIR / "milvus_all_docs_mixed.db")
     collection = "rag_all_docs_mixed"
 
     print(f"\n{'='*70}")
