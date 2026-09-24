@@ -9,9 +9,10 @@ Processes all files from all_data/ folder:
 4. Embeds with BGE-large (1024 dims)
 5. Stores in Milvus 'oneshot.db' collection
 
-Usage: python oneshot_ingestion.py
+Usage: python oneshot_ingestion.py [--input-dir all_data] [--db oneshot.db] [--collection oneshot]
 """
 
+import argparse
 import torch
 from sentence_transformers import SentenceTransformer
 import json
@@ -510,11 +511,18 @@ class OneShotIngestion:
 
 def main():
     """Main entry point."""
+    parser = argparse.ArgumentParser(description="Ingest a folder of documents into a Milvus Lite collection.")
+    parser.add_argument("--input-dir", default="all_data", help="Folder with the documents to ingest (default: all_data)")
+    parser.add_argument("--db", default="oneshot.db", help="Milvus Lite database file (default: oneshot.db)")
+    parser.add_argument("--collection", default="oneshot", help="Collection name (default: oneshot)")
+    parser.add_argument("--batch-size", type=int, default=32, help="Embedding batch size (default: 32)")
+    args = parser.parse_args()
+
     pipeline = OneShotIngestion(
-        input_dir="all_data",
-        db_name="oneshot.db",
-        collection_name="oneshot",
-        batch_size=32
+        input_dir=args.input_dir,
+        db_name=args.db,
+        collection_name=args.collection,
+        batch_size=args.batch_size
     )
 
     pipeline.run()
