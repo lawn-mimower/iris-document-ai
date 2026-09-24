@@ -10,6 +10,7 @@ Provides comprehensive statistical analysis including:
 - Visualization of distributions
 """
 
+import argparse
 import json
 from pymilvus import MilvusClient
 import tiktoken
@@ -29,13 +30,21 @@ def analyze_chunks(db_path="milvus_all_docs.db", collection_name="rag_all_docs")
     print(f"Connecting to database: {db_path}")
     client = MilvusClient(db_path)
 
-    # Query all chunks
+    # Query all chunks (an empty filter needs an iterator; plain query() requires a limit)
     print(f"Querying collection: {collection_name}")
-    results = client.query(
+    results = []
+    iterator = client.query_iterator(
         collection_name=collection_name,
+        batch_size=1000,
         filter="",
         output_fields=["text", "source_file", "doc_type", "chunk_id", "total_chunks"]
     )
+    while True:
+        batch = iterator.next()
+        if not batch:
+            iterator.close()
+            break
+        results.extend(batch)
 
     print(f"Found {len(results)} chunks")
 
@@ -249,7 +258,12 @@ def create_visualizations(token_counts, chunks_by_type, stats):
     print(f"✓ Small chunks detail plot saved to: {output_file2}")
 
 if __name__ == "__main__":
-    stats, token_counts, chunks_by_type = analyze_chunks()
+    parser = argparse.ArgumentParser(description="Token/character statistics for chunks stored in Milvus Lite.")
+    parser.add_argument("--db", default="milvus_all_docs.db", help="Milvus Lite database file (default: milvus_all_docs.db)")
+    parser.add_argument("--collection", default="rag_all_docs", help="Collection name (default: rag_all_docs)")
+    args = parser.parse_args()
+
+    stats, token_counts, chunks_by_type = analyze_chunks(args.db, args.collection)
 
     print("\n" + "="*70)
     print("ANALYSIS COMPLETE")
