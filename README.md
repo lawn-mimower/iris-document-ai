@@ -155,4 +155,4 @@ KG/                         Docling conversion, table extraction, Neo4j loader, 
 tests/                      offline and e2e tests; fixtures/ holds the fictional form and financial documents
 ```
 
-Licence: not yet specified.
+Licence: MIT — see LICENSE.
