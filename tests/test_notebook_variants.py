@@ -20,7 +20,8 @@ from PIL import Image, ImageDraw
 from conftest import REPO_ROOT
 
 TRUERAG = REPO_ROOT / "ComparisonScriptsOctober/trueRAG.ipynb"
-MERGED = [TRUERAG]
+CHUNKING_NB = REPO_ROOT / "DAM/phase2_chunking_embedding.ipynb"
+MERGED = [TRUERAG, CHUNKING_NB]
 
 
 def code_cells(path):
@@ -170,3 +171,93 @@ def test_truerag_upsert_uses_variant_namespace(tmp_path, namespace):
     assert call.get("namespace") == namespace and ("namespace" in call) == (namespace is not None)
     (vector_id, vector, metadata), = call["vectors"]
     assert vector_id == "notes.txt_p1_c0" and metadata["source_file"] == "notes.txt"
+
+
+# --- DAM/phase2_chunking_embedding.ipynb ------------------------------------------------------------------------
+
+CHUNKING_EXPECTED = {
+    "hierarchical": ("milvus_all_docs.db", "rag_all_docs", "gemini-2.5-flash-lite", None, False),
+    "hybrid": ("milvus_all_docs_hybrid.db", "rag_all_docs_hybrid", "gemini-2.5-flash-lite", 1000, False),
+    "mixed": ("milvus_all_docs_mixed.db", "rag_all_docs_mixed", "gemini-2.5-flash", None, True),
+}
+
+
+def chunking_config(strategy):
+    ns = run_settings(CHUNKING_NB, "CHUNKING", strategy)
+    ns["Path"] = Path
+    exec(cell_starting_with(CHUNKING_NB, "# Configuration"), ns)
+    return ns
+
+
+@pytest.mark.parametrize("strategy", list(CHUNKING_EXPECTED))
+def test_chunking_strategy_settings(strategy):
+    db, collection, model, insert_batch, has_chunker_field = CHUNKING_EXPECTED[strategy]
+    ns = chunking_config(strategy)
+    assert (ns["MILVUS_DB"], ns["COLLECTION_NAME"], ns["GEMINI_MODEL"]) == (db, collection, model)
+    assert ns["INSERT_BATCH_SIZE"] == insert_batch
+    assert ("chunker_used" in ns["METADATA_FIELDS"]) == has_chunker_field
+    assert ns["USE_FINANCIAL_PROMPT"] == (strategy != "hierarchical")
+
+
+class _Chunker:
+    def __init__(self, **kwargs):
+        self.max_tokens = 512
+
+    def chunk(self, doc):
+        return [SimpleNamespace(text=f"{type(self).__name__}:{doc['name']}:{i}") for i in range(2)]
+
+
+class _Hierarchical(_Chunker):
+    pass
+
+
+class _Hybrid(_Chunker):
+    pass
+
+
+@pytest.mark.parametrize("strategy,xlsx_chunker,pdf_chunker", [
+    ("hierarchical", "_Hierarchical", "_Hierarchical"),
+    ("hybrid", "_Hybrid", "_Hybrid"),
+    ("mixed", "_Hierarchical", "_Hybrid"),
+])
+def test_chunking_picks_chunker_per_document_type(strategy, xlsx_chunker, pdf_chunker):
+    ns = chunking_config(strategy)
+    ns.update(HierarchicalChunker=_Hierarchical, HybridChunker=_Hybrid, tqdm=lambda it, **kw: it,
+              DoclingDocument=SimpleNamespace(model_validate=lambda data: data),
+              documents={"tb.json": {"name": "tb", "origin": {"filename": "trial_balance.xlsx"}},
+                         "fs.json": {"name": "fs", "origin": {"filename": "statements.pdf"}}})
+    exec(cell_starting_with(CHUNKING_NB, 'if CHUNKING == "hierarchical":'), ns)
+    by_file = {}
+    for chunk in ns["all_chunks"]:
+        by_file.setdefault(chunk["source_file"], []).append(chunk)
+    assert [c["text"].split(":")[0] for c in by_file["tb.json"]] == [xlsx_chunker] * 2
+    assert [c["text"].split(":")[0] for c in by_file["fs.json"]] == [pdf_chunker] * 2
+    assert {c["doc_type"] for c in by_file["tb.json"]} == {"xlsx"}
+    if strategy == "mixed":
+        assert {c["chunker_used"] for c in by_file["tb.json"]} == {"HierarchicalChunker"}
+        assert {c["chunker_used"] for c in by_file["fs.json"]} == {"HybridChunker"}
+    else:
+        assert all("chunker_used" not in c for c in ns["all_chunks"])
+
+
+class _Milvus:
+    def __init__(self):
+        self.batches = []
+
+    def insert(self, collection_name, data):
+        self.batches.append(len(data))
+        return {"insert_count": len(data)}
+
+
+@pytest.mark.parametrize("strategy,expected_batches", [
+    ("hierarchical", [2500]), ("hybrid", [1000, 1000, 500]), ("mixed", [2500]),
+])
+def test_chunking_insert_batches(strategy, expected_batches):
+    ns = chunking_config(strategy)
+    chunks = [{"text": f"t{i}", "source_file": "a.json", "doc_type": "pdf", "chunk_id": i, "total_chunks": 2500,
+               "chunker_used": "HybridChunker"} for i in range(2500)]
+    client = _Milvus()
+    ns.update(all_chunks=chunks, embeddings_list=[[0.0]] * 2500, client=client, time=time)
+    exec(cell_starting_with(CHUNKING_NB, "# Prepare data for insertion"), ns)
+    assert client.batches == expected_batches
+    assert ("chunker_used" in ns["data_to_insert"][0]) == (strategy == "mixed")
