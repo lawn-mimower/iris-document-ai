@@ -1,0 +1,172 @@
+"""Notebooks that select their behaviour with a setting in the first code cell (tagged "parameters").
+
+The cells are executed offline with small stand-ins for Pinecone, Milvus, OCR and the embedding model.
+"""
+
+import ast
+import io
+import json
+import time
+import xml.etree.ElementTree as ET
+from pathlib import Path
+from types import SimpleNamespace
+from typing import List
+
+import numpy as np
+import pandas as pd
+import pytest
+from PIL import Image, ImageDraw
+
+from conftest import REPO_ROOT
+
+TRUERAG = REPO_ROOT / "ComparisonScriptsOctober/trueRAG.ipynb"
+MERGED = [TRUERAG]
+
+
+def code_cells(path):
+    nb = json.loads(Path(path).read_text(encoding="utf-8"))
+    return [c for c in nb["cells"] if c["cell_type"] == "code"]
+
+
+def source(cell):
+    return "".join(cell["source"]) if isinstance(cell["source"], list) else cell["source"]
+
+
+def cell_starting_with(path, prefix):
+    matches = [source(c) for c in code_cells(path) if source(c).startswith(prefix)]
+    assert len(matches) == 1, (prefix, len(matches))
+    return matches[0]
+
+
+def run_settings(path, name, value):
+    """Execute the parameters cell (with `name` overridden) and the settings cell after it."""
+    cells = code_cells(path)
+    assert "parameters" in cells[0]["metadata"].get("tags", [])
+    ns = {}
+    exec(source(cells[0]), ns)
+    assert name in ns
+    ns[name] = value
+    exec(source(cells[1]), ns)
+    return ns
+
+
+@pytest.mark.parametrize("path", MERGED, ids=[str(p.relative_to(REPO_ROOT)) for p in MERGED])
+def test_merged_notebook_has_parameters_cell_and_valid_code(path):
+    cells = code_cells(path)
+    assert cells[0]["metadata"].get("tags") == ["parameters"]
+    for cell in cells:
+        ast.parse(source(cell))
+
+
+# --- ComparisonScriptsOctober/trueRAG.ipynb ---------------------------------------------------------------------
+
+TRUERAG_EXPECTED = {
+    "full": dict(RUN_INGESTION=True, EXCEL_MODE="text", namespace=None, CLEAR_INDEX=True, batch_size=1024),
+    "no_excel": dict(RUN_INGESTION=True, EXCEL_MODE="none", namespace="no-excel", CLEAR_INDEX=False, batch_size=256),
+    "excel_ocr": dict(RUN_INGESTION=True, EXCEL_MODE="ocr", namespace="excel-ocr", CLEAR_INDEX=False, batch_size=256),
+    "query_only": dict(RUN_INGESTION=False, EXCEL_MODE="text", namespace=None, CLEAR_INDEX=False, batch_size=1024),
+}
+
+
+@pytest.mark.parametrize("variant", list(TRUERAG_EXPECTED))
+def test_truerag_variant_settings(variant):
+    ns = run_settings(TRUERAG, "VARIANT", variant)
+    expected = dict(TRUERAG_EXPECTED[variant])
+    assert ns["settings"]["batch_size"] == expected.pop("batch_size")
+    for key, value in expected.items():
+        assert ns[key] == value, key
+
+
+def test_truerag_unknown_variant_rejected():
+    with pytest.raises(ValueError, match="Unknown VARIANT"):
+        run_settings(TRUERAG, "VARIANT", "everything")
+
+
+class _Splitter:
+    def __init__(self, **kwargs):
+        pass
+
+    def split_text(self, text):
+        return [text]
+
+
+def truerag_helpers(excel_mode, **extra):
+    ns = dict(Path=Path, List=List, io=io, ET=ET, pd=pd, Image=Image, ImageDraw=ImageDraw,
+              tqdm=lambda it, **kw: it, RecursiveCharacterTextSplitter=_Splitter,
+              fitz=None, docx=None, pytesseract=None, index_name="test-index", EXCEL_MODE=excel_mode)
+    ns.update(extra)
+    exec(cell_starting_with(TRUERAG, "def find_all_documents"), ns)
+    return ns
+
+
+@pytest.fixture
+def docs_folder(tmp_path):
+    for name in ["report.pdf", "sheet.xlsx", "notes.txt", "._hidden.pdf", "table.csv"]:
+        (tmp_path / name).write_bytes(b"x")
+    (tmp_path / "__MACOSX").mkdir()
+    (tmp_path / "__MACOSX" / "meta.pdf").write_bytes(b"x")
+    return tmp_path
+
+
+@pytest.mark.parametrize("excel_mode,has_excel", [("text", True), ("ocr", True), ("none", False)])
+def test_truerag_find_all_documents_respects_excel_mode(docs_folder, excel_mode, has_excel):
+    found = [Path(p).name for p in truerag_helpers(excel_mode)["find_all_documents"](str(docs_folder))]
+    assert found == sorted(["notes.txt", "report.pdf"] + (["sheet.xlsx"] if has_excel else []))
+
+
+@pytest.fixture
+def workbook(tmp_path):
+    path = tmp_path / "book.xlsx"
+    with pd.ExcelWriter(path) as writer:
+        pd.DataFrame([["Revenue", 100], ["Costs", 40]]).to_excel(writer, sheet_name="PnL", header=False, index=False)
+    return path
+
+
+def test_truerag_reads_excel_as_text(workbook):
+    pages = truerag_helpers("text")["extract_text_from_document"](str(workbook))
+    assert len(pages) == 1
+    assert pages[0]["content"].startswith("--- Content from Sheet: PnL ---")
+    assert "Revenue" in pages[0]["content"]
+
+
+def test_truerag_reads_excel_with_ocr(workbook):
+    seen = {}
+
+    def image_to_string(image, config=None):
+        seen["size"], seen["config"] = image.size, config
+        return "OCR TEXT"
+
+    ns = truerag_helpers("ocr", pytesseract=SimpleNamespace(image_to_string=image_to_string))
+    pages = ns["extract_text_from_document"](str(workbook))
+    assert pages == [{"page_number": 1, "content": "=== Sheet: PnL ===\n\nOCR TEXT"}]
+    assert seen["config"] == "--psm 6" and seen["size"][0] > 0
+
+
+def test_truerag_skips_excel_without_excel_mode(workbook):
+    assert truerag_helpers("none")["extract_text_from_document"](str(workbook)) == []
+
+
+class _Index:
+    def __init__(self):
+        self.calls = []
+
+    def upsert(self, **kwargs):
+        self.calls.append(kwargs)
+
+
+class _Model:
+    def encode(self, texts, **kwargs):
+        return np.ones((len(texts), 3))
+
+
+@pytest.mark.parametrize("namespace", [None, "no-excel"])
+def test_truerag_upsert_uses_variant_namespace(tmp_path, namespace):
+    doc = tmp_path / "notes.txt"
+    doc.write_text("Board meeting held on 1 April.", encoding="utf-8")
+    index = _Index()
+    truerag_helpers("text")["process_and_upsert_document"](str(doc), index, _Model(), 8, namespace)
+    assert len(index.calls) == 1
+    call = index.calls[0]
+    assert call.get("namespace") == namespace and ("namespace" in call) == (namespace is not None)
+    (vector_id, vector, metadata), = call["vectors"]
+    assert vector_id == "notes.txt_p1_c0" and metadata["source_file"] == "notes.txt"
