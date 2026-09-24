@@ -6,11 +6,14 @@ Parses all documents, chunks three ways, embeds, stores in Milvus.
 Verifies every index contains the expected data.
 
 Usage:
-    source ~/anaconda3/bin/activate ml-env
     python reindex.py
+
+    Input/output folders can be changed with the DAM_INPUT_DIR and
+    DAM_REINDEX_OUTPUT environment variables.
 """
 
 import json
+import os
 import time
 import hashlib
 from pathlib import Path
@@ -26,8 +29,8 @@ from tqdm import tqdm
 
 # ── Config ──────────────────────────────────────────────────────
 
-INPUT_DIR = Path(__file__).parent / "all_data"
-OUTPUT_DIR = Path(__file__).parent / "reindex_output"
+INPUT_DIR = Path(os.getenv("DAM_INPUT_DIR", Path(__file__).parent / "all_data"))
+OUTPUT_DIR = Path(os.getenv("DAM_REINDEX_OUTPUT", Path(__file__).parent / "reindex_output"))
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 MILVUS_DB = str(OUTPUT_DIR / "experiment.db")
