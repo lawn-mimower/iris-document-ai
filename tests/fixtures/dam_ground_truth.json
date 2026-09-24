@@ -1,0 +1,30 @@
+{
+  "description": "Synthetic ground truth for tests/fixtures/dam_docs (fictional company).",
+  "questions": [
+    {
+      "id": "Q1",
+      "question": "Corporate Identity Number (CIN) of company",
+      "answer": "U00000XX0000PTC000000"
+    },
+    {
+      "id": "Q2",
+      "question": "Name of the company",
+      "answer": "Examplecorp Widgets Private Limited"
+    },
+    {
+      "id": "Q3",
+      "question": "Authorised capital of the company (in Rs.)",
+      "answer": "10,00,000"
+    },
+    {
+      "id": "Q4",
+      "question": "Date of Board of Directors' meeting in which financial statements are approved",
+      "answer": "05/09/2024"
+    },
+    {
+      "id": "Q5",
+      "question": "Whether Secretarial Audit is applicable (Yes/No)",
+      "answer": "No"
+    }
+  ]
+}
