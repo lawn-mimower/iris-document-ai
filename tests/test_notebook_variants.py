@@ -21,7 +21,8 @@ from conftest import REPO_ROOT
 
 TRUERAG = REPO_ROOT / "ComparisonScriptsOctober/trueRAG.ipynb"
 CHUNKING_NB = REPO_ROOT / "DAM/phase2_chunking_embedding.ipynb"
-MERGED = [TRUERAG, CHUNKING_NB]
+BGE_NB = REPO_ROOT / "DAM/beg_rag-excel.ipynb"
+MERGED = [TRUERAG, CHUNKING_NB, BGE_NB]
 
 
 def code_cells(path):
@@ -261,3 +262,37 @@ def test_chunking_insert_batches(strategy, expected_batches):
     exec(cell_starting_with(CHUNKING_NB, "# Prepare data for insertion"), ns)
     assert client.batches == expected_batches
     assert ("chunker_used" in ns["data_to_insert"][0]) == (strategy == "mixed")
+
+
+# --- DAM/beg_rag-excel.ipynb ------------------------------------------------------------------------------------
+
+@pytest.mark.parametrize("source_name,suffix,form_questions", [("excel", ".xlsx", True), ("pdf", ".pdf", False)])
+def test_bge_rag_source_settings(source_name, suffix, form_questions):
+    ns = run_settings(BGE_NB, "SOURCE", source_name)
+    assert ns["SOURCE_PATH"].endswith(suffix)
+    assert ns["RUN_FORM_QUESTIONS"] is form_questions
+    assert ns["QUESTION"]
+
+
+@pytest.mark.parametrize("source_name,creates_collection", [("excel", True), ("pdf", False)])
+def test_bge_rag_form_questions_only_for_excel(source_name, creates_collection):
+    ns = run_settings(BGE_NB, "SOURCE", source_name)
+    opened = []
+
+    class Client:
+        def __init__(self, uri):
+            opened.append(uri)
+
+        def has_collection(self, name):
+            return False
+
+        def create_collection(self, **kwargs):
+            pass
+
+        def insert(self, **kwargs):
+            pass
+
+    ns.update(MilvusClient=Client, texts=["a", "b"], tqdm=lambda it, **kw: it, emb_text=lambda t: [0.0],
+              embedding_dim=1)
+    exec(cell_starting_with(BGE_NB, "if RUN_FORM_QUESTIONS:"), ns)
+    assert bool(opened) == creates_collection

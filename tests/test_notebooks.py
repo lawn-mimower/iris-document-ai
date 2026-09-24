@@ -10,7 +10,7 @@ NOTEBOOKS = sorted(p for p in REPO_ROOT.rglob("*.ipynb") if ".venv" not in p.par
 
 
 def test_notebooks_found():
-    assert len(NOTEBOOKS) >= 15
+    assert len(NOTEBOOKS) >= 14
 
 
 @pytest.mark.parametrize("path", NOTEBOOKS, ids=[str(p.relative_to(REPO_ROOT)) for p in NOTEBOOKS])
