@@ -4,29 +4,37 @@ import argparse
 import os
 import google.generativeai as genai
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+# Model used to produce the fill plan (override with the GEMINI_MODEL environment variable)
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+
 def call_llm_api(prompt):
     """
     Sends the master prompt to the Google Gemini API and returns the response.
     """
     # --- IMPORTANT ---
     # For this to work, you must have your Google API key set as an
-    # environment variable named 'GOOGLE_API_KEY'.
+    # environment variable named 'GOOGLE_API_KEY' or 'GEMINI_API_KEY'.
     try:
-        api_key = os.getenv("GOOGLE_API_KEY")
+        api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
         if not api_key:
-            raise ValueError("GOOGLE_API_KEY environment variable not set.")
+            raise ValueError("GOOGLE_API_KEY (or GEMINI_API_KEY) environment variable not set.")
         
         genai.configure(api_key=api_key)
         
-        # Using Gemini 1.5 Pro for its large context window and reasoning
-        model = genai.GenerativeModel('gemini-1.5-pro-latest')
+        model = genai.GenerativeModel(GEMINI_MODEL)
         
         # Configure the model to ensure the output is JSON
         generation_config = genai.types.GenerationConfig(
             response_mime_type="application/json"
         )
         
-        print("Sending prompt to Gemini 1.5 Pro... (This may take a moment)")
+        print(f"Sending prompt to {GEMINI_MODEL}... (This may take a moment)")
         response = model.generate_content(prompt, generation_config=generation_config)
         
         print("Received response from LLM.")
