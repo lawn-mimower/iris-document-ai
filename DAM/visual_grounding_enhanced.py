@@ -6,6 +6,7 @@ Retrieves chunks from Milvus and highlights them on the original documents.
 Supports: PDF, Images (JPG/PNG), with bounding box visualization.
 """
 
+import argparse
 from pymilvus import MilvusClient
 from sentence_transformers import SentenceTransformer
 from pathlib import Path
@@ -41,7 +42,7 @@ class VisualGrounder:
             collection_name=self.collection_name,
             data=[query_embedding],
             limit=limit,
-            output_fields=["text", "source_file", "doc_type", "page_number",
+            output_fields=["text", "source_file", "filename", "doc_type", "page_number",
                           "bbox_l", "bbox_t", "bbox_r", "bbox_b", "item_type"]
         )
 
@@ -55,7 +56,7 @@ class VisualGrounder:
             score = result['distance']
 
             print(f"\n--- Result {idx} (Score: {score:.4f}) ---")
-            print(f"File: {entity.get('source_file', 'N/A')}")
+            print(f"File: {entity.get('source_file') or entity.get('filename', 'N/A')}")
             print(f"Type: {entity.get('doc_type', 'N/A')}")
             print(f"Page: {entity.get('page_number', 'N/A')}")
             print(f"Item Type: {entity.get('item_type', 'N/A')}")
@@ -72,13 +73,14 @@ class VisualGrounder:
     def visualize_chunk(self, entity, result_idx, query, output_path):
         """Visualize a single chunk on its source document."""
 
-        source_file = entity.get('source_file', '')
-        doc_type = entity.get('doc_type', '').lower()
+        # Collections built by oneshot_ingestion.py store 'filename' (with extension) and no 'doc_type'
+        source_file = entity.get('source_file') or entity.get('filename', '')
+        doc_type = (entity.get('doc_type') or Path(source_file).suffix.lstrip('.')).lower()
         page_num = entity.get('page_number', 0)
 
         # Find the source file
         source_path = None
-        for ext in [f".{doc_type}", ".pdf", ".jpg", ".png", ".xlsx", ".docx"]:
+        for ext in ["", f".{doc_type}", ".pdf", ".jpg", ".png", ".xlsx", ".docx"]:
             potential_path = self.data_dir / f"{source_file}{ext}"
             if potential_path.exists():
                 source_path = potential_path
@@ -100,6 +102,7 @@ class VisualGrounder:
         """Highlight bbox on PDF page."""
 
         page_num = int(entity.get('page_number', 0))
+        page_idx = page_num - 1 if page_num > 0 else 0  # docling page numbers start at 1
         bbox = [
             entity.get('bbox_l', 0),
             entity.get('bbox_t', 0),
@@ -110,12 +113,17 @@ class VisualGrounder:
         # Open PDF
         doc = fitz.open(pdf_path)
 
-        if page_num < 0 or page_num >= len(doc):
+        if page_idx < 0 or page_idx >= len(doc):
             print(f"  ⚠ Invalid page number: {page_num}")
             doc.close()
             return
 
-        page = doc[page_num]
+        page = doc[page_idx]
+
+        # docling PDF boxes use a bottom-left origin (top > bottom); convert to top-left
+        if bbox[1] > bbox[3]:
+            page_height = page.rect.height
+            bbox = [bbox[0], page_height - bbox[1], bbox[2], page_height - bbox[3]]
 
         # Convert page to image
         pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))  # 2x zoom for better quality
@@ -151,7 +159,7 @@ class VisualGrounder:
         )
 
         ax.axis('off')
-        ax.set_title(f"Query: {query[:80]}...\nPage {page_num + 1} of {pdf_path.name}",
+        ax.set_title(f"Query: {query[:80]}...\nPage {page_idx + 1} of {pdf_path.name}",
                     fontsize=10, pad=20)
 
         # Save
@@ -220,10 +228,19 @@ class VisualGrounder:
 def main():
     """Main execution."""
 
-    grounder = VisualGrounder()
+    parser = argparse.ArgumentParser(description="Retrieve chunks and highlight them on the source documents.")
+    parser.add_argument("--db", default="oneshot.db", help="Milvus Lite database file (default: oneshot.db)")
+    parser.add_argument("--collection", default="oneshot", help="Collection name (default: oneshot)")
+    parser.add_argument("--data-dir", default="all_data", help="Folder with the original documents (default: all_data)")
+    parser.add_argument("--output-dir", default="visual_grounding_outputs", help="Where to save the images")
+    parser.add_argument("--query", "-q", action="append", help="Query text (repeatable; default: built-in form field queries)")
+    parser.add_argument("--limit", type=int, default=3, help="Results per query (default: 3)")
+    args = parser.parse_args()
+
+    grounder = VisualGrounder(db_path=args.db, collection_name=args.collection, data_dir=args.data_dir)
 
     # Define queries
-    queries = [
+    queries = args.query or [
         "Corporate Identity Number (CIN) of company",
         "Name of the company",
         "Address of the registered office of the company",
@@ -242,10 +259,10 @@ def main():
 
     # Process each query
     for query in queries:
-        grounder.search_and_visualize(query, limit=3)
+        grounder.search_and_visualize(query, limit=args.limit, output_dir=args.output_dir)
 
     print("\n" + "="*80)
-    print("COMPLETED: Check 'visual_grounding_outputs/' folder for highlighted documents")
+    print(f"COMPLETED: Check '{args.output_dir}/' folder for highlighted documents")
     print("="*80 + "\n")
 
 
