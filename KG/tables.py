@@ -1,15 +1,21 @@
+import argparse
 import pandas as pd
 from pathlib import Path
 from docling.document_converter import DocumentConverter
+
+parser = argparse.ArgumentParser(description="Extract tables from a document with docling.")
+parser.add_argument("source", help="Path or URL of the document")
+parser.add_argument("-o", "--output-dir", default="extracted_tables", help="Folder for CSV/HTML tables (default: extracted_tables)")
+args = parser.parse_args()
 
 converter = DocumentConverter()
 
 # Convert document
 
-result = converter.convert("policy.pdf")
+result = converter.convert(args.source)
 
 # Create output directory
-output_dir = Path("extracted_tables")
+output_dir = Path(args.output_dir)
 output_dir.mkdir(parents=True, exist_ok=True)
 
 # Extract and save tables
