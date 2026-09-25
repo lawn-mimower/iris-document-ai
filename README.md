@@ -148,23 +148,25 @@ Known limitations:
 
 `benchmarks/` compares both strands with conventional baselines on synthetic documents. Everything is fictional, the sets are small, and each configuration ran once. [`benchmarks/RESULTS.md`](benchmarks/RESULTS.md) has the full tables, the run conditions and the caveats.
 
-**Field extraction.** Six fictional companies each have a 6-page financial-statement PDF, a directors' report (DOCX) and a trial balance (XLSX). Facts are spread across the files, and the documents contain distractors such as prior-year figures, a holding company's CIN and a registrar's e-mail. The task is 16 AOC-4 style fields per company: 96 field instances, 2 of which are stated nowhere. Four methods are compared, with the same LLM for all of them within a run:
+**Field extraction.** Six fictional companies each have a 6-page financial-statement PDF, a directors' report (DOCX) and a trial balance (XLSX). Facts are spread across the files, and the documents contain distractors such as prior-year figures, a holding company's CIN and a registrar's e-mail. The task is 16 AOC-4 style fields per company: 96 field instances, 2 of which are stated nowhere. Six methods are compared, with the same LLM for all of them within a run:
 
-- the repo's pipeline (Docling → BGE-large → Milvus Lite, top 5)
-- a basic BM25 RAG over plain pypdf / python-docx / openpyxl text
+- the repo's pipeline (Docling → BGE-large → Milvus Lite, top 5), one call per field or all fields in one call
+- a basic BM25 RAG over plain pypdf / python-docx / openpyxl text, the same two ways
 - one prompt holding the whole folder
 - regex rules
 
-| `gemini-3.5-flash-lite`, one call per company | correct | gold evidence in retrieved passages |
-|---|---|---|
-| whole folder in one prompt | 93/96 | – |
-| BM25 RAG, all fields in one call | 91/96 | 86/94 |
-| repo pipeline, all fields in one call | 80/96 | 72/94 |
-| regex rules (no LLM) | 86/96 | – |
+| Method | gpt-oss:20b, local | `gemini-3.5-flash-lite` | gold evidence in retrieved passages |
+|---|---|---|---|
+| whole folder in one prompt | 81/96 | 93/96 | – |
+| BM25 RAG, all fields in one call | 89/96 | 91/96 | 86/94 |
+| BM25 RAG, one call per field | 77/96 | not run | 86/94 |
+| repo pipeline, all fields in one call | 75/96 | 80/96 | 72/94 |
+| repo pipeline, one call per field | 67/96 | not run | 72/94 |
+| regex rules (no LLM) | 86/96 | 86/96 | – |
 
-On these short documents (about 4k tokens per company), the repo's pipeline loses to both simpler methods, and the reason is its retrieval. Docling leaves the cover title and the headings out of chunk text and merges numbered notes into one long chunk. The top-5 passages for a field then often miss the sentence that answers it. The single call costs no more tokens here than either RAG variant. That would change with real annual reports of 100+ pages, which this benchmark does not test.
+On these short documents (about 4k tokens per company), the repo's pipeline loses to both simpler methods with either model, and the reason is its retrieval. Docling leaves the cover title and the headings out of chunk text and merges numbered notes into one long chunk. The top-5 passages for a field then often miss the sentence that answers it. One call per field, the repo's own configuration, is worse than one call per company for both retrievers, at sixteen times the calls. The single call costs no more tokens here than either RAG variant. That would change with real annual reports of 100+ pages, which this benchmark does not test.
 
-**Form filling.** There are six fictional form layouts (labels left or above, two columns, yes/no rows, a ruled table, character-cell fields) with 52 fields in total. The repo's `phase1.py` + `gestalt_processor.py` report only 39 of the 68 target boxes: wide boxes, ruled tables and 9 pt checkboxes are missed. A no-LLM nearest-label rule on that output places 28 of 52 values. If the boxes come from the PDF's vector drawings instead, both the unchanged `agent.py` (on `gemini-3.5-flash`) and the nearest-label rule place 52 of 52. The agent on the repo's own phase1 output has not run yet, because the free Gemini quota ran out; `RESULTS.md` has the command that finishes it.
+**Form filling.** There are six fictional form layouts (labels left or above, two columns, yes/no rows, a ruled table, character-cell fields) with 52 fields in total. The repo's `phase1.py` + `gestalt_processor.py` report only 39 of the 68 target boxes: wide boxes, ruled tables and 9 pt checkboxes are missed. On that output the repo's `agent.py` (on `gemini-3.5-flash-lite`) places 12 of 52 values and a no-LLM nearest-label rule 28 of 52. If the boxes come from the PDF's vector drawings instead, the unchanged agent places 44 of 52 on `gemini-3.5-flash-lite` and 52 of 52 on `gemini-3.5-flash`, and the nearest-label rule 52 of 52 with no model. Perception, not placement, is what limits this strand.
 
 ## Repository layout
 

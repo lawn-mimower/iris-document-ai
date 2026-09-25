@@ -5,12 +5,12 @@ Two small synthetic benchmarks compare the repo's methods with conventional base
 1. **Field extraction (DAM).** Answer 16 AOC-4 style fields from a folder of a company's documents.
 2. **Form filling.** Place new values on a blank form, given one filled-in example.
 
-Everything here is synthetic and small. There are 6 fictional companies (96 field instances) and 6 fictional forms (52 fields). Each system ran once. Read the numbers as a description of these documents, not as general accuracy. Every number below comes from a JSON file in `benchmarks/results/`. `python benchmarks/report.py` prints these tables again from those files.
+Everything here is synthetic and small. There are 6 fictional companies (96 field instances) and 6 fictional forms (52 fields). Each system ran once. The complete runs use free models: a local gpt-oss:20b for every field-extraction method, and Gemini 3.5 Flash-Lite on the API free tier for the one-call-per-company methods and the form agents. Read the numbers as a description of these documents, not as general accuracy. Every number below comes from a JSON file in `benchmarks/results/`. `python benchmarks/report.py` prints these tables again from those files.
 
 ## Summary
 
-- **Field extraction, `gemini-3.5-flash-lite`, one call per company.** The whole-folder single call gets 93/96, BM25 RAG 91/96, the repo's Docling + BGE + Milvus pipeline 80/96 and regex rules 86/96. The repo's pipeline loses at retrieval: its top-5 passages held the gold evidence for 72 of 94 answerable fields, against 86 for BM25.
-- **Form filling.** The repo's `phase1.py` + gestalt step report 39 of 68 target boxes. With that perception, a no-LLM nearest-label rule places 28/52 values. With boxes read from the PDF's vector drawings, the unchanged agent (`gemini-3.5-flash`) and the rule both place 52/52. The agent on phase1 output is pending (free quota).
+- **Field extraction.** With every method on one local model (gpt-oss:20b): BM25 RAG with all fields in one call 89/96, regex rules 86/96, the whole folder in one call 81/96, the repo's Docling + BGE + Milvus pipeline 75/96 batched and 67/96 one call per field, BM25 one call per field 77/96. On `gemini-3.5-flash-lite` (one call per company only): single call 93/96, BM25 91/96, the repo's pipeline 80/96. The repo's pipeline loses at retrieval, whichever model answers: its top-5 passages held the gold evidence for 72 of 94 answerable fields, against 86 for BM25.
+- **Form filling.** The repo's `phase1.py` + gestalt step report 39 of 68 target boxes. On that perception the repo's agent (`gemini-3.5-flash-lite`) places 12/52 values and a no-LLM nearest-label rule 28/52. With boxes read from the PDF's vector drawings, the same agent places 44/52 on `gemini-3.5-flash-lite` and 52/52 on `gemini-3.5-flash`, and the rule 52/52 with no model.
 
 ## Task 1: AOC-4 field extraction
 
@@ -66,9 +66,47 @@ The generator checks every recorded (file, page, text) location against text ext
 - **Source correct.** The cited passage's file (and page, for PDFs) is one of the places that state the gold value. If nothing is cited, the top-ranked passage is used. Word and Excel files are checked at file level only.
 - **Gold evidence in context.** At least one passage retrieved for the field contains the text that states the gold value. This measures retrieval alone. In the batched methods the model sees the passages retrieved for every field, so it can answer from another field's passage.
 
-### Run L: `llama3.2` on local Ollama, all six methods
+### Run O: gpt-oss:20b on local Ollama, all six methods
 
-Run L is still in progress. Its results will be added here, and until then it can be finished with the Run L command under "Reproduce, resume" plus `--resume`.
+Every method with the same local model, so the per-field methods (the repo's own configuration: one call per field) are compared with the batched and single-call forms like for like.
+
+| Method | Correct (all fields) | Strict | Answerable correct | Declined when not stated | Source file/page correct | Gold evidence in retrieved context | LLM calls | Prompt tokens | Output tokens | LLM time (s) | Ingestion (s) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| dam | 67/96 (70%) | 66/96 (69%) | 66/94 (70%) | 1/2 | 79/94 (84%) | 72/94 (77%) | 96 | 69,084 | 7,022 | 250.1 | 455.4 |
+| bm25 | 77/96 (80%) | 77/96 (80%) | 75/94 (80%) | 2/2 | 80/94 (85%) | 86/94 (91%) | 96 | 126,933 | 6,556 | 282.7 | 0.2 |
+| dam_batched | 75/96 (78%) | 75/96 (78%) | 74/94 (79%) | 1/2 | 85/94 (90%) | 72/94 (77%) | 6 | 25,031 | 5,469 | 177.8 | 455.4 |
+| bm25_batched | 89/96 (93%) | 89/96 (93%) | 89/94 (95%) | 0/2 | 94/94 (100%) | 86/94 (91%) | 6 | 24,023 | 4,404 | 146.2 | 0.2 |
+| single_call | 81/96 (84%) | 81/96 (84%) | 80/94 (85%) | 1/2 | – | – | 6 | 23,013 | 1,568 | 63.9 | 0.2 |
+| rules | 86/96 (90%) | 86/96 (90%) | 86/94 (91%) | 0/2 | 78/84 (93%) | – | 0 | 0 | 0 | 0.0 | 0.2 |
+
+Per field (correct out of companies scored):
+
+| Field | dam | bm25 | dam_batched | bm25_batched | single_call | rules |
+|---|---|---|---|---|---|---|
+| cin | 6/6 | 6/6 | 6/6 | 6/6 | 6/6 | 6/6 |
+| company_name | 6/6 | 6/6 | 6/6 | 6/6 | 6/6 | 6/6 |
+| registered_office | 6/6 | 6/6 | 6/6 | 6/6 | 6/6 | 6/6 |
+| email | 6/6 | 5/6 | 6/6 | 5/6 | 5/6 | 4/6 |
+| fy_from | 4/6 | 2/6 | 6/6 | 6/6 | 6/6 | 6/6 |
+| fy_to | 6/6 | 6/6 | 6/6 | 6/6 | 6/6 | 6/6 |
+| board_meeting_date | 0/6 | 6/6 | 4/6 | 6/6 | 6/6 | 6/6 |
+| agm_date | 5/6 | 6/6 | 2/6 | 5/6 | 6/6 | 0/6 |
+| authorised_capital | 3/6 | 4/6 | 2/6 | 3/6 | 1/6 | 5/6 |
+| industry | 4/6 | 5/6 | 4/6 | 6/6 | 6/6 | 6/6 |
+| consolidated_fs | 4/6 | 6/6 | 5/6 | 6/6 | 6/6 | 6/6 |
+| cag_comments | 3/6 | 2/6 | 4/6 | 6/6 | 5/6 | 6/6 |
+| cag_supplementary_audit | 2/6 | 3/6 | 4/6 | 6/6 | 5/6 | 6/6 |
+| secretarial_audit | 6/6 | 5/6 | 6/6 | 6/6 | 6/6 | 5/6 |
+| revenue | 4/6 | 4/6 | 4/6 | 6/6 | 4/6 | 6/6 |
+| profit_after_tax | 2/6 | 5/6 | 4/6 | 4/6 | 1/6 | 6/6 |
+
+What the run shows:
+
+- **Retrieval is the repo pipeline's problem, and it does not depend on the model.** Its top-5 passages hold the gold evidence for 72 of 94 answerable fields, BM25's for 86, the same counts as in run G. With the passages it has, the model answers most of what is answerable: the batched form answers 74 of the 94 answerable fields, more than the 72 whose evidence was in their own top-5, because a field can be answered from a passage retrieved for another one. The misses follow the retrieval: `board_meeting_date` 0/6 per field (the sentence sits in a directors' report chunk that the BGE query never ranks in the top 5), `cag_supplementary_audit` 2/6, `profit_after_tax` 2/6.
+- **One call per field is worse than one call per company for both retrievers** (67 → 75 for the repo pipeline, 77 → 89 for BM25), at sixteen times the calls and three to five times the prompt tokens. The union of the passages retrieved for all sixteen fields covers what a single field's top-5 misses, and the model can answer a field from a passage retrieved for another one.
+- **Batched BM25 beats the whole folder in one prompt on this model** (89 against 81), the reverse of run G (91 against 93). The single call loses on the two amount fields (`authorised_capital` 1/6, `profit_after_tax` 1/6): asked to convert "Rs. 25 crore" or a lakhs figure to rupees inside a 4,000-token prompt, gpt-oss:20b slips where Gemini did not. Given the shorter retrieved context it converts correctly. The rules, which parse the amount after "authorised" directly, get 5/6 and 6/6.
+- **The rules are competitive** (86/96) because the documents were generated from templates the rules were written against; see the caveats. They miss `agm_date` on every company (the date is stated in a sentence the regex does not cover) and never decline the two unanswerable fields.
+- **Cost.** Ingestion for the repo pipeline (Docling, BGE-large and Milvus Lite on the CPU) took 455 s for six companies against 0.2 s for the plain-text BM25 index. Per query, the batched methods make 6 calls and use 24,000–25,000 prompt tokens in total; the per-field methods make 96 calls and use 69,000–127,000. Every LLM figure is from a 12 GB GPU that held about 80% of the model, so the times are indicative only.
 
 ### Run G: `gemini-3.5-flash-lite` (Google AI Studio free tier), one call per company per method
 
@@ -155,26 +193,45 @@ It drops shapes that sit inside a text span (letters the shape detector reported
 
 **Scoring.** A text value counts when a plan entry with that text has its centre inside the target box (2 pt tolerance). A checkbox group counts when the chosen option's box, and no other option's box, holds a tick. A comb field counts when the whole value, or one character per cell, lies inside it.
 
-### Results: agents on `gemini-3.5-flash`, geometry offline
+### Results: agents on `gemini-3.5-flash-lite` (complete) and `gemini-3.5-flash` (vector arm only), geometry offline
+
+`gemini-3.5-flash-lite`, all four methods:
 
 | Form | agent | agent_vector | geometric_phase1 | geometric_vector |
 |---|---|---|---|---|
-| f1_labels_left | pending | 7/7 | 4/7 | 7/7 |
-| f2_labels_above | pending | 6/6 | 1/6 | 6/6 |
-| f3_two_column | pending | 10/10 | 10/10 | 10/10 |
-| f4_yes_no_rows | pending | 8/8 | 7/8 | 8/8 |
-| f5_ruled_grid | pending | 9/9 | 0/9 | 9/9 |
-| f6_comb_kyc | pending | 12/12 | 6/12 | 12/12 |
-| **all** | **–** | **52/52 (100%)** | **28/52 (54%)** | **52/52 (100%)** |
-| checkbox fields | – | 12/12 (100%) | 9/12 (75%) | 12/12 (100%) |
-| comb fields | – | 3/3 (100%) | 3/3 (100%) | 3/3 (100%) |
-| text fields | – | 37/37 (100%) | 16/37 (43%) | 37/37 (100%) |
+| f1_labels_left | 2/7 | 7/7 | 4/7 | 7/7 |
+| f2_labels_above | 0/6 | 6/6 | 1/6 | 6/6 |
+| f3_two_column | 9/10 | 10/10 | 10/10 | 10/10 |
+| f4_yes_no_rows | 0/8 | 8/8 | 7/8 | 8/8 |
+| f5_ruled_grid | 0/9 | 2/9 | 0/9 | 9/9 |
+| f6_comb_kyc | 1/12 | 11/12 | 6/12 | 12/12 |
+| **all** | **12/52 (23%)** | **44/52 (85%)** | **28/52 (54%)** | **52/52 (100%)** |
+| checkbox fields | 1/12 (8%) | 12/12 (100%) | 9/12 (75%) | 12/12 (100%) |
+| comb fields | 1/3 (33%) | 2/3 (67%) | 3/3 (100%) | 3/3 (100%) |
+| text fields | 10/37 (27%) | 30/37 (81%) | 16/37 (43%) | 37/37 (100%) |
+
+| Method | LLM calls | Prompt tokens | Output tokens | Thinking tokens | LLM time (s) |
+|---|---|---|---|---|---|
+| agent | 6 | 676,413 | 4,278 | 0 | 813.4 |
+| agent_vector | 6 | 138,932 | 4,200 | 0 | 20.0 |
+
+`gemini-3.5-flash`, the agent with vector perception only (its free daily quota was exhausted before the phase1 arm could run, on two keys and on two days):
+
+| Form | agent_vector |
+|---|---|
+| f1_labels_left | 7/7 |
+| f2_labels_above | 6/6 |
+| f3_two_column | 10/10 |
+| f4_yes_no_rows | 8/8 |
+| f5_ruled_grid | 9/9 |
+| f6_comb_kyc | 12/12 |
+| **all** | **52/52 (100%)** |
 
 | Method | LLM calls | Prompt tokens | Output tokens | Thinking tokens | LLM time (s) |
 |---|---|---|---|---|---|
 | agent_vector | 6 | 138,932 | 4,240 | 0 | 872.7 |
 
-Target boxes reported by the perception step (IoU > 0.5):
+Target boxes reported by the perception step (IoU > 0.5), the same for both runs:
 
 | Form | phase1 + gestalt | vector drawings |
 |---|---|---|
@@ -185,24 +242,21 @@ Target boxes reported by the perception step (IoU > 0.5):
 | f5_ruled_grid | 0/11 (73 elements) | 11/11 (36 elements) |
 | f6_comb_kyc | 6/14 (198 elements) | 14/14 (33 elements) |
 
-`agent` (the repo's own configuration) has **no results yet**. The first call, on f1 (305k characters of prompt), hit the SDK's default 600 s deadline. The client deadline was then raised to 1,800 s. By then the free-tier limit of 20 requests per day for `gemini-3.5-flash` had been used up; this benchmark made 7 of those requests, and the key is shared with other work. `gemini-2.5-flash` (the agent's default), `gemini-3.7-flash` and `gemini-3.8-flash` also answered 429 on their first request. The resume command is below. Until it runs, the benchmark says nothing about how well the agent does on phase1 output.
-
-What the run shows:
+What the runs show:
 
 - **Perception is the bottleneck on these forms, not placement.** `phase1.py` + `gestalt_processor.py` report only 39 of the 68 target boxes. It misses three kinds:
   - boxes more than 10 times as wide as they are tall (the shape filter requires an aspect ratio below 10), so 250–400 pt wide name and address boxes are missed
   - everything inside a ruled table (only outermost contours are kept, so f5 yields one box for the whole table)
   - 9 pt checkboxes: they are reported as input fields, and the gestalt step then merges them with letter fragments of the option text
-- Nearest-label geometry on the same phase1 elements places 28 of 52 values. Every miss is a field whose box was not reported. Where the box is present, the simple rule places the value correctly.
-- With perception from the PDF's vector drawings, both the unchanged agent and the geometric rule place **52 of 52**. The agent needed 6 LLM calls and about 139k prompt tokens; the rule needed no model and under 10 ms per form, perception included.
+- **The repo's own configuration places 12 of 52 values.** Given the phase1 elements, the agent does worse than the nearest-label rule on the same elements (28/52). The prompt holds 140–205 elements per form, most of them letter fragments and merged boxes, and runs to 113,000 tokens on average; the model then places text in the wrong box (10/37 text fields) and ticks the wrong or no checkbox (1/12). Where the box for a field was not reported, no placement method can succeed, and every one of the rule's 24 misses is such a field.
+- **With perception from the PDF's vector drawings** the unchanged agent places 44 of 52 on `gemini-3.5-flash-lite` and 52 of 52 on `gemini-3.5-flash`; the geometric rule places 52 of 52 with no model and under 10 ms per form, perception included. The smaller model's misses are the ruled grid (2/9: it puts values in the header row) and one comb field. The agent needed 6 calls and about 139,000 prompt tokens in either run.
 - The vector perception, the geometric rule and the six layouts were all written by the same person, knowing the layouts. The rule's 52/52 shows that these forms are easy once the boxes are known; it does not show that the rule generalises. Scanned forms have no vector drawings at all.
-
 
 ## Run conditions
 
-The runs were made on 24–25 September 2026.
+The runs were made on 24–26 September 2026.
 
-**Machine.** Intel Core i7-13700KF (24 threads), 31 GB RAM, no GPU (Docling and BGE ran on the CPU). Other benchmark jobs, including other Ollama servers, shared the machine throughout, with a load average of 20–37. Read every time in this file as indicative only. Token counts are the better measure of cost.
+**Machine.** Intel Core i7-13700KF (24 threads), 31 GB RAM, an RTX 4070 SUPER with 12 GB. Docling and BGE ran on the CPU in every run. The Gemini runs of 24–25 September shared the machine with other benchmark jobs (load average 20–37); the gpt-oss run and the form runs of 26 September had it to themselves. Read every time in this file as indicative only. Token counts are the better measure of cost.
 
 **Software.**
 
@@ -213,7 +267,7 @@ The runs were made on 24–25 September 2026.
 - PyMuPDF 1.26.7, opencv 4.12.0
 - pypdf 6.9.2, python-docx 1.2.0, openpyxl 3.1.5, reportlab 4.4.10
 - google-generativeai 0.8.6
-- Ollama 0.12.5 serving `llama3.2` (3.2B, Q4_K_M) with a context of 8,192 tokens, temperature 0 and seed 0 (the largest prompt is under 6k tokens, and no prompt reached the limit)
+- Ollama 0.12.5 serving `gpt-oss:20b` (21B parameters, 3.6B active, MXFP4, digest 17052f91) with a context of 16,384 tokens, temperature 0, seed 0 and `think: low`, about 80% of the weights on the GPU. The largest prompt is under 6k tokens, and no prompt reached the limit. Ollama's JSON grammar mode is not used for this model: the reasoning leaked into the answer and the JSON came out mangled, so the model gets the plain prompt and its fenced JSON is parsed (`llm_client.py`).
 
 **Retrieval settings.** Top-k is 5. BM25 uses k1 = 1.5 and b = 0.75. BM25 chunks are 1,000 characters with 200 overlap. BGE queries are the form labels, without an instruction prefix, as in the repo.
 
@@ -221,11 +275,11 @@ The runs were made on 24–25 September 2026.
 
 - `gemini-2.5-flash-lite` (the harness default) answered 404: "no longer available to new users".
 - `gemini-2.5-flash` (the agent default) answered 429 (quota exceeded) on its first request.
-- Task 1 therefore uses `gemini-3.5-flash-lite` and Task 2 uses `gemini-3.5-flash`.
+- Task 1 therefore uses `gemini-3.5-flash-lite`. Task 2 used `gemini-3.5-flash` on 24 September; on 26 September that model answered 429 on two keys before any request, so the complete Task 2 run is on `gemini-3.5-flash-lite`.
 
-In total the runs made 30 Gemini requests. 24 succeeded: 18 on `gemini-3.5-flash-lite` and 6 on `gemini-3.5-flash`. 6 failed: one 404, four 429s and one client deadline. The Task 1 Gemini run used temperature 0. The agent keeps the model's default temperature, as `prototype1/agent.py` does. Each configuration ran once.
+In total the runs made 44 Gemini requests. 36 succeeded: 30 on `gemini-3.5-flash-lite` (18 for Task 1, 12 for Task 2) and 6 on `gemini-3.5-flash`. 8 failed: one 404, six 429s and one client deadline. The Task 1 Gemini run used temperature 0. The agent keeps the model's default temperature, as `prototype1/agent.py` does. Each configuration ran once.
 
-**Caching.** Every LLM response is stored in `benchmarks/.cache/` (git-ignored), keyed by provider, model, settings and prompt. `--offline` re-scores from the cache without calling a model. After the Gemini pass, one date in the generator (c4's AGM) was changed. c4's documents were rebuilt before either run read them, and c4's Gemini scores were recomputed from the cached responses (`--resume --redo --offline`); no request was repeated. Run L was first started with a 16,384-token context. With other jobs holding most of the memory, its Ollama runner exited in the middle of a request and then could not be reloaded (HTTP 500), so the whole run was repeated from scratch with an 8,192-token context. The committed file holds only the 8k run.
+**Caching.** Every LLM response is stored in `benchmarks/.cache/` (git-ignored), keyed by provider, model, settings and prompt. `--offline` re-scores from the cache without calling a model. After the Gemini pass, one date in the generator (c4's AGM) was changed. c4's documents were rebuilt before either run read them, and c4's Gemini scores were recomputed from the cached responses (`--resume --redo --offline`); no request was repeated. Run O was first started with Ollama's JSON grammar mode on; every answer came back mangled, so those responses were discarded, the mode was switched off for reasoning models and the run was repeated from scratch. The committed file holds only the repeated run.
 
 ## Caveats
 
@@ -234,9 +288,9 @@ In total the runs made 30 Gemini requests. 24 succeeded: 18 on `gemini-3.5-flash
 - **Baselines written by the benchmark's author.** The same person wrote the generators, the rules, the vector perception and the geometric filler, knowing the templates and layouts. The DAM rules were written against a first version of the documents. The boilerplate sections (accounting policies, committees, the dividend note, …) were added afterwards and the rules were not changed; that change cost them the AGM dates. The rules and the geometric filler are still an optimistic picture of what hand-written rules achieve.
 - **The answer prompt is not the harness's.** It adds a passage citation and JSON output. The harness's LLM judge is not used: answers are matched after normalisation, and text fields accept a token F1 of at least 0.8.
 - **Defaults only for the repo's pipeline.** It ran with top-5 retrieval and no reranking, query reformulation or chunking changes, all of which the harness offers. BM25 was not tuned either.
-- **Models.** `llama3.2` is a 3B model, which pulls down every LLM-based method in run L. On Gemini only the one-call-per-company methods ran. The Gemini models differ from the repo's defaults because of availability on the day.
+- **Models.** The local run uses gpt-oss:20b, a 21B mixture-of-experts model; a 3B model tried first (llama3.2) could not follow the answer format and its run was abandoned. On Gemini only the one-call-per-company methods ran, so run G and run O compare a model as much as a method. The Gemini models differ from the repo's defaults because of availability on the day, and Task 2's two agent runs are on two different Gemini models.
 - **Coarse source check.** For Word and Excel files the source is checked at file level only. For Yes/No fields the source is the file that holds the deciding sentence.
-- **Form agent.** The agent ran with the model's default temperature and one sample per form. The arm with the repo's own perception has not run yet.
+- **Form agent.** The agent ran with the model's default temperature and one sample per form. The arm with the repo's own perception ran on `gemini-3.5-flash-lite` only; on `gemini-3.5-flash` it is still pending.
 
 ## Reproduce, resume
 
@@ -248,11 +302,11 @@ python benchmarks/generate_dam_benchmark.py
 python benchmarks/generate_form_benchmark.py
 ```
 
-Run L, with a local Ollama serving `llama3.2`:
+Run O, with a local Ollama serving `gpt-oss:20b`:
 
 ```bash
-OLLAMA_HOST=http://127.0.0.1:11434 python benchmarks/run_dam_benchmark.py --run local-llama3.2 \
-  --provider ollama --model llama3.2 --num-ctx 8192
+OLLAMA_HOST=http://127.0.0.1:11434 CUDA_VISIBLE_DEVICES="" python benchmarks/run_dam_benchmark.py \
+  --run local-gpt-oss-20b --provider ollama --model gpt-oss:20b --num-ctx 16384 --think low
 ```
 
 Run G, with `GEMINI_API_KEY` or `GOOGLE_API_KEY` in the environment:
@@ -266,12 +320,14 @@ python benchmarks/run_dam_benchmark.py --run gemini-3.5-flash-lite --provider ge
 Task 2, then print the tables:
 
 ```bash
-python benchmarks/run_form_benchmark.py --run gemini-3.5-flash --model gemini-3.5-flash \
+python benchmarks/run_form_benchmark.py --run gemini-3.5-flash-lite --model gemini-3.5-flash-lite \
   --min-interval 65 --timeout 1800
+python benchmarks/run_form_benchmark.py --run gemini-3.5-flash --model gemini-3.5-flash \
+  --methods agent_vector,geometric_phase1,geometric_vector --min-interval 65 --timeout 1800
 python benchmarks/report.py
 ```
 
-**Still to run.** Run the `agent` arm of Task 2 once the `gemini-3.5-flash` free quota has reset (6 requests with prompts of 150–400k characters). It adds its results to `forms_gemini-3.5-flash.json`:
+**Still to run.** The `agent` arm of Task 2 on `gemini-3.5-flash` (6 requests with prompts of 150–400k characters), once that model's free quota allows it. It adds its results to `forms_gemini-3.5-flash.json`:
 
 ```bash
 python benchmarks/run_form_benchmark.py --run gemini-3.5-flash --methods agent --model gemini-3.5-flash \
