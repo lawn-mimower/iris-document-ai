@@ -167,10 +167,13 @@ class LLMClient:
         if self.temperature is not None:
             options["temperature"] = self.temperature
         body = {"model": self.model, "prompt": prompt, "stream": False, "options": options}
-        if json_mode:
-            body["format"] = "json"
         if self.think:
+            # Ollama's JSON grammar mode conflicts with reasoning models' output channels
+            # (the reasoning leaks into the answer and the JSON comes out mangled), so
+            # reasoning models get the plain prompt and parse_json strips their code fence.
             body["think"] = self.think
+        elif json_mode:
+            body["format"] = "json"
         for attempt in range(3):   # a local runner can crash (e.g. memory pressure) and restart
             try:
                 r = requests.post(f"{base}/api/generate", json=body, timeout=max(self.timeout_s, 1800))
