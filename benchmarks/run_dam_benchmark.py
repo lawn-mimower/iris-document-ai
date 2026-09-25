@@ -290,6 +290,7 @@ def main():
     ap.add_argument("--model", default="llama3.2")
     ap.add_argument("--top-k", type=int, default=5)
     ap.add_argument("--num-ctx", type=int, default=16384, help="Ollama context window")
+    ap.add_argument("--think", default=None, help="Ollama think level for reasoning models (low, medium, high)")
     ap.add_argument("--min-interval", type=float, default=0.0, help="seconds between live LLM calls")
     ap.add_argument("--max-live-calls", type=int, default=None, help="stop after this many live calls")
     ap.add_argument("--daily-cap", type=int, default=None, help="refuse live calls once today's ledger has this many")
@@ -331,7 +332,7 @@ def main():
 
     llm = None
     if any(m in LLM_METHODS for m in methods):
-        llm = LLMClient(args.provider, args.model, cache_dir=args.cache_dir, min_interval_s=args.min_interval,
+        llm = LLMClient(args.provider, args.model, cache_dir=args.cache_dir, min_interval_s=args.min_interval, think=args.think,
                         max_live_calls=args.max_live_calls, daily_cap=args.daily_cap, num_ctx=args.num_ctx,
                         offline=args.offline)
     dam_index = None

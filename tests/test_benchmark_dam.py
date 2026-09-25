@@ -100,6 +100,9 @@ def test_llm_client_caches_and_keeps_a_ledger(tmp_path, monkeypatch):
     offline = llm_client.LLMClient("ollama", "tiny", cache_dir=tmp_path, offline=True)
     with pytest.raises(llm_client.QuotaExhausted):
         offline.complete("never seen")
+    thinking = llm_client.LLMClient("ollama", "tiny", cache_dir=tmp_path, think="low")
+    assert thinking._key("q", True) != c._key("q", True)   # the think level is part of the cache key
+    assert not thinking.complete("q")["cached"]
 
 
 def test_parse_json_tolerates_fences():

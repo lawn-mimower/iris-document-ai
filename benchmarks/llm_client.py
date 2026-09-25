@@ -37,7 +37,8 @@ class LLMCallFailed(LLMStop):
 class LLMClient:
     def __init__(self, provider: str, model: str, cache_dir=DEFAULT_CACHE, min_interval_s: float = 0.0,
                  max_live_calls: int = None, daily_cap: int = None, num_ctx: int = 16384,
-                 temperature: float = 0.0, offline: bool = False, timeout_s: float = 600.0):
+                 temperature: float = 0.0, offline: bool = False, timeout_s: float = 600.0,
+                 think: str = None):
         if provider not in ("gemini", "ollama"):
             raise ValueError(f"unknown provider {provider!r}")
         self.provider, self.model = provider, model
@@ -45,6 +46,7 @@ class LLMClient:
         self.min_interval_s = min_interval_s
         self.max_live_calls, self.daily_cap = max_live_calls, daily_cap
         self.num_ctx, self.temperature = num_ctx, temperature
+        self.think = think              # Ollama think level ("low", "medium", "high") for models that reason
         self.offline = offline          # cache only: a miss raises instead of calling the model
         self.timeout_s = timeout_s      # client deadline per call (600 s is the SDK default)
         self.live_calls = 0
@@ -56,6 +58,7 @@ class LLMClient:
         blob = json.dumps({"provider": self.provider, "model": self.model, "json": json_mode,
                            "temperature": self.temperature,
                            "num_ctx": self.num_ctx if self.provider == "ollama" else None,
+                           "think": self.think if self.provider == "ollama" else None,
                            "prompt": prompt}, sort_keys=True)
         return hashlib.sha256(blob.encode()).hexdigest()
 
@@ -166,6 +169,8 @@ class LLMClient:
         body = {"model": self.model, "prompt": prompt, "stream": False, "options": options}
         if json_mode:
             body["format"] = "json"
+        if self.think:
+            body["think"] = self.think
         for attempt in range(3):   # a local runner can crash (e.g. memory pressure) and restart
             try:
                 r = requests.post(f"{base}/api/generate", json=body, timeout=max(self.timeout_s, 1800))

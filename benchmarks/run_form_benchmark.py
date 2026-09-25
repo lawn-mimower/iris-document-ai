@@ -129,6 +129,7 @@ def main():
     ap.add_argument("--forms", default="", help="comma-separated form ids (default: all)")
     ap.add_argument("--provider", choices=["gemini", "ollama"], default="gemini")
     ap.add_argument("--model", default=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"))
+    ap.add_argument("--think", default=None, help="Ollama think level for reasoning models (low, medium, high)")
     ap.add_argument("--min-interval", type=float, default=0.0)
     ap.add_argument("--timeout", type=float, default=600.0, help="client deadline per LLM call in seconds")
     ap.add_argument("--max-live-calls", type=int, default=None)
@@ -164,7 +165,7 @@ def main():
     llm = None
     if any(m.startswith("agent") for m in methods) and not args.dry_run:
         # temperature None: keep the model's default sampling, as prototype1/agent.py does
-        llm = LLMClient(args.provider, args.model, cache_dir=args.cache_dir, min_interval_s=args.min_interval,
+        llm = LLMClient(args.provider, args.model, cache_dir=args.cache_dir, min_interval_s=args.min_interval, think=args.think,
                         max_live_calls=args.max_live_calls, daily_cap=args.daily_cap, temperature=None,
                         offline=args.offline, timeout_s=args.timeout)
     stop_reason = None
