@@ -1,0 +1,4292 @@
+{
+ "benchmark": "form_filling",
+ "run": "gemini-3.5-flash-lite",
+ "status": "complete",
+ "updated": "2026-09-26T02:05:22",
+ "conditions": {
+  "agent_llm": "gemini:gemini-3.5-flash-lite",
+  "agent_temperature": "model default (as prototype1/agent.py)",
+  "client_timeout_s": 1800.0,
+  "n_forms": 6,
+  "python": "3.12.2",
+  "platform": "Linux-6.8.0-111-generic-x86_64-with-glibc2.39",
+  "stop_reason": null
+ },
+ "methods": {
+  "agent": "repo pipeline: phase1 + gestalt_processor + prototype1/agent.py (LLM, golden sample in the prompt)",
+  "agent_vector": "prototype1/agent.py unchanged, but fed gestalt-processed vector elements instead of phase1 output",
+  "geometric_phase1": "nearest-label geometry on the phase1 + gestalt elements, no LLM, no golden sample",
+  "geometric_vector": "nearest-label geometry on PDF text spans + vector rectangles, no LLM, no golden sample"
+ },
+ "summary": {
+  "agent": {
+   "forms_scored": 6,
+   "fields": 52,
+   "correct": 12,
+   "by_kind": {
+    "text": {
+     "n": 37,
+     "correct": 10
+    },
+    "checkbox": {
+     "n": 12,
+     "correct": 1
+    },
+    "comb": {
+     "n": 3,
+     "correct": 1
+    }
+   },
+   "per_form": {
+    "f1_labels_left": "2/7",
+    "f2_labels_above": "0/6",
+    "f3_two_column": "9/10",
+    "f4_yes_no_rows": "0/8",
+    "f5_ruled_grid": "0/9",
+    "f6_comb_kyc": "1/12"
+   },
+   "llm_calls": 6,
+   "prompt_tokens": 676413,
+   "completion_tokens": 4278,
+   "thinking_tokens": 0,
+   "llm_time_ms": 813422
+  },
+  "agent_vector": {
+   "forms_scored": 6,
+   "fields": 52,
+   "correct": 44,
+   "by_kind": {
+    "text": {
+     "n": 37,
+     "correct": 30
+    },
+    "checkbox": {
+     "n": 12,
+     "correct": 12
+    },
+    "comb": {
+     "n": 3,
+     "correct": 2
+    }
+   },
+   "per_form": {
+    "f1_labels_left": "7/7",
+    "f2_labels_above": "6/6",
+    "f3_two_column": "10/10",
+    "f4_yes_no_rows": "8/8",
+    "f5_ruled_grid": "2/9",
+    "f6_comb_kyc": "11/12"
+   },
+   "llm_calls": 6,
+   "prompt_tokens": 138932,
+   "completion_tokens": 4200,
+   "thinking_tokens": 0,
+   "llm_time_ms": 20029
+  },
+  "geometric_phase1": {
+   "forms_scored": 6,
+   "fields": 52,
+   "correct": 28,
+   "by_kind": {
+    "text": {
+     "n": 37,
+     "correct": 16
+    },
+    "checkbox": {
+     "n": 12,
+     "correct": 9
+    },
+    "comb": {
+     "n": 3,
+     "correct": 3
+    }
+   },
+   "per_form": {
+    "f1_labels_left": "4/7",
+    "f2_labels_above": "1/6",
+    "f3_two_column": "10/10",
+    "f4_yes_no_rows": "7/8",
+    "f5_ruled_grid": "0/9",
+    "f6_comb_kyc": "6/12"
+   },
+   "llm_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "thinking_tokens": 0,
+   "llm_time_ms": 0
+  },
+  "geometric_vector": {
+   "forms_scored": 6,
+   "fields": 52,
+   "correct": 52,
+   "by_kind": {
+    "text": {
+     "n": 37,
+     "correct": 37
+    },
+    "checkbox": {
+     "n": 12,
+     "correct": 12
+    },
+    "comb": {
+     "n": 3,
+     "correct": 3
+    }
+   },
+   "per_form": {
+    "f1_labels_left": "7/7",
+    "f2_labels_above": "6/6",
+    "f3_two_column": "10/10",
+    "f4_yes_no_rows": "8/8",
+    "f5_ruled_grid": "9/9",
+    "f6_comb_kyc": "12/12"
+   },
+   "llm_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "thinking_tokens": 0,
+   "llm_time_ms": 0
+  }
+ },
+ "perception": {
+  "f1_labels_left": {
+   "phase1_gestalt": {
+    "targets": 11,
+    "found": 8,
+    "n_elements": 160,
+    "ms": 97
+   },
+   "vector": {
+    "targets": 11,
+    "found": 11,
+    "n_elements": 27,
+    "ms": 1
+   }
+  },
+  "f2_labels_above": {
+   "phase1_gestalt": {
+    "targets": 8,
+    "found": 3,
+    "n_elements": 141,
+    "ms": 78
+   },
+   "vector": {
+    "targets": 8,
+    "found": 8,
+    "n_elements": 20,
+    "ms": 1
+   }
+  },
+  "f3_two_column": {
+   "phase1_gestalt": {
+    "targets": 12,
+    "found": 11,
+    "n_elements": 152,
+    "ms": 81
+   },
+   "vector": {
+    "targets": 12,
+    "found": 12,
+    "n_elements": 29,
+    "ms": 1
+   }
+  },
+  "f4_yes_no_rows": {
+   "phase1_gestalt": {
+    "targets": 12,
+    "found": 11,
+    "n_elements": 205,
+    "ms": 96
+   },
+   "vector": {
+    "targets": 12,
+    "found": 12,
+    "n_elements": 31,
+    "ms": 1
+   }
+  },
+  "f5_ruled_grid": {
+   "phase1_gestalt": {
+    "targets": 11,
+    "found": 0,
+    "n_elements": 73,
+    "ms": 75
+   },
+   "vector": {
+    "targets": 11,
+    "found": 11,
+    "n_elements": 36,
+    "ms": 1
+   }
+  },
+  "f6_comb_kyc": {
+   "phase1_gestalt": {
+    "targets": 14,
+    "found": 6,
+    "n_elements": 198,
+    "ms": 100
+   },
+   "vector": {
+    "targets": 14,
+    "found": 14,
+    "n_elements": 33,
+    "ms": 2
+   }
+  }
+ },
+ "results": {
+  "f1_labels_left|agent": {
+   "form": "f1_labels_left",
+   "method": "agent",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 305123,
+    "prompt_tokens": 114348,
+    "completion_tokens": 437,
+    "thinking_tokens": 0,
+    "latency_ms": 3717,
+    "cached": false
+   },
+   "ms": 3807,
+   "score": {
+    "n_fields": 7,
+    "n_correct": 2,
+    "n_plan_entries": 7,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Applicant name",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Date of birth",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Address",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Phone number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 94
+     },
+     {
+      "key": "E-mail",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Membership type",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     },
+     {
+      "key": "Preferred language",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Jordan Sample",
+     "bbox": [
+      122.4,
+      136.5,
+      184.7,
+      144.2
+     ]
+    },
+    {
+     "text": "17/10/1986",
+     "bbox": [
+      214.5,
+      129.6,
+      335.4,
+      150.4
+     ]
+    },
+    {
+     "text": "4 Demo Lane, Sampleton",
+     "bbox": [
+      214.5,
+      205.4,
+      375.2,
+      226.5
+     ]
+    },
+    {
+     "text": "+91 90000 22222",
+     "bbox": [
+      214.5,
+      205.4,
+      375.2,
+      226.5
+     ]
+    },
+    {
+     "text": "jordan@example.invalid",
+     "bbox": [
+      214.5,
+      205.4,
+      375.2,
+      226.5
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      367.6,
+      322.5,
+      372.6,
+      328.3
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      308.8,
+      322.5,
+      313.3,
+      328.3
+     ]
+    }
+   ]
+  },
+  "f1_labels_left|agent_vector": {
+   "form": "f1_labels_left",
+   "method": "agent_vector",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 56714,
+    "prompt_tokens": 21273,
+    "completion_tokens": 413,
+    "thinking_tokens": 0,
+    "latency_ms": 2214,
+    "cached": false
+   },
+   "ms": 63497,
+   "score": {
+    "n_fields": 7,
+    "n_correct": 7,
+    "n_plan_entries": 7,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Applicant name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Date of birth",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Address",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Phone number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "E-mail",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Membership type",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Student"
+      ]
+     },
+     {
+      "key": "Preferred language",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Hindi"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Jordan Sample",
+     "bbox": [
+      215.0,
+      92.0,
+      515.0,
+      112.0
+     ]
+    },
+    {
+     "text": "17/10/1986",
+     "bbox": [
+      215.0,
+      130.0,
+      335.0,
+      150.0
+     ]
+    },
+    {
+     "text": "4 Demo Lane, Sampleton",
+     "bbox": [
+      215.0,
+      168.0,
+      545.0,
+      188.0
+     ]
+    },
+    {
+     "text": "+91 90000 22222",
+     "bbox": [
+      215.0,
+      206.0,
+      375.0,
+      226.0
+     ]
+    },
+    {
+     "text": "jordan@example.invalid",
+     "bbox": [
+      215.0,
+      244.0,
+      465.0,
+      264.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      350.0,
+      291.0,
+      355.0,
+      296.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      290.0,
+      323.0,
+      295.0,
+      328.0
+     ]
+    }
+   ]
+  },
+  "f1_labels_left|geometric_phase1": {
+   "form": "f1_labels_left",
+   "method": "geometric_phase1",
+   "status": "ok",
+   "llm": null,
+   "ms": 2,
+   "score": {
+    "n_fields": 7,
+    "n_correct": 4,
+    "n_plan_entries": 4,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Applicant name",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Date of birth",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Address",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Phone number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 94
+     },
+     {
+      "key": "E-mail",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Membership type",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Student"
+      ]
+     },
+     {
+      "key": "Preferred language",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Hindi"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      349.6,
+      290.6,
+      355.3,
+      296.3
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      289.6,
+      322.5,
+      295.3,
+      328.3
+     ]
+    },
+    {
+     "text": "17/10/1986",
+     "bbox": [
+      214.5,
+      129.6,
+      335.4,
+      150.4
+     ]
+    },
+    {
+     "text": "+91 90000 22222",
+     "bbox": [
+      214.5,
+      205.4,
+      375.2,
+      226.5
+     ]
+    }
+   ]
+  },
+  "f1_labels_left|geometric_vector": {
+   "form": "f1_labels_left",
+   "method": "geometric_vector",
+   "status": "ok",
+   "llm": null,
+   "ms": 1,
+   "score": {
+    "n_fields": 7,
+    "n_correct": 7,
+    "n_plan_entries": 7,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Applicant name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Date of birth",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Address",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Phone number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "E-mail",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Membership type",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Student"
+      ]
+     },
+     {
+      "key": "Preferred language",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Hindi"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      350.0,
+      291.0,
+      355.0,
+      296.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      290.0,
+      323.0,
+      295.0,
+      328.0
+     ]
+    },
+    {
+     "text": "17/10/1986",
+     "bbox": [
+      215.0,
+      130.0,
+      335.0,
+      150.0
+     ]
+    },
+    {
+     "text": "Jordan Sample",
+     "bbox": [
+      215.0,
+      92.0,
+      515.0,
+      112.0
+     ]
+    },
+    {
+     "text": "+91 90000 22222",
+     "bbox": [
+      215.0,
+      206.0,
+      375.0,
+      226.0
+     ]
+    },
+    {
+     "text": "4 Demo Lane, Sampleton",
+     "bbox": [
+      215.0,
+      168.0,
+      545.0,
+      188.0
+     ]
+    },
+    {
+     "text": "jordan@example.invalid",
+     "bbox": [
+      215.0,
+      244.0,
+      465.0,
+      264.0
+     ]
+    }
+   ]
+  },
+  "f2_labels_above|agent": {
+   "form": "f2_labels_above",
+   "method": "agent",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 269071,
+    "prompt_tokens": 100565,
+    "completion_tokens": 355,
+    "thinking_tokens": 0,
+    "latency_ms": 3089,
+    "cached": false
+   },
+   "ms": 65792,
+   "score": {
+    "n_fields": 6,
+    "n_correct": 0,
+    "n_plan_entries": 6,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Full name",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Organisation",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Purpose of visit",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Host employee",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Vehicle number",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "ID proof shown",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Sam Specimen",
+     "bbox": [
+      50.9,
+      108.5,
+      55.9,
+      116.1
+     ]
+    },
+    {
+     "text": "Sample Textiles Co.",
+     "bbox": [
+      50.6,
+      264.4,
+      56.6,
+      272.1
+     ]
+    },
+    {
+     "text": "Vendor meeting",
+     "bbox": [
+      50.9,
+      212.6,
+      56.1,
+      220.3
+     ]
+    },
+    {
+     "text": "K. Testcase",
+     "bbox": [
+      79.4,
+      266.4,
+      92.4,
+      274.3
+     ]
+    },
+    {
+     "text": "ZZ 09 CD 5678",
+     "bbox": [
+      50.4,
+      316.5,
+      56.6,
+      323.9
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      299.2,
+      390.4,
+      304.9,
+      397.8
+     ]
+    }
+   ]
+  },
+  "f2_labels_above|agent_vector": {
+   "form": "f2_labels_above",
+   "method": "agent_vector",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 43621,
+    "prompt_tokens": 16217,
+    "completion_tokens": 339,
+    "thinking_tokens": 0,
+    "latency_ms": 3979,
+    "cached": false
+   },
+   "ms": 65889,
+   "score": {
+    "n_fields": 6,
+    "n_correct": 6,
+    "n_plan_entries": 6,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Full name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Organisation",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Purpose of visit",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Host employee",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Vehicle number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "ID proof shown",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Voter ID"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Sam Specimen",
+     "bbox": [
+      50.0,
+      122.0,
+      450.0,
+      142.0
+     ]
+    },
+    {
+     "text": "Sample Textiles Co.",
+     "bbox": [
+      50.0,
+      174.0,
+      450.0,
+      194.0
+     ]
+    },
+    {
+     "text": "Vendor meeting",
+     "bbox": [
+      50.0,
+      226.0,
+      450.0,
+      246.0
+     ]
+    },
+    {
+     "text": "K. Testcase",
+     "bbox": [
+      50.0,
+      278.0,
+      450.0,
+      298.0
+     ]
+    },
+    {
+     "text": "ZZ 09 CD 5678",
+     "bbox": [
+      50.0,
+      330.0,
+      450.0,
+      350.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      260.0,
+      393.0,
+      265.0,
+      398.0
+     ]
+    }
+   ]
+  },
+  "f2_labels_above|geometric_phase1": {
+   "form": "f2_labels_above",
+   "method": "geometric_phase1",
+   "status": "ok",
+   "llm": null,
+   "ms": 1,
+   "score": {
+    "n_fields": 6,
+    "n_correct": 1,
+    "n_plan_entries": 1,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Full name",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Organisation",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Purpose of visit",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Host employee",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Vehicle number",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "ID proof shown",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Voter ID"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      259.6,
+      392.6,
+      265.4,
+      398.3
+     ]
+    }
+   ]
+  },
+  "f2_labels_above|geometric_vector": {
+   "form": "f2_labels_above",
+   "method": "geometric_vector",
+   "status": "ok",
+   "llm": null,
+   "ms": 1,
+   "score": {
+    "n_fields": 6,
+    "n_correct": 6,
+    "n_plan_entries": 6,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Full name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Organisation",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Purpose of visit",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Host employee",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Vehicle number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "ID proof shown",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Voter ID"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      260.0,
+      393.0,
+      265.0,
+      398.0
+     ]
+    },
+    {
+     "text": "Sample Textiles Co.",
+     "bbox": [
+      50.0,
+      174.0,
+      450.0,
+      194.0
+     ]
+    },
+    {
+     "text": "Vendor meeting",
+     "bbox": [
+      50.0,
+      226.0,
+      450.0,
+      246.0
+     ]
+    },
+    {
+     "text": "K. Testcase",
+     "bbox": [
+      50.0,
+      278.0,
+      450.0,
+      298.0
+     ]
+    },
+    {
+     "text": "ZZ 09 CD 5678",
+     "bbox": [
+      50.0,
+      330.0,
+      450.0,
+      350.0
+     ]
+    },
+    {
+     "text": "Sam Specimen",
+     "bbox": [
+      50.0,
+      122.0,
+      450.0,
+      142.0
+     ]
+    }
+   ]
+  },
+  "f3_two_column|agent": {
+   "form": "f3_two_column",
+   "method": "agent",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 293413,
+    "prompt_tokens": 110113,
+    "completion_tokens": 605,
+    "thinking_tokens": 0,
+    "latency_ms": 3571,
+    "cached": false
+   },
+   "ms": 64508,
+   "score": {
+    "n_fields": 10,
+    "n_correct": 9,
+    "n_plan_entries": 10,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "First name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Last name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Employee ID",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Department",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Joining date",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Manager",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "City",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "PIN code",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Shift",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Night"
+      ]
+     },
+     {
+      "key": "Laptop required",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Leo",
+     "bbox": [
+      124.5,
+      101.5,
+      265.4,
+      122.4
+     ]
+    },
+    {
+     "text": "Specimen",
+     "bbox": [
+      384.4,
+      101.5,
+      545.3,
+      122.4
+     ]
+    },
+    {
+     "text": "EX-2210",
+     "bbox": [
+      124.5,
+      137.5,
+      265.4,
+      158.4
+     ]
+    },
+    {
+     "text": "Logistics",
+     "bbox": [
+      384.4,
+      137.5,
+      545.3,
+      158.4
+     ]
+    },
+    {
+     "text": "15/01/2025",
+     "bbox": [
+      124.5,
+      173.5,
+      265.4,
+      194.4
+     ]
+    },
+    {
+     "text": "R. Mockley",
+     "bbox": [
+      384.4,
+      173.5,
+      545.3,
+      194.4
+     ]
+    },
+    {
+     "text": "Sampleton",
+     "bbox": [
+      124.5,
+      209.5,
+      265.4,
+      230.4
+     ]
+    },
+    {
+     "text": "999202",
+     "bbox": [
+      384.4,
+      209.5,
+      545.3,
+      230.4
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      184.5,
+      254.6,
+      190.3,
+      260.4
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      456.3,
+      254.3,
+      461.1,
+      260.1
+     ]
+    }
+   ]
+  },
+  "f3_two_column|agent_vector": {
+   "form": "f3_two_column",
+   "method": "agent_vector",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 62947,
+    "prompt_tokens": 23576,
+    "completion_tokens": 568,
+    "thinking_tokens": 0,
+    "latency_ms": 3323,
+    "cached": false
+   },
+   "ms": 64751,
+   "score": {
+    "n_fields": 10,
+    "n_correct": 10,
+    "n_plan_entries": 10,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "First name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Last name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Employee ID",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Department",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Joining date",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Manager",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "City",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "PIN code",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Shift",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Night"
+      ]
+     },
+     {
+      "key": "Laptop required",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Leo",
+     "bbox": [
+      125.0,
+      102.0,
+      265.0,
+      122.0
+     ]
+    },
+    {
+     "text": "Specimen",
+     "bbox": [
+      385.0,
+      102.0,
+      545.0,
+      122.0
+     ]
+    },
+    {
+     "text": "EX-2210",
+     "bbox": [
+      125.0,
+      138.0,
+      265.0,
+      158.0
+     ]
+    },
+    {
+     "text": "Logistics",
+     "bbox": [
+      385.0,
+      138.0,
+      545.0,
+      158.0
+     ]
+    },
+    {
+     "text": "15/01/2025",
+     "bbox": [
+      125.0,
+      174.0,
+      265.0,
+      194.0
+     ]
+    },
+    {
+     "text": "R. Mockley",
+     "bbox": [
+      385.0,
+      174.0,
+      545.0,
+      194.0
+     ]
+    },
+    {
+     "text": "Sampleton",
+     "bbox": [
+      125.0,
+      210.0,
+      265.0,
+      230.0
+     ]
+    },
+    {
+     "text": "999202",
+     "bbox": [
+      385.0,
+      210.0,
+      545.0,
+      230.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      185.0,
+      255.0,
+      190.0,
+      260.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      440.0,
+      255.0,
+      445.0,
+      260.0
+     ]
+    }
+   ]
+  },
+  "f3_two_column|geometric_phase1": {
+   "form": "f3_two_column",
+   "method": "geometric_phase1",
+   "status": "ok",
+   "llm": null,
+   "ms": 2,
+   "score": {
+    "n_fields": 10,
+    "n_correct": 10,
+    "n_plan_entries": 10,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "First name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Last name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Employee ID",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Department",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Joining date",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Manager",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "City",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "PIN code",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Shift",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Night"
+      ]
+     },
+     {
+      "key": "Laptop required",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      184.5,
+      254.6,
+      190.3,
+      260.4
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      439.5,
+      254.6,
+      445.3,
+      260.4
+     ]
+    },
+    {
+     "text": "EX-2210",
+     "bbox": [
+      124.5,
+      137.5,
+      265.4,
+      158.4
+     ]
+    },
+    {
+     "text": "15/01/2025",
+     "bbox": [
+      124.5,
+      173.5,
+      265.4,
+      194.4
+     ]
+    },
+    {
+     "text": "Logistics",
+     "bbox": [
+      384.4,
+      137.5,
+      545.3,
+      158.4
+     ]
+    },
+    {
+     "text": "Leo",
+     "bbox": [
+      124.5,
+      101.5,
+      265.4,
+      122.4
+     ]
+    },
+    {
+     "text": "Specimen",
+     "bbox": [
+      384.4,
+      101.5,
+      545.3,
+      122.4
+     ]
+    },
+    {
+     "text": "999202",
+     "bbox": [
+      384.4,
+      209.5,
+      545.3,
+      230.4
+     ]
+    },
+    {
+     "text": "R. Mockley",
+     "bbox": [
+      384.4,
+      173.5,
+      545.3,
+      194.4
+     ]
+    },
+    {
+     "text": "Sampleton",
+     "bbox": [
+      124.5,
+      209.5,
+      265.4,
+      230.4
+     ]
+    }
+   ]
+  },
+  "f3_two_column|geometric_vector": {
+   "form": "f3_two_column",
+   "method": "geometric_vector",
+   "status": "ok",
+   "llm": null,
+   "ms": 2,
+   "score": {
+    "n_fields": 10,
+    "n_correct": 10,
+    "n_plan_entries": 10,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "First name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Last name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Employee ID",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Department",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Joining date",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Manager",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "City",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "PIN code",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Shift",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Night"
+      ]
+     },
+     {
+      "key": "Laptop required",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      185.0,
+      255.0,
+      190.0,
+      260.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      440.0,
+      255.0,
+      445.0,
+      260.0
+     ]
+    },
+    {
+     "text": "EX-2210",
+     "bbox": [
+      125.0,
+      138.0,
+      265.0,
+      158.0
+     ]
+    },
+    {
+     "text": "15/01/2025",
+     "bbox": [
+      125.0,
+      174.0,
+      265.0,
+      194.0
+     ]
+    },
+    {
+     "text": "Logistics",
+     "bbox": [
+      385.0,
+      138.0,
+      545.0,
+      158.0
+     ]
+    },
+    {
+     "text": "Leo",
+     "bbox": [
+      125.0,
+      102.0,
+      265.0,
+      122.0
+     ]
+    },
+    {
+     "text": "Specimen",
+     "bbox": [
+      385.0,
+      102.0,
+      545.0,
+      122.0
+     ]
+    },
+    {
+     "text": "999202",
+     "bbox": [
+      385.0,
+      210.0,
+      545.0,
+      230.0
+     ]
+    },
+    {
+     "text": "R. Mockley",
+     "bbox": [
+      385.0,
+      174.0,
+      545.0,
+      194.0
+     ]
+    },
+    {
+     "text": "Sampleton",
+     "bbox": [
+      125.0,
+      210.0,
+      265.0,
+      230.0
+     ]
+    }
+   ]
+  },
+  "f4_yes_no_rows|agent": {
+   "form": "f4_yes_no_rows",
+   "method": "agent",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 387601,
+    "prompt_tokens": 145469,
+    "completion_tokens": 471,
+    "thinking_tokens": 0,
+    "latency_ms": 560787,
+    "cached": false
+   },
+   "ms": 622362,
+   "score": {
+    "n_fields": 8,
+    "n_correct": 0,
+    "n_plan_entries": 8,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Name",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Policy number",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Height (cm)",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Weight (kg)",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Do you smoke",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     },
+     {
+      "key": "Do you have diabetes",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     },
+     {
+      "key": "Hospitalised in the last 5 years",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     },
+     {
+      "key": "Do you consume alcohol",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Omar Sample",
+     "bbox": [
+      159.6,
+      125.5,
+      310.5,
+      146.4
+     ]
+    },
+    {
+     "text": "POL-000987",
+     "bbox": [
+      159.6,
+      159.6,
+      220.5,
+      180.4
+     ]
+    },
+    {
+     "text": "181",
+     "bbox": [
+      159.6,
+      193.4,
+      220.5,
+      214.5
+     ]
+    },
+    {
+     "text": "77",
+     "bbox": [
+      67.4,
+      200.6,
+      77.7,
+      210.2
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      412.4,
+      252.4,
+      416.7,
+      258.2
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      467.4,
+      278.4,
+      472.2,
+      284.1
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      467.4,
+      304.5,
+      472.2,
+      310.3
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      412.4,
+      330.4,
+      416.7,
+      336.2
+     ]
+    }
+   ]
+  },
+  "f4_yes_no_rows|agent_vector": {
+   "form": "f4_yes_no_rows",
+   "method": "agent_vector",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 63142,
+    "prompt_tokens": 23744,
+    "completion_tokens": 453,
+    "thinking_tokens": 0,
+    "latency_ms": 2423,
+    "cached": false
+   },
+   "ms": 2432,
+   "score": {
+    "n_fields": 8,
+    "n_correct": 8,
+    "n_plan_entries": 8,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Policy number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Height (cm)",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Weight (kg)",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Do you smoke",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Yes"
+      ]
+     },
+     {
+      "key": "Do you have diabetes",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     },
+     {
+      "key": "Hospitalised in the last 5 years",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     },
+     {
+      "key": "Do you consume alcohol",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Yes"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Omar Sample",
+     "bbox": [
+      160.0,
+      92.0,
+      410.0,
+      112.0
+     ]
+    },
+    {
+     "text": "POL-000987",
+     "bbox": [
+      160.0,
+      126.0,
+      310.0,
+      146.0
+     ]
+    },
+    {
+     "text": "181",
+     "bbox": [
+      160.0,
+      160.0,
+      220.0,
+      180.0
+     ]
+    },
+    {
+     "text": "77",
+     "bbox": [
+      160.0,
+      194.0,
+      220.0,
+      214.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      421.2,
+      253.0,
+      426.2,
+      258.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      476.8,
+      279.0,
+      481.8,
+      284.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      476.8,
+      305.0,
+      481.8,
+      310.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      421.2,
+      331.0,
+      426.2,
+      336.0
+     ]
+    }
+   ]
+  },
+  "f4_yes_no_rows|geometric_phase1": {
+   "form": "f4_yes_no_rows",
+   "method": "geometric_phase1",
+   "status": "ok",
+   "llm": null,
+   "ms": 5,
+   "score": {
+    "n_fields": 8,
+    "n_correct": 7,
+    "n_plan_entries": 7,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Name",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Policy number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Height (cm)",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 94
+     },
+     {
+      "key": "Weight (kg)",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 93
+     },
+     {
+      "key": "Do you smoke",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Yes"
+      ]
+     },
+     {
+      "key": "Do you have diabetes",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     },
+     {
+      "key": "Hospitalised in the last 5 years",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     },
+     {
+      "key": "Do you consume alcohol",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Yes"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      420.6,
+      252.4,
+      426.6,
+      258.4
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      476.2,
+      278.6,
+      482.0,
+      284.4
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      476.2,
+      304.5,
+      482.0,
+      310.3
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      420.6,
+      330.4,
+      426.6,
+      336.4
+     ]
+    },
+    {
+     "text": "POL-000987",
+     "bbox": [
+      159.6,
+      125.5,
+      310.5,
+      146.4
+     ]
+    },
+    {
+     "text": "181",
+     "bbox": [
+      159.6,
+      159.6,
+      220.5,
+      180.4
+     ]
+    },
+    {
+     "text": "77",
+     "bbox": [
+      159.6,
+      193.4,
+      220.5,
+      214.5
+     ]
+    }
+   ]
+  },
+  "f4_yes_no_rows|geometric_vector": {
+   "form": "f4_yes_no_rows",
+   "method": "geometric_vector",
+   "status": "ok",
+   "llm": null,
+   "ms": 4,
+   "score": {
+    "n_fields": 8,
+    "n_correct": 8,
+    "n_plan_entries": 8,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Policy number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Height (cm)",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Weight (kg)",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Do you smoke",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Yes"
+      ]
+     },
+     {
+      "key": "Do you have diabetes",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     },
+     {
+      "key": "Hospitalised in the last 5 years",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "No"
+      ]
+     },
+     {
+      "key": "Do you consume alcohol",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Yes"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      421.2,
+      253.0,
+      426.2,
+      258.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      476.8,
+      279.0,
+      481.8,
+      284.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      476.8,
+      305.0,
+      481.8,
+      310.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      421.2,
+      331.0,
+      426.2,
+      336.0
+     ]
+    },
+    {
+     "text": "POL-000987",
+     "bbox": [
+      160.0,
+      126.0,
+      310.0,
+      146.0
+     ]
+    },
+    {
+     "text": "181",
+     "bbox": [
+      160.0,
+      160.0,
+      220.0,
+      180.0
+     ]
+    },
+    {
+     "text": "77",
+     "bbox": [
+      160.0,
+      194.0,
+      220.0,
+      214.0
+     ]
+    },
+    {
+     "text": "Omar Sample",
+     "bbox": [
+      160.0,
+      92.0,
+      410.0,
+      112.0
+     ]
+    }
+   ]
+  },
+  "f5_ruled_grid|agent": {
+   "form": "f5_ruled_grid",
+   "method": "agent",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 146388,
+    "prompt_tokens": 54697,
+    "completion_tokens": 548,
+    "thinking_tokens": 0,
+    "latency_ms": 5138,
+    "cached": false
+   },
+   "ms": 67628,
+   "score": {
+    "n_fields": 9,
+    "n_correct": 0,
+    "n_plan_entries": 9,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Vendor name",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 5
+     },
+     {
+      "key": "Tax registration no.",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Contact person",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Phone",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Bank name",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Account number",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Branch code",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "City",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Vendor type",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Sample Paints Co.",
+     "bbox": [
+      39.6,
+      121.4,
+      555.2,
+      252.4
+     ]
+    },
+    {
+     "text": "ZZ-TAX-2222",
+     "bbox": [
+      337.1,
+      70.1,
+      340.9,
+      76.3
+     ]
+    },
+    {
+     "text": "M. Sample",
+     "bbox": [
+      255.3,
+      70.1,
+      259.4,
+      76.3
+     ]
+    },
+    {
+     "text": "+91 90000 44444",
+     "bbox": [
+      184.3,
+      70.1,
+      189.3,
+      76.3
+     ]
+    },
+    {
+     "text": "Sample Rural Bank",
+     "bbox": [
+      130.0,
+      70.1,
+      133.9,
+      76.3
+     ]
+    },
+    {
+     "text": "000444555666",
+     "bbox": [
+      40.5,
+      70.1,
+      44.6,
+      76.3
+     ]
+    },
+    {
+     "text": "SMPL0005678",
+     "bbox": [
+      138.4,
+      51.6,
+      208.7,
+      62.1
+     ]
+    },
+    {
+     "text": "Mockpur",
+     "bbox": [
+      104.6,
+      51.6,
+      133.2,
+      62.1
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      59.5,
+      716.3,
+      63.1,
+      722.0
+     ]
+    }
+   ]
+  },
+  "f5_ruled_grid|agent_vector": {
+   "form": "f5_ruled_grid",
+   "method": "agent_vector",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 52400,
+    "prompt_tokens": 19577,
+    "completion_tokens": 529,
+    "thinking_tokens": 0,
+    "latency_ms": 2919,
+    "cached": false
+   },
+   "ms": 62781,
+   "score": {
+    "n_fields": 9,
+    "n_correct": 2,
+    "n_plan_entries": 9,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Vendor name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 25
+     },
+     {
+      "key": "Tax registration no.",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Contact person",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Phone",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Bank name",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Account number",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Branch code",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "City",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Vendor type",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Service provider"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Sample Paints Co.",
+     "bbox": [
+      40.0,
+      122.0,
+      555.0,
+      148.0
+     ]
+    },
+    {
+     "text": "ZZ-TAX-2222",
+     "bbox": [
+      40.0,
+      148.0,
+      555.0,
+      174.0
+     ]
+    },
+    {
+     "text": "M. Sample",
+     "bbox": [
+      40.0,
+      174.0,
+      555.0,
+      200.0
+     ]
+    },
+    {
+     "text": "+91 90000 44444",
+     "bbox": [
+      40.0,
+      200.0,
+      555.0,
+      226.0
+     ]
+    },
+    {
+     "text": "Sample Rural Bank",
+     "bbox": [
+      40.0,
+      226.0,
+      555.0,
+      252.0
+     ]
+    },
+    {
+     "text": "000444555666",
+     "bbox": [
+      40.0,
+      122.0,
+      555.0,
+      148.0
+     ]
+    },
+    {
+     "text": "SMPL0005678",
+     "bbox": [
+      40.0,
+      148.0,
+      555.0,
+      174.0
+     ]
+    },
+    {
+     "text": "Mockpur",
+     "bbox": [
+      40.0,
+      174.0,
+      555.0,
+      200.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      358.8,
+      238.0,
+      363.8,
+      243.0
+     ]
+    }
+   ]
+  },
+  "f5_ruled_grid|geometric_phase1": {
+   "form": "f5_ruled_grid",
+   "method": "geometric_phase1",
+   "status": "ok",
+   "llm": null,
+   "ms": 2,
+   "score": {
+    "n_fields": 9,
+    "n_correct": 0,
+    "n_plan_entries": 0,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Vendor name",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Tax registration no.",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Contact person",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Phone",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Bank name",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Account number",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Branch code",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "City",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Vendor type",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     }
+    ]
+   },
+   "plan": []
+  },
+  "f5_ruled_grid|geometric_vector": {
+   "form": "f5_ruled_grid",
+   "method": "geometric_vector",
+   "status": "ok",
+   "llm": null,
+   "ms": 2,
+   "score": {
+    "n_fields": 9,
+    "n_correct": 9,
+    "n_plan_entries": 9,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Vendor name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Tax registration no.",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Contact person",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Phone",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Bank name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Account number",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Branch code",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "City",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Vendor type",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Service provider"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      358.8,
+      238.0,
+      363.8,
+      243.0
+     ]
+    },
+    {
+     "text": "ZZ-TAX-2222",
+     "bbox": [
+      426.2,
+      122.0,
+      555.0,
+      148.0
+     ]
+    },
+    {
+     "text": "000444555666",
+     "bbox": [
+      426.2,
+      174.0,
+      555.0,
+      200.0
+     ]
+    },
+    {
+     "text": "M. Sample",
+     "bbox": [
+      168.8,
+      148.0,
+      297.5,
+      174.0
+     ]
+    },
+    {
+     "text": "Sample Paints Co.",
+     "bbox": [
+      168.8,
+      122.0,
+      297.5,
+      148.0
+     ]
+    },
+    {
+     "text": "SMPL0005678",
+     "bbox": [
+      168.8,
+      200.0,
+      297.5,
+      226.0
+     ]
+    },
+    {
+     "text": "Sample Rural Bank",
+     "bbox": [
+      168.8,
+      174.0,
+      297.5,
+      200.0
+     ]
+    },
+    {
+     "text": "+91 90000 44444",
+     "bbox": [
+      426.2,
+      148.0,
+      555.0,
+      174.0
+     ]
+    },
+    {
+     "text": "Mockpur",
+     "bbox": [
+      426.2,
+      200.0,
+      555.0,
+      226.0
+     ]
+    }
+   ]
+  },
+  "f6_comb_kyc|agent": {
+   "form": "f6_comb_kyc",
+   "method": "agent",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 401327,
+    "prompt_tokens": 151221,
+    "completion_tokens": 1862,
+    "thinking_tokens": 0,
+    "latency_ms": 237120,
+    "cached": false
+   },
+   "ms": 299095,
+   "score": {
+    "n_fields": 12,
+    "n_correct": 1,
+    "n_plan_entries": 32,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Customer name",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Date of birth",
+      "kind": "comb",
+      "correct": false,
+      "placed": true
+     },
+     {
+      "key": "Father's or spouse's name",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Mobile",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "E-mail",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Occupation",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Annual income",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "Address",
+      "kind": "text",
+      "correct": false,
+      "placed": true,
+      "iou_pct": 0
+     },
+     {
+      "key": "PIN code",
+      "kind": "comb",
+      "correct": false,
+      "placed": true
+     },
+     {
+      "key": "Tax ID",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Account type",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     },
+     {
+      "key": "Nationality",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": true,
+      "ticked": [
+       "Indian"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Arjun Sample",
+     "bbox": [
+      66.7,
+      110.4,
+      73.9,
+      116.1
+     ]
+    },
+    {
+     "text": "2",
+     "bbox": [
+      390.6,
+      108.5,
+      396.6,
+      115.9
+     ]
+    },
+    {
+     "text": "1",
+     "bbox": [
+      425.4,
+      108.5,
+      443.9,
+      116.1
+     ]
+    },
+    {
+     "text": "1",
+     "bbox": [
+      451.3,
+      108.5,
+      513.7,
+      116.1
+     ]
+    },
+    {
+     "text": "1",
+     "bbox": [
+      389.4,
+      121.4,
+      422.3,
+      142.5
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      427.3,
+      121.4,
+      460.4,
+      142.5
+     ]
+    },
+    {
+     "text": "8",
+     "bbox": [
+      465.4,
+      121.4,
+      530.2,
+      142.5
+     ]
+    },
+    {
+     "text": "5",
+     "bbox": [
+      517.8,
+      208.5,
+      524.0,
+      216.2
+     ]
+    },
+    {
+     "text": "S. Sample",
+     "bbox": [
+      66.7,
+      110.4,
+      73.9,
+      116.1
+     ]
+    },
+    {
+     "text": "9000066666",
+     "bbox": [
+      390.6,
+      158.6,
+      397.6,
+      166.3
+     ]
+    },
+    {
+     "text": "arjun@example.invalid",
+     "bbox": [
+      444.3,
+      221.5,
+      555.2,
+      242.3
+     ]
+    },
+    {
+     "text": "Teacher",
+     "bbox": [
+      310.2,
+      208.5,
+      317.2,
+      216.2
+     ]
+    },
+    {
+     "text": "650000",
+     "bbox": [
+      444.8,
+      208.5,
+      451.3,
+      216.2
+     ]
+    },
+    {
+     "text": "3 Sample Nagar, Mockpur",
+     "bbox": [
+      444.3,
+      271.4,
+      553.2,
+      292.5
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      445.5,
+      258.4,
+      460.9,
+      266.1
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      475.0,
+      258.4,
+      479.8,
+      266.1
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      439.5,
+      316.5,
+      459.7,
+      326.3
+     ]
+    },
+    {
+     "text": "4",
+     "bbox": [
+      359.4,
+      316.5,
+      379.1,
+      326.3
+     ]
+    },
+    {
+     "text": "0",
+     "bbox": [
+      280.0,
+      318.4,
+      286.5,
+      326.1
+     ]
+    },
+    {
+     "text": "4",
+     "bbox": [
+      321.7,
+      320.3,
+      331.8,
+      328.3
+     ]
+    },
+    {
+     "text": "P",
+     "bbox": [
+      45.7,
+      324.8,
+      52.3,
+      338.5
+     ]
+    },
+    {
+     "text": "Q",
+     "bbox": [
+      63.7,
+      324.8,
+      70.3,
+      338.5
+     ]
+    },
+    {
+     "text": "R",
+     "bbox": [
+      81.4,
+      324.8,
+      88.6,
+      338.5
+     ]
+    },
+    {
+     "text": "S",
+     "bbox": [
+      99.4,
+      324.8,
+      106.6,
+      338.5
+     ]
+    },
+    {
+     "text": "X",
+     "bbox": [
+      117.7,
+      324.8,
+      124.3,
+      338.5
+     ]
+    },
+    {
+     "text": "6",
+     "bbox": [
+      136.2,
+      324.8,
+      141.8,
+      338.5
+     ]
+    },
+    {
+     "text": "7",
+     "bbox": [
+      154.2,
+      324.8,
+      159.8,
+      338.5
+     ]
+    },
+    {
+     "text": "8",
+     "bbox": [
+      172.2,
+      324.8,
+      177.8,
+      338.5
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      190.2,
+      324.8,
+      195.8,
+      338.5
+     ]
+    },
+    {
+     "text": "K",
+     "bbox": [
+      207.9,
+      324.8,
+      214.1,
+      338.5
+     ]
+    },
+    {
+     "text": "X",
+     "bbox": [
+      119.5,
+      366.4,
+      129.3,
+      376.2
+     ]
+    },
+    {
+     "text": "X",
+     "bbox": [
+      229.4,
+      370.5,
+      234.2,
+      376.2
+     ]
+    }
+   ]
+  },
+  "f6_comb_kyc|agent_vector": {
+   "form": "f6_comb_kyc",
+   "method": "agent_vector",
+   "status": "ok",
+   "llm": {
+    "model": "gemini:gemini-3.5-flash-lite",
+    "prompt_chars": 91611,
+    "prompt_tokens": 34545,
+    "completion_tokens": 1898,
+    "thinking_tokens": 0,
+    "latency_ms": 5171,
+    "cached": false
+   },
+   "ms": 5183,
+   "score": {
+    "n_fields": 12,
+    "n_correct": 11,
+    "n_plan_entries": 33,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Customer name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Date of birth",
+      "kind": "comb",
+      "correct": false,
+      "placed": true
+     },
+     {
+      "key": "Father's or spouse's name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Mobile",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "E-mail",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Occupation",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Annual income",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Address",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "PIN code",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Tax ID",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Account type",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Current"
+      ]
+     },
+     {
+      "key": "Nationality",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Other"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "Arjun Sample",
+     "bbox": [
+      40.0,
+      122.0,
+      370.0,
+      142.0
+     ]
+    },
+    {
+     "text": "2",
+     "bbox": [
+      395.2,
+      124.8,
+      400.8,
+      138.5
+     ]
+    },
+    {
+     "text": "1",
+     "bbox": [
+      411.2,
+      124.8,
+      416.8,
+      138.5
+     ]
+    },
+    {
+     "text": "1",
+     "bbox": [
+      433.2,
+      124.8,
+      438.8,
+      138.5
+     ]
+    },
+    {
+     "text": "1",
+     "bbox": [
+      449.2,
+      124.8,
+      454.8,
+      138.5
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      471.2,
+      124.8,
+      476.8,
+      138.5
+     ]
+    },
+    {
+     "text": "8",
+     "bbox": [
+      487.2,
+      124.8,
+      492.8,
+      138.5
+     ]
+    },
+    {
+     "text": "5",
+     "bbox": [
+      503.2,
+      124.8,
+      508.8,
+      138.5
+     ]
+    },
+    {
+     "text": "5",
+     "bbox": [
+      519.2,
+      124.8,
+      524.8,
+      138.5
+     ]
+    },
+    {
+     "text": "S. Sample",
+     "bbox": [
+      40.0,
+      172.0,
+      370.0,
+      192.0
+     ]
+    },
+    {
+     "text": "9000066666",
+     "bbox": [
+      390.0,
+      172.0,
+      555.0,
+      192.0
+     ]
+    },
+    {
+     "text": "arjun@example.invalid",
+     "bbox": [
+      40.0,
+      222.0,
+      290.0,
+      242.0
+     ]
+    },
+    {
+     "text": "Teacher",
+     "bbox": [
+      310.0,
+      222.0,
+      430.0,
+      242.0
+     ]
+    },
+    {
+     "text": "650000",
+     "bbox": [
+      445.0,
+      222.0,
+      555.0,
+      242.0
+     ]
+    },
+    {
+     "text": "3 Sample Nagar, Mockpur",
+     "bbox": [
+      40.0,
+      272.0,
+      430.0,
+      292.0
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      451.2,
+      274.8,
+      456.8,
+      288.5
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      469.2,
+      274.8,
+      474.8,
+      288.5
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      487.2,
+      274.8,
+      492.8,
+      288.5
+     ]
+    },
+    {
+     "text": "4",
+     "bbox": [
+      505.2,
+      274.8,
+      510.8,
+      288.5
+     ]
+    },
+    {
+     "text": "0",
+     "bbox": [
+      523.2,
+      274.8,
+      528.8,
+      288.5
+     ]
+    },
+    {
+     "text": "4",
+     "bbox": [
+      541.2,
+      274.8,
+      546.8,
+      288.5
+     ]
+    },
+    {
+     "text": "P",
+     "bbox": [
+      45.7,
+      324.8,
+      52.3,
+      338.5
+     ]
+    },
+    {
+     "text": "Q",
+     "bbox": [
+      63.7,
+      324.8,
+      70.3,
+      338.5
+     ]
+    },
+    {
+     "text": "R",
+     "bbox": [
+      81.4,
+      324.8,
+      88.6,
+      338.5
+     ]
+    },
+    {
+     "text": "S",
+     "bbox": [
+      99.4,
+      324.8,
+      106.6,
+      338.5
+     ]
+    },
+    {
+     "text": "X",
+     "bbox": [
+      117.7,
+      324.8,
+      124.3,
+      338.5
+     ]
+    },
+    {
+     "text": "6",
+     "bbox": [
+      136.2,
+      324.8,
+      141.8,
+      338.5
+     ]
+    },
+    {
+     "text": "7",
+     "bbox": [
+      154.2,
+      324.8,
+      159.8,
+      338.5
+     ]
+    },
+    {
+     "text": "8",
+     "bbox": [
+      172.2,
+      324.8,
+      177.8,
+      338.5
+     ]
+    },
+    {
+     "text": "9",
+     "bbox": [
+      190.2,
+      324.8,
+      195.8,
+      338.5
+     ]
+    },
+    {
+     "text": "K",
+     "bbox": [
+      207.9,
+      324.8,
+      214.1,
+      338.5
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      440.0,
+      317.0,
+      449.0,
+      326.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      200.0,
+      367.0,
+      209.0,
+      376.0
+     ]
+    }
+   ]
+  },
+  "f6_comb_kyc|geometric_phase1": {
+   "form": "f6_comb_kyc",
+   "method": "geometric_phase1",
+   "status": "ok",
+   "llm": null,
+   "ms": 3,
+   "score": {
+    "n_fields": 12,
+    "n_correct": 6,
+    "n_plan_entries": 7,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Customer name",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Date of birth",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Father's or spouse's name",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Mobile",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "E-mail",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "Occupation",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Annual income",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 95
+     },
+     {
+      "key": "Address",
+      "kind": "text",
+      "correct": false,
+      "placed": false,
+      "iou_pct": 0
+     },
+     {
+      "key": "PIN code",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Tax ID",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Account type",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": true,
+      "ticked": [
+       "Savings"
+      ]
+     },
+     {
+      "key": "Nationality",
+      "kind": "checkbox",
+      "correct": false,
+      "placed": false,
+      "ticked": []
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "999404",
+     "bbox": [
+      444.3,
+      271.4,
+      553.2,
+      292.5
+     ]
+    },
+    {
+     "text": "21/11/1985",
+     "bbox": [
+      465.4,
+      121.4,
+      530.2,
+      142.5
+     ]
+    },
+    {
+     "text": "Teacher",
+     "bbox": [
+      309.5,
+      221.5,
+      430.4,
+      242.3
+     ]
+    },
+    {
+     "text": "650000",
+     "bbox": [
+      444.3,
+      221.5,
+      555.2,
+      242.3
+     ]
+    },
+    {
+     "text": "PQRSX6789K",
+     "bbox": [
+      39.6,
+      321.5,
+      220.5,
+      342.4
+     ]
+    },
+    {
+     "text": "9000066666",
+     "bbox": [
+      389.4,
+      171.6,
+      555.4,
+      192.4
+     ]
+    },
+    {
+     "text": "Current",
+     "bbox": [
+      359.4,
+      316.5,
+      379.1,
+      326.3
+     ]
+    }
+   ]
+  },
+  "f6_comb_kyc|geometric_vector": {
+   "form": "f6_comb_kyc",
+   "method": "geometric_vector",
+   "status": "ok",
+   "llm": null,
+   "ms": 3,
+   "score": {
+    "n_fields": 12,
+    "n_correct": 12,
+    "n_plan_entries": 12,
+    "n_invalid_entries": 0,
+    "fields": [
+     {
+      "key": "Customer name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Date of birth",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Father's or spouse's name",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Mobile",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "E-mail",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Occupation",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Annual income",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "Address",
+      "kind": "text",
+      "correct": true,
+      "placed": true,
+      "iou_pct": 100
+     },
+     {
+      "key": "PIN code",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Tax ID",
+      "kind": "comb",
+      "correct": true,
+      "placed": true
+     },
+     {
+      "key": "Account type",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Current"
+      ]
+     },
+     {
+      "key": "Nationality",
+      "kind": "checkbox",
+      "correct": true,
+      "placed": true,
+      "ticked": [
+       "Other"
+      ]
+     }
+    ]
+   },
+   "plan": [
+    {
+     "text": "✓",
+     "bbox": [
+      440.0,
+      317.0,
+      449.0,
+      326.0
+     ]
+    },
+    {
+     "text": "✓",
+     "bbox": [
+      200.0,
+      367.0,
+      209.0,
+      376.0
+     ]
+    },
+    {
+     "text": "S. Sample",
+     "bbox": [
+      40.0,
+      172.0,
+      370.0,
+      192.0
+     ]
+    },
+    {
+     "text": "9000066666",
+     "bbox": [
+      390.0,
+      172.0,
+      555.0,
+      192.0
+     ]
+    },
+    {
+     "text": "arjun@example.invalid",
+     "bbox": [
+      40.0,
+      222.0,
+      290.0,
+      242.0
+     ]
+    },
+    {
+     "text": "Teacher",
+     "bbox": [
+      310.0,
+      222.0,
+      430.0,
+      242.0
+     ]
+    },
+    {
+     "text": "650000",
+     "bbox": [
+      445.0,
+      222.0,
+      555.0,
+      242.0
+     ]
+    },
+    {
+     "text": "3 Sample Nagar, Mockpur",
+     "bbox": [
+      40.0,
+      272.0,
+      430.0,
+      292.0
+     ]
+    },
+    {
+     "text": "999404",
+     "bbox": [
+      445.0,
+      272.0,
+      553.0,
+      292.0
+     ]
+    },
+    {
+     "text": "PQRSX6789K",
+     "bbox": [
+      40.0,
+      322.0,
+      220.0,
+      342.0
+     ]
+    },
+    {
+     "text": "Arjun Sample",
+     "bbox": [
+      40.0,
+      122.0,
+      370.0,
+      142.0
+     ]
+    },
+    {
+     "text": "21/11/1985",
+     "bbox": [
+      390.0,
+      122.0,
+      530.0,
+      142.0
+     ]
+    }
+   ]
+  }
+ }
+}
